@@ -31,10 +31,36 @@
   --linea: #d8d3cb;        /*  divisor, nunca texto */
   --linea-fina: #efebe6;
   --tenue: #f6f4f1;
+  --sobre-accion: #ffffff;
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
+
+/* ============================================================
+   CADA CAPÍTULO TIENE SU LUZ
+   Misma tipografía, mismo verde, mismo marrón. Cambia el ambiente.
+   ============================================================ */
+/* II · Cómo duermo: de noche. Contrastes verificados sobre #12161b. */
+:root[data-tema="duermo"] {
+  --papel: #12161b;
+  --tinta: #ece8e1;        /* 14.87:1 */
+  --gris: #b5afa7;         /*  8.35:1 */
+  --rotulo: #9d968d;       /*  6.21:1 */
+  --firma: #d2b39b;        /*  9.22:1 */
+  --accion: #86bdb2;       /*  8.59:1 */
+  --accion-hover: #a2cfc6;
+  --alarma: #ef9a88;       /*  8.34:1 */
+  --linea: #2f353d;
+  --linea-fina: #20252b;
+  --tenue: #1b2026;
+  --sobre-accion: #12161b; /*  texto oscuro sobre el botón: 8.59:1 */
+  color-scheme: dark;
+}
+/* IV · Cómo se ven: el más luminoso. Contrastes verificados sobre #fbf8f3. */
+:root[data-tema="veo"] { --papel: #fbf8f3; --tenue: #f3eee6; --linea-fina: #ece6dd; }
+
+html { background: var(--papel); transition: background-color 700ms var(--ease); }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -57,6 +83,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background-color 700ms var(--ease), color 700ms var(--ease);
 }
 :focus-visible { outline: 2px solid var(--accion); outline-offset: 3px; }
 
@@ -68,7 +95,7 @@ body {
 }
 
 /* ---------- Banda y cabecera ---------- */
-.banda { background: var(--tinta); color: #fff; font-size: 12.5px; line-height: 1.5; padding-block: 10px; }
+.banda { background: #191714; color: #fff; font-size: 12.5px; line-height: 1.5; padding-block: 10px; }
 .banda strong { font-weight: 500; }
 
 .cabecera {
@@ -134,7 +161,39 @@ body {
   font-size: 15px; font-weight: 500; color: var(--accion);
   border: 1px solid var(--accion); padding: 11px 18px; min-height: 44px;
 }
-@media (hover: hover) { .prueba-btn:hover { background: var(--accion); color: #fff; } }
+@media (hover: hover) { .prueba-btn:hover { background: var(--accion); color: var(--sobre-accion); } }
+
+/* I · Cómo respiro: una línea que respira. Ocho segundos por ciclo. */
+.aliento { display: block; height: 1px; width: 44px; background: var(--firma); margin-top: 20px; }
+:root[data-tema="respiro"] .aliento { animation: aliento 8s ease-in-out infinite; }
+@keyframes aliento { 0%, 100% { width: 44px; } 50% { width: min(360px, 72%); } }
+.crono-fase { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--firma); }
+
+/* III · Cómo muerdo: una lámina técnica. Retícula y respuestas en recuadro. */
+:root[data-tema="muerdo"] .escenario {
+  background-image:
+    linear-gradient(var(--linea-fina) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea-fina) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+:root[data-tema="muerdo"] .respuestas { border: 1px solid var(--tinta); background: var(--papel); }
+:root[data-tema="muerdo"] .r { padding: 16px 16px; grid-template-columns: 40px 1fr; }
+:root[data-tema="muerdo"] .r:last-child { border-bottom: 0; }
+:root[data-tema="muerdo"] .r-tecla { border-right: 1px solid var(--linea); align-self: stretch; }
+@media (hover: hover) { :root[data-tema="muerdo"] .r:hover { padding-left: 28px; } }
+:root[data-tema="muerdo"] .r[aria-pressed="true"] { padding-left: 28px; }
+:root[data-tema="muerdo"] .porque { background: var(--papel); padding: 12px 14px; border: 1px solid var(--linea); }
+
+/* IV · Cómo se ven: más grande y con aire. Dos columnas en pantallas anchas. */
+:root[data-tema="veo"] .pregunta { font-size: clamp(34px, 6vw, 68px); max-width: 15ch; }
+@media (min-width: 700px) {
+  :root[data-tema="veo"] .respuestas {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px;
+    border-top: 0; max-width: 760px;
+  }
+  :root[data-tema="veo"] .r { border-bottom: 0; border-top: 1px solid var(--linea); padding-block: 22px; }
+}
 .crono {
   font-family: var(--display); font-weight: 300; font-size: 46px; line-height: 1;
   font-variant-numeric: tabular-nums; color: var(--tinta); min-width: 2ch;
@@ -244,13 +303,13 @@ body {
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   min-height: 54px; padding: 0 28px;
-  background: var(--accion); color: #fff; font-size: 16px; font-weight: 500;
-  text-decoration: none; transition: background-color 220ms var(--ease), transform 160ms var(--ease);
+  background: var(--accion); color: var(--sobre-accion); font-size: 16px; font-weight: 500;
+  text-decoration: none; transition: background-color 220ms var(--ease), transform 160ms var(--ease), opacity 220ms var(--ease);
 }
 .btn:active { transform: scale(.985); }
 @media (hover: hover) { .btn:hover { background: var(--accion-hover); } }
 .btn--alarma { background: var(--alarma); }
-@media (hover: hover) { .btn--alarma:hover { background: #7a2618; } }
+@media (hover: hover) { .btn--alarma:hover { background: var(--alarma); opacity: .86; } }
 .enlace {
   font-size: 15px; color: var(--gris);
   text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--linea);
@@ -316,7 +375,25 @@ body {
   font-size: 13px; color: var(--gris);
 }
 .barra-movil b { color: var(--tinta); font-weight: 500; }
-.barra-movil button { font-size: 14px; font-weight: 500; color: var(--accion); min-height: 40px; padding: 0 4px; }
+.barra-movil button { font-size: 14px; font-weight: 500; color: var(--accion); min-height: 40px; padding: 0 4px; white-space: nowrap; flex: none; }
+/* La última respuesta, siempre a la vista: se ve que algo se está armando. */
+.barra-ultima {
+  display: block; flex: 1; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-family: var(--display); font-size: 18px; color: var(--tinta);
+}
+.barra-ultima i { font-style: italic; color: var(--firma); margin-right: 5px; }
+.barra-ultima--vacia { font-family: var(--sans); font-size: 13px; color: var(--gris); }
+.barra-movil.llega .barra-ultima { animation: llega 700ms var(--ease) both; }
+@keyframes llega { from { opacity: .2; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* La respuesta que viaja hacia la entrevista */
+.vuela {
+  position: fixed; z-index: 40; pointer-events: none;
+  font-family: var(--display); font-weight: 300; line-height: 1.2; color: var(--tinta);
+  transform-origin: left top;
+  transition: transform 440ms var(--ease), opacity 440ms var(--ease);
+}
 @media (min-width: 960px) { .barra-movil { display: none; } }
 
 @media (max-width: 959px) {
@@ -331,7 +408,7 @@ body {
 @media (min-width: 960px) { .cerrar { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .entra, .t-par--nuevo { animation: none; }
+  .entra, .t-par--nuevo, .aliento, .barra-movil.llega .barra-ultima { animation: none !important; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
 </style>
@@ -506,14 +583,20 @@ var APPS_SCRIPT_URL = '';       // vacío = solo WhatsApp (mismo patrón que iNo
 // ---------------------------------------------------------------
 // Estado
 // ---------------------------------------------------------------
-var est = {
-  fase: 'indice',      // indice · pregunta · fincap · antecedente · prioridad · nombre · final
-  cap: null, qi: 0,
-  resp: {},            // id de pregunta → índice de opción
-  visitados: [],       // capítulos en el orden en que se abrieron
-  hechos: [],          // capítulos terminados
-  prio: null, nombre: ''
-};
+function estadoInicial() {
+  return {
+    fase: 'gancho',      // gancho · indice · pregunta · fincap · antecedente · prioridad · nombre · final
+    cap: null, qi: 0,
+    resp: {},            // id de pregunta → índice de opción
+    visitados: [],       // capítulos en el orden en que se abrieron
+    hechos: [],          // capítulos terminados
+    prio: null, nombre: '',
+    gancho: false,       // ya contestó la pregunta de entrada
+    ultima: null         // id de la última pregunta contestada (para la barra móvil)
+  };
+}
+var est = estadoInicial();
+var ocupado = false;     // mientras una respuesta va volando, no se aceptan más clics
 var hist = [];
 var ultimoId = null;   // para resaltar la última línea de la transcripción
 var folio = 'DA-' + Math.random().toString(36).slice(2, 6).toUpperCase();
@@ -524,6 +607,18 @@ function visibles(c) {
   return c.preguntas.filter(function (q) {
     return !q.si || q.si.en.indexOf(est.resp[q.si.id]) !== -1;
   });
+}
+// Las que se recorren pantalla por pantalla. La de "dientes juntos o
+// separados" abre la página; si ya se contestó ahí, no se repite.
+function navegables(c) {
+  return visibles(c).filter(function (q) { return !(est.gancho && q.id === 'aprieta'); });
+}
+function pregunta(id) {
+  if (id === 'antecedente') return ANTECEDENTE;
+  for (var i = 0; i < CAPS.length; i++) {
+    var q = CAPS[i].preguntas.filter(function (x) { return x.id === id; })[0];
+    if (q) return q;
+  }
 }
 function opElegida(q) { return est.resp[q.id] === undefined ? null : q.ops[est.resp[q.id]]; }
 function esc(s) {
@@ -563,6 +658,10 @@ function recado() {
     l.push('', rotulo + ': ' + c.titulo);
     l = l.concat(ls.length ? ls : ['· Nada en particular que mencionar']);
   });
+
+  // La pregunta de entrada, si no quedó dentro de "Cómo muerdo".
+  var g = est.gancho && opElegida(pregunta('aprieta'));
+  if (g && g.r && est.hechos.indexOf('muerdo') === -1) l.push('', 'TAMBIÉN: ' + g.r);
 
   var a = opElegida(ANTECEDENTE);
   if (a) l.push('', 'ANTECEDENTE: ' + a.r);
@@ -621,8 +720,34 @@ function vistaIndice() {
     '</div>';
 }
 
+function vistaGancho() {
+  var q = pregunta('aprieta'), o = opElegida(q);
+  if (!o) {
+    return '<div class="entra">' +
+      '<span class="posicion">Antes de empezar, una pregunta</span>' +
+      '<span class="p-marca" aria-hidden="true">P.</span>' +
+      '<h2 class="pregunta">Ahora mismo, ¿tus dientes están juntos o separados?</h2>' +
+      '<p class="indicacion">No los muevas. Solo fíjate.</p>' +
+      respuestas(q.ops, undefined, 'gancho') +
+      '</div>' +
+      '<button type="button" class="atras" data-accion="indice">Ir directo a las preguntas</button>';
+  }
+  var lectura = {
+    0: 'Contestaste que juntos y apretados. Mucha gente se entera así de que aprieta todo el día, y es de lo que la doctora revisa.',
+    1: 'Los tienes juntos aunque no aprietes. Es un detalle que la doctora revisa en consulta.',
+    2: 'Así suelen estar. Con preguntas como esta se arma tu conversación.'
+  }[est.resp.aprieta];
+  return '<div class="entra">' +
+    '<span class="posicion">Antes de empezar</span>' +
+    '<h2 class="pregunta" style="margin-top:28px">En reposo, los dientes no se tocan.</h2>' +
+    '<p class="indicacion">' + esc(lectura) + '</p>' +
+    '<p class="indicacion">Las demás preguntas son así: cosas que se notan en un minuto y que casi nadie se había preguntado.</p>' +
+    '<div class="botones"><button type="button" class="btn" data-accion="indice">Seguir</button></div>' +
+    '</div>' + atras();
+}
+
 function vistaPregunta() {
-  var c = cap(est.cap), qs = visibles(c), q = qs[est.qi];
+  var c = cap(est.cap), qs = navegables(c), q = qs[est.qi];
   var puntos = qs.map(function (_, i) {
     return '<span class="punto' + (i < est.qi ? ' punto--hecho' : i === est.qi ? ' punto--actual' : '') + '"></span>';
   }).join('');
@@ -630,6 +755,7 @@ function vistaPregunta() {
     ? '<div class="prueba"><button type="button" class="prueba-btn" data-accion="cronometro" id="prueba-btn">' +
       'Empezar los ' + q.prueba + ' segundos</button>' +
       '<span class="crono" id="crono" aria-live="polite"></span>' +
+      '<span class="crono-fase" id="crono-fase"></span>' +
       '<span class="crono-texto" id="crono-texto">Respira tranquilo, con la boca cerrada.</span></div>'
     : '';
   return '<div class="entra">' +
@@ -637,6 +763,7 @@ function vistaPregunta() {
     '<div class="puntos" aria-hidden="true">' + puntos + '</div>' +
     '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
+    (c.id === 'respiro' ? '<span class="aliento" aria-hidden="true"></span>' : '') +
     (q.ind ? '<p class="indicacion">' + esc(q.ind) + '</p>' : '') +
     prueba +
     respuestas(q.ops, est.resp[q.id], 'responder') +
@@ -738,8 +865,16 @@ function totalRespuestas() {
   est.visitados.forEach(function (id) {
     visibles(cap(id)).forEach(function (q) { if (opElegida(q)) n++; });
   });
+  if (est.gancho && est.visitados.indexOf('muerdo') === -1) n++;
   if (opElegida(ANTECEDENTE)) n++;
   return n;
+}
+function bloqueTranscripcion(rotulo, q) {
+  var o = opElegida(q);
+  return '<span class="t-cap">' + esc(rotulo) + '</span>' +
+    '<span class="t-par' + (est.ultima === q.id && ultimoId ? ' t-par--nuevo' : '') + '">' +
+    '<span class="t-p"><i>P.</i>' + esc(q.p) + '</span>' +
+    '<span class="t-r' + (o.alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' + esc(o.t) + '</span></span>';
 }
 function vistaTranscripcion() {
   var n = totalRespuestas();
@@ -748,6 +883,9 @@ function vistaTranscripcion() {
   if (!n) {
     return out + '<p class="t-vacio">Aquí se va escribiendo tu conversación, pregunta por pregunta. ' +
       'Es lo mismo que va a leer la doctora.</p>';
+  }
+  if (est.gancho && est.visitados.indexOf('muerdo') === -1) {
+    out += bloqueTranscripcion('Para empezar', pregunta('aprieta'));
   }
   est.visitados.forEach(function (id) {
     var c = cap(id), qs = visibles(c).filter(opElegida);
@@ -760,12 +898,7 @@ function vistaTranscripcion() {
         '<span class="t-r' + (o.alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' + esc(o.t) + '</span></span>';
     });
   });
-  var a = opElegida(ANTECEDENTE);
-  if (a) {
-    out += '<span class="t-cap">Antecedente</span><span class="t-par' + (ultimoId === 'antecedente' ? ' t-par--nuevo' : '') + '">' +
-      '<span class="t-p"><i>P.</i>' + esc(ANTECEDENTE.p) + '</span>' +
-      '<span class="t-r"><i>R.</i>' + esc(a.t) + '</span></span>';
-  }
+  if (opElegida(ANTECEDENTE)) out += bloqueTranscripcion('Antecedente', ANTECEDENTE);
   return out;
 }
 
@@ -775,23 +908,35 @@ function vistaTranscripcion() {
 function render() {
   if (reloj) { clearInterval(reloj); reloj = null; }
   var v = {
-    indice: vistaIndice, pregunta: vistaPregunta, fincap: vistaFinCap,
+    gancho: vistaGancho, indice: vistaIndice, pregunta: vistaPregunta, fincap: vistaFinCap,
     antecedente: vistaAntecedente, prioridad: vistaPrioridad, nombre: vistaNombre, final: vistaFinal
   }[est.fase];
+
+  // La luz del capítulo: solo mientras estás dentro de él.
+  var tema = (est.fase === 'pregunta' || est.fase === 'fincap') ? est.cap : '';
+  if (tema) document.documentElement.setAttribute('data-tema', tema);
+  else document.documentElement.removeAttribute('data-tema');
+
   document.getElementById('escenario').innerHTML = v();
-  var t = document.getElementById('transcripcion');
-  t.innerHTML = vistaTranscripcion();
+  document.getElementById('transcripcion').innerHTML = vistaTranscripcion();
+
+  // Barra móvil: la última respuesta escrita, no un contador suelto.
   var n = totalRespuestas();
-  document.getElementById('barra').innerHTML =
-    '<span>Tu entrevista · <b>' + n + ' respuesta' + (n === 1 ? '' : 's') + '</b></span>' +
-    '<button type="button" data-accion="abrir-panel">Ver</button>';
+  var u = est.ultima && pregunta(est.ultima), uo = u && opElegida(u);
+  var barra = document.getElementById('barra');
+  barra.innerHTML = (uo
+      ? '<span class="barra-ultima"><i>R.</i>' + esc(uo.t) + '</span>'
+      : '<span class="barra-ultima barra-ultima--vacia">Aquí se va escribiendo tu entrevista</span>') +
+    (n ? '<button type="button" data-accion="abrir-panel">' + (n === 1 ? 'Ver' : 'Ver las ' + n) + '</button>' : '');
+  barra.classList.toggle('llega', !!ultimoId);
+
   document.getElementById('folio').textContent = folio;
   window.scrollTo({ top: 0, behavior: 'instant' });
   ultimoId = null;
 }
 
 function siguientePregunta() {
-  var qs = visibles(cap(est.cap));
+  var qs = navegables(cap(est.cap));
   if (est.qi + 1 < qs.length) { est.qi++; return; }
   if (est.hechos.indexOf(est.cap) === -1) est.hechos.push(est.cap);
   est.fase = 'fincap';
@@ -807,15 +952,19 @@ function accion(a, v) {
     if (est.visitados.indexOf(v) === -1) est.visitados.push(v);
   } else if (a === 'responder') {
     guardar();
-    var q = visibles(cap(est.cap))[est.qi];
+    var q = navegables(cap(est.cap))[est.qi];
     est.resp[q.id] = Number(v);
-    ultimoId = q.id;
+    ultimoId = q.id; est.ultima = q.id;
     siguientePregunta();
+  } else if (a === 'gancho') {
+    guardar();
+    est.resp.aprieta = Number(v); est.gancho = true;
+    ultimoId = 'aprieta'; est.ultima = 'aprieta';
   } else if (a === 'cerrar-entrevista') {
     guardar(); cerrarEntrevista();
   } else if (a === 'antecedente') {
     guardar();
-    est.resp.antecedente = Number(v); ultimoId = 'antecedente';
+    est.resp.antecedente = Number(v); ultimoId = 'antecedente'; est.ultima = 'antecedente';
     est.fase = est.hechos.length > 1 ? 'prioridad' : 'nombre';
   } else if (a === 'prioridad') {
     guardar();
@@ -832,7 +981,7 @@ function accion(a, v) {
     guardar(); est.fase = 'indice';
   } else if (a === 'reiniciar') {
     hist = [];
-    est = { fase: 'indice', cap: null, qi: 0, resp: {}, visitados: [], hechos: [], prio: null, nombre: '' };
+    est = estadoInicial();
   } else if (a === 'abrir-panel') {
     document.getElementById('transcripcion').classList.add('abierta'); return;
   } else if (a === 'cerrar-panel') {
@@ -851,16 +1000,22 @@ function accion(a, v) {
   render();
 }
 
+// El cronómetro va al ritmo de la línea que respira: 4 s inhalar, 4 s exhalar.
 function iniciarCrono() {
-  var q = visibles(cap(est.cap))[est.qi], s = q.prueba;
+  var q = navegables(cap(est.cap))[est.qi], total = q.prueba, s = total;
   var num = document.getElementById('crono'), txt = document.getElementById('crono-texto');
-  var btn = document.getElementById('prueba-btn');
+  var fase = document.getElementById('crono-fase'), btn = document.getElementById('prueba-btn');
   if (!num) return;
   btn.hidden = true;
-  num.textContent = s;
+  txt.textContent = '';
+  var pinta = function () {
+    num.textContent = s > 0 ? s : '';
+    fase.textContent = s > 0 ? (((total - s) % 8) < 4 ? 'inhala…' : 'exhala…') : '';
+  };
+  pinta();
   reloj = setInterval(function () {
     s--;
-    num.textContent = s > 0 ? s : '';
+    pinta();
     if (s <= 0) {
       clearInterval(reloj); reloj = null;
       txt.textContent = 'Listo. ¿Cómo te fue?';
@@ -868,10 +1023,56 @@ function iniciarCrono() {
   }, 1000);
 }
 
+// Al contestar, la respuesta viaja hacia la entrevista antes de que
+// llegue la siguiente pregunta. En escritorio va a la columna; en el
+// teléfono, a la barra de abajo.
+function volar(boton, despues) {
+  var texto = boton.querySelector('.r-texto');
+  var ancho = window.innerWidth >= 960;
+  var destino = ancho ? document.getElementById('transcripcion') : document.getElementById('barra');
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quieto || !texto || !destino) return despues();
+
+  boton.setAttribute('aria-pressed', 'true');
+  var a = texto.getBoundingClientRect(), d = destino.getBoundingClientRect();
+  var copia = document.createElement('span');
+  copia.className = 'vuela';
+  copia.textContent = texto.textContent;
+  copia.style.left = a.left + 'px';
+  copia.style.top = a.top + 'px';
+  copia.style.width = a.width + 'px';
+  copia.style.fontSize = getComputedStyle(texto).fontSize;
+  document.body.appendChild(copia);
+
+  var x, y;
+  if (ancho) {
+    var ultimo = destino.lastElementChild;
+    var fondo = ultimo ? ultimo.getBoundingClientRect().bottom : d.top + 40;
+    x = d.left + 32 - a.left;
+    y = Math.min(fondo + 12, window.innerHeight - 60) - a.top;
+  } else {
+    x = 22 - a.left;
+    y = d.top + 12 - a.top;
+  }
+  ocupado = true;
+  requestAnimationFrame(function () {
+    copia.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(.66)';
+    copia.style.opacity = '0.25';
+  });
+  setTimeout(function () {
+    copia.remove();
+    ocupado = false;
+    despues();
+  }, 450);
+}
+
+var VUELAN = { responder: 1, gancho: 1, antecedente: 1 };
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-accion]');
-  if (!b) return;
-  accion(b.dataset.accion, b.dataset.valor);
+  if (!b || ocupado) return;
+  var a = b.dataset.accion, v = b.dataset.valor;
+  if (VUELAN[a]) return volar(b, function () { accion(a, v); });
+  accion(a, v);
 });
 
 // Teclas 1-9 contestan, como en una entrevista rápida.
