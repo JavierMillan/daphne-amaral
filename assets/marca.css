@@ -1,0 +1,167 @@
+/* ============================================================
+   Dra. Daphne Amaral Alemán — hoja de marca
+   Fuente: design system TSPU2e5nJp3SzqjQ4A5G47
+   Todo color y medida sale de aquí. Nada de hex suelto en la página.
+   ============================================================ */
+
+:root {
+  /* Color — 60% lino, 30% tinta, 10% acentos */
+  --lino: #f7f4ef;
+  --lino-alt: #efeae2;
+  --tinta: #2a2622;
+  --muted: #6b6560;
+  --line: #e4ded4;
+
+  /* Dos acentos con trabajos distintos:
+     marron = firma (identifica) · agua = acción (una por pantalla) */
+  --marron: #73594a;
+  --marron-soft: #d9cabd;
+  --agua: #3a635c;
+  --agua-soft: #dce8e6;
+  --sobre-agua: #ffffff;
+
+  --exito: #3c6649;
+  --error: #a14034;
+  --error-soft: #f4e4e1;
+  --foco: #3a635c;
+
+  --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-6: 24px;  --space-8: 32px;  --space-12: 48px; --space-16: 64px;
+  --space-24: 96px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --ancho: 1080px;
+  --ancho-texto: 680px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --lino: #1c1a17;       --lino-alt: #262320;
+    --tinta: #f2ede4;      --muted: #a69e94;
+    --line: #3a352f;
+    --marron: #c9a98f;     --marron-soft: #4a3c33;
+    --agua: #7fb5ab;       --agua-soft: #2b3b38;
+    --sobre-agua: #1c1a17;
+    --exito: #7fb58e;      --error: #e08a7c;   --error-soft: #3a2320;
+    --foco: #7fb5ab;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --lino: #1c1a17;       --lino-alt: #262320;
+  --tinta: #f2ede4;      --muted: #a69e94;
+  --line: #3a352f;
+  --marron: #c9a98f;     --marron-soft: #4a3c33;
+  --agua: #7fb5ab;       --agua-soft: #2b3b38;
+  --sobre-agua: #1c1a17;
+  --exito: #7fb58e;      --error: #e08a7c;   --error-soft: #3a2320;
+  --foco: #7fb5ab;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--lino);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- Tipografía ---------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: clamp(39px, 6.5vw, 62px); line-height: 1.08; }
+h2 { font-size: clamp(31px, 4.6vw, 44px); line-height: 1.15; }
+h3 { font-size: 25px; line-height: 1.25; font-weight: 400; }
+p { margin: 0; }
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.lead { font-size: clamp(18px, 2.2vw, 21px); line-height: 1.55; color: var(--muted); }
+.texto-largo { max-width: 62ch; }
+
+/* ---------- Lockup ---------- */
+.mono {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--marron);
+}
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 160ms var(--ease), opacity 200ms var(--ease);
+}
+.btn:active { transform: scale(.975); }
+.btn--primario { background: var(--agua); color: var(--sobre-agua); }
+.btn--secundario { background: transparent; color: var(--tinta); border-color: var(--line); }
+@media (hover: hover) {
+  .btn--secundario:hover { border-color: var(--marron); }
+}
+
+/* ---------- Estructura ---------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.seccion { padding-block: var(--space-16); }
+@media (min-width: 768px) { .seccion { padding-block: var(--space-24); } }
+
+.regla { width: 44px; height: 1px; background: var(--marron); border: 0; margin: 0; }
+
+/* ---------- Revelado al entrar en pantalla ---------- */
+/* Parten visibles: si el observador no corre, el contenido igual se lee. */
+.revela { transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+.js .revela { opacity: 0; transform: translateY(14px); }
+.js .revela.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js .revela { opacity: 1; transform: none; transition: none; }
+}

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dra. Daphne Amaral Alemán — Ortodoncia y medicina dental del sueño en Guadalajara</title>
+<meta name="description" content="Ortodoncia, Invisalign y medicina dental del sueño en Guadalajara, colonia Monraz. Tu sonrisa es mucho más que dientes alineados.">
+
+<meta property="og:title" content="Dra. Daphne Amaral Alemán — Ortodoncia">
+<meta property="og:description" content="Ortodoncia, Invisalign y medicina dental del sueño en Guadalajara. Tu sonrisa es mucho más que dientes alineados.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="assets/marca.css">
+
+<style>
+/* ============================================================
+   Landing — Dra. Daphne Amaral Alemán
+   Composición: editorial a una columna, alineada a la izquierda,
+   con el numeral y el hairline como ritmo entre secciones.
+   ============================================================ */
+
+/* ---------- Barra superior ---------- */
+.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: color-mix(in srgb, var(--lino) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 240ms var(--ease);
+}
+.nav--scrolled { border-bottom-color: var(--line); }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--lino);
+  z-index: 21;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 68px;
+}
+.marca { display: flex; align-items: baseline; gap: 9px; text-decoration: none; }
+.marca .mono { font-size: 23px; }
+.marca-txt {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav-links { display: none; gap: var(--space-6); margin-left: auto; }
+@media (min-width: 880px) { .nav-links { display: flex; } }
+.nav-links a {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 180ms var(--ease);
+}
+.nav-links a:hover { color: var(--tinta); }
+.nav .btn { margin-left: auto; padding: 0 20px; min-height: 42px; font-size: 15px; }
+@media (min-width: 880px) { .nav .btn { margin-left: 0; } }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: var(--space-16) var(--space-12); }
+@media (min-width: 768px) { .hero { padding-block: var(--space-24) var(--space-16); } }
+.hero-grid { display: grid; gap: var(--space-12); }
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: 1.15fr .85fr; gap: var(--space-16); align-items: center; }
+}
+.hero h1 { margin-top: var(--space-4); }
+.hero .lead { margin-top: var(--space-6); max-width: 46ch; }
+.hero-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+.credenciales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.credenciales span { display: flex; align-items: center; gap: 6px; }
+.credenciales svg { color: var(--marron); flex: none; }
+
+/* Marco de retrato: hoy es un placeholder tipográfico. */
+.retrato {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-md);
+  background: var(--lino-alt);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  max-width: 420px;
+  width: 100%;
+  justify-self: center;
+}
+.retrato::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.retrato-nota {
+  text-align: center;
+  padding: var(--space-6);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 30ch;
+}
+.retrato-nota strong { display: block; color: var(--marron); font-weight: 500; margin-bottom: 6px; }
+.retrato .mono-grande {
+  font-family: var(--font-display);
+  font-size: 92px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--marron-soft);
+  margin-bottom: var(--space-4);
+}
+
+/* ---------- Encabezado de sección ---------- */
+.sec-cabeza { margin-bottom: var(--space-12); }
+.sec-cabeza .regla { margin: var(--space-3) 0 var(--space-6); }
+.sec-cabeza h2 { max-width: 20ch; }
+.sec-cabeza .lead { margin-top: var(--space-4); max-width: 54ch; }
+
+/* ---------- Enfoque (el diferenciador) ---------- */
+.enfoque { background: var(--lino-alt); }
+.enfoque-cita {
+  font-family: var(--font-display);
+  font-size: clamp(27px, 4vw, 38px);
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+.enfoque-grid { display: grid; gap: var(--space-12); }
+@media (min-width: 860px) {
+  .enfoque-grid { grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; }
+}
+.enfoque-texto { display: grid; gap: var(--space-4); }
+.enfoque-texto p { color: var(--muted); max-width: 54ch; }
+
+/* ---------- Servicios ---------- */
+.servicios-lista {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.servicio {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 760px) {
+  .servicio {
+    grid-template-columns: 56px 1fr 1.2fr;
+    gap: var(--space-6);
+    align-items: baseline;
+    padding-block: var(--space-8);
+  }
+}
+.servicio-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--marron);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.servicio h3 { font-size: 21px; font-weight: 400; }
+.servicio p { color: var(--muted); font-size: 15px; max-width: 50ch; }
+
+/* ---------- Proceso ---------- */
+.pasos { display: grid; gap: var(--space-12); }
+@media (min-width: 820px) { .pasos { grid-template-columns: repeat(3, 1fr); gap: var(--space-8); } }
+.paso .numeral {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--marron);
+  font-variant-numeric: tabular-nums;
+}
+.paso .regla { margin: var(--space-3) 0 var(--space-4); }
+.paso h3 { font-size: 21px; font-weight: 400; margin-bottom: var(--space-2); }
+.paso p { color: var(--muted); font-size: 15px; }
+
+/* ---------- Llamado final ---------- */
+.cierre { text-align: left; }
+.cierre-caja {
+  background: var(--agua-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-12) var(--space-8);
+}
+@media (min-width: 768px) { .cierre-caja { padding: var(--space-16); } }
+.cierre-caja h2 { max-width: 18ch; }
+.cierre-caja .lead { margin-top: var(--space-4); max-width: 48ch; color: var(--tinta); opacity: .78; }
+.cierre-caja .btn { margin-top: var(--space-8); }
+.cierre-nota { font-size: 14px; color: var(--muted); margin-top: var(--space-4); }
+
+/* ---------- Pie ---------- */
+.pie { border-top: 1px solid var(--line); padding-block: var(--space-12); }
+.pie-grid { display: grid; gap: var(--space-8); }
+@media (min-width: 760px) { .pie-grid { grid-template-columns: 1.2fr 1fr 1fr; } }
+.pie h4 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 var(--space-3);
+}
+.pie p, .pie a { font-size: 15px; color: var(--tinta); text-decoration: none; }
+.pie a:hover { color: var(--marron); }
+.pie-datos { display: grid; gap: var(--space-2); }
+.pie-legal {
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* ---------- Aviso de demo ---------- */
+.demo {
+  background: var(--marron-soft);
+  color: var(--tinta);
+  font-size: 13px;
+  line-height: 1.6;
+  padding-block: var(--space-3);
+}
+.demo strong { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="demo">
+  <div class="contenedor">
+    <strong>Demostración.</strong> Sitio de muestra con datos de ejemplo. Los
+    textos legales, el teléfono y las fotografías están pendientes de confirmar.
+  </div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="contenedor nav-inner">
+    <a class="marca" href="#inicio">
+      <span class="mono" aria-hidden="true">DA</span>
+      <span class="marca-txt">Dra. Daphne Amaral</span>
+    </a>
+    <div class="nav-links">
+      <a href="#enfoque">Enfoque</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Cómo trabajamos</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a class="btn btn--primario" href="cuestionario.html">Agendar valoración</a>
+  </div>
+</nav>
+
+<main id="inicio">
+
+  <!-- ---------- Hero ---------- -->
+  <section class="hero">
+    <div class="contenedor hero-grid">
+      <div>
+        <p class="eyebrow">Ortodoncia · Guadalajara</p>
+        <h1>Tu sonrisa es mucho más que dientes alineados.</h1>
+        <p class="lead">
+          Antes de mover un solo diente, entendemos cómo respiras, cómo duermes
+          y cómo mueves la mandíbula. La estética llega después — y llega mejor.
+        </p>
+        <div class="hero-acciones">
+          <a class="btn btn--primario" href="cuestionario.html">Agendar mi primera valoración</a>
+          <a class="btn btn--secundario" href="#enfoque">Conocer el enfoque</a>
+        </div>
+        <div class="credenciales">
+          <span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8.4 6.2 11.6 13 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Ortodoncia UAG
+          </span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8.4 6.2 11.6 13 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Invisalign Doctor
+          </span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8.4 6.2 11.6 13 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Medicina Dental del Sueño
+          </span>
+        </div>
+      </div>
+
+      <div class="retrato revela">
+        <div class="retrato-nota">
+          <span class="mono-grande" aria-hidden="true">DA</span>
+          <strong>Aquí va el retrato</strong>
+          Luz natural suave, ligeramente desaturado, grano fino. Nunca una
+          fotografía clínica en esta posición.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Enfoque ---------- -->
+  <section class="seccion enfoque" id="enfoque">
+    <div class="contenedor">
+      <div class="enfoque-grid">
+        <div class="revela">
+          <p class="eyebrow">El enfoque</p>
+          <hr class="regla" style="margin:var(--space-3) 0 var(--space-6)">
+          <p class="enfoque-cita">
+            Respiras por la boca… ¿y si no fuera solo una costumbre?
+          </p>
+        </div>
+        <div class="enfoque-texto revela">
+          <p>
+            La forma en que respiras mientras duermes deja huella en cómo crecen
+            los maxilares, en cómo encajan los dientes y en cómo amaneces. No es
+            un detalle estético: es la base sobre la que se construye todo lo demás.
+          </p>
+          <p>
+            Por eso la primera cita no empieza con un presupuesto. Empieza con
+            preguntas: cómo duermes, si roncas, si despiertas con la mandíbula
+            tensa, si te cuesta respirar por la nariz.
+          </p>
+          <p>
+            A veces la respuesta es ortodoncia. A veces es trabajar junto con
+            otro especialista. Lo que nunca hacemos es prometer que alinear
+            dientes resuelve un problema respiratorio — eso no sería honesto.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Servicios ---------- -->
+  <section class="seccion" id="servicios">
+    <div class="contenedor">
+      <div class="sec-cabeza revela">
+        <p class="eyebrow">Servicios</p>
+        <hr class="regla">
+        <h2>Lo que podemos revisar juntos</h2>
+        <p class="lead">
+          Puedes llegar con una necesidad concreta o con la duda completa. En el
+          cuestionario eliges las que te suenen y preparamos tu valoración.
+        </p>
+      </div>
+
+      <div class="servicios-lista">
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">01</span>
+          <h3>Invisalign</h3>
+          <p>Alineadores transparentes. Planificación digital del movimiento, sin brackets.</p>
+        </article>
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">02</span>
+          <h3>Ortodoncia convencional</h3>
+          <p>Brackets para alineación y problemas de mordida, cuando es la mejor opción del caso.</p>
+        </article>
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">03</span>
+          <h3>Respiración y sueño</h3>
+          <p>Respiración oral, ronquidos y sueño inquieto. Valoración y, si hace falta, derivación.</p>
+        </article>
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">04</span>
+          <h3>ATM y dolor mandibular</h3>
+          <p>Dolor, chasquidos, bloqueos o dificultad para abrir la boca.</p>
+        </article>
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">05</span>
+          <h3>Ortodoncia infantil</h3>
+          <p>Crecimiento y desarrollo dental. Hábitos orales y maloclusiones a tiempo.</p>
+        </article>
+        <article class="servicio revela">
+          <span class="servicio-num" aria-hidden="true">06</span>
+          <h3>Diseño de sonrisa</h3>
+          <p>Blanqueamiento, resinas y estética dental sobre una base funcional sana.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Proceso ---------- -->
+  <section class="seccion" id="proceso" style="background: var(--lino-alt)">
+    <div class="contenedor">
+      <div class="sec-cabeza revela">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <hr class="regla">
+        <h2>Tres pasos, sin sorpresas</h2>
+      </div>
+      <div class="pasos">
+        <div class="paso revela">
+          <p class="numeral" aria-hidden="true">01</p>
+          <hr class="regla">
+          <h3>Cuestionario</h3>
+          <p>
+            Dos o tres minutos desde tu teléfono. Nos dices qué te trae y qué
+            has notado. No es historia clínica: eso lo vemos en persona.
+          </p>
+        </div>
+        <div class="paso revela">
+          <p class="numeral" aria-hidden="true">02</p>
+          <hr class="regla">
+          <h3>Valoración</h3>
+          <p>
+            Revisión completa en consultorio. Salimos de ahí con un diagnóstico
+            claro y las alternativas reales para tu caso, con sus costos.
+          </p>
+        </div>
+        <div class="paso revela">
+          <p class="numeral" aria-hidden="true">03</p>
+          <hr class="regla">
+          <h3>Tratamiento</h3>
+          <p>
+            Empezamos cuando tú decides, sabiendo cuánto dura, qué implica y
+            qué resultado esperar. Nada arranca sin que lo entiendas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Cierre ---------- -->
+  <section class="seccion cierre" id="contacto">
+    <div class="contenedor">
+      <div class="cierre-caja revela">
+        <h2>Empecemos por entender tu caso.</h2>
+        <p class="lead">
+          Contesta el cuestionario y llegamos a tu primera cita sabiendo qué
+          revisar. Es gratis, no compromete a nada, y se hace en lo que esperas el café.
+        </p>
+        <a class="btn btn--primario" href="cuestionario.html">Agendar mi primera valoración</a>
+        <p class="cierre-nota">Toma 2–3 minutos · Sin compromiso</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie-grid">
+      <div>
+        <a class="marca" href="#inicio" style="margin-bottom: var(--space-3)">
+          <span class="mono" aria-hidden="true">DA</span>
+          <span class="marca-txt">Dra. Daphne Amaral Alemán</span>
+        </a>
+        <p style="color: var(--muted); font-size: 14px; max-width: 32ch">
+          Ortodoncia, Invisalign y medicina dental del sueño.
+        </p>
+      </div>
+      <div>
+        <h4>Consultorio</h4>
+        <div class="pie-datos">
+          <p>Colonia Monraz<br>Guadalajara, Jalisco</p>
+          <p style="color: var(--muted); font-size: 14px">Dirección completa por confirmar</p>
+        </div>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <div class="pie-datos">
+          <a href="https://www.instagram.com/dra_daphneamaral/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.doctoralia.com.mx/z/DCQc1K" target="_blank" rel="noopener noreferrer">Doctoralia</a>
+          <p style="color: var(--muted); font-size: 14px">Teléfono por confirmar</p>
+        </div>
+      </div>
+    </div>
+    <div class="pie-legal">
+      <p>Este sitio es informativo y no sustituye una valoración profesional. No emitimos diagnósticos en línea.</p>
+      <p>Pendiente: aviso de privacidad conforme a la LFPDPPP · Cédula profesional</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Solo con JS activo se ocultan las secciones para revelarlas al entrar.
+document.documentElement.classList.add('js');
+
+(function () {
+  var nav = document.getElementById('nav');
+  var reveals = document.querySelectorAll('.revela');
+
+  // Hairline de la barra solo cuando ya se bajó.
+  var marcarNav = function () {
+    nav.classList.toggle('nav--scrolled', window.scrollY > 8);
+  };
+  marcarNav();
+  addEventListener('scroll', marcarNav, { passive: true });
+
+  // Sin IntersectionObserver, todo queda visible.
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('visible'); });
+    return;
+  }
+  var obs = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+  reveals.forEach(function (el, i) {
+    el.style.transitionDelay = (i % 3) * 70 + 'ms';
+    obs.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
