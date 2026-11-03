@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ficha previa — Dra. Daphne Amaral Alemán</title>
+<meta name="description" content="Marca lo que reconozcas. Al terminar se arma tu ficha y la mandas. Ortodoncia y medicina dental del sueño, Guadalajara.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap">
+
+<style>
+/* ============================================================
+   Ficha previa — Dra. Daphne Amaral
+   Referencia de sistema: 19-86.fr (archivo arquitectónico).
+   Filas con hairline, folios, cero sombras, cero radios.
+   Lo que se lee va en columna; lo que se marca va en filas.
+   Nunca se mezclan en la misma línea.
+   Contrastes verificados: todos AA o AAA sobre blanco.
+   ============================================================ */
+:root {
+  --papel: #ffffff;
+  --tinta: #191714;        /* 17.89:1 AAA */
+  --gris: #55504a;         /*  7.98:1 AAA */
+  --rotulo: #6b655d;       /*  5.76:1 AA  — versalitas 11px */
+  --firma: #6b5244;        /*  7.20:1 AAA — folios, marca */
+  --accion: #1f5e52;       /*  7.55:1 AAA */
+  --accion-fondo: #17483f;
+  --alarma: #962f20;       /*  7.71:1 AAA */
+  --linea: #d8d3cb;        /*  divisor, nunca texto */
+  --linea-fina: #ebe7e1;
+  --marcada: #f2f6f4;      /*  fila marcada */
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Reset explícito de todo control: el navegador no decide por mí. */
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+:focus-visible { outline: 2px solid var(--accion); outline-offset: 2px; }
+
+.marco {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-left: max(22px, env(safe-area-inset-left, 0px));
+  padding-right: max(22px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Encabezado tipo expediente ---------- */
+.cabecera {
+  border-bottom: 1px solid var(--tinta);
+  padding-block: 18px 14px;
+}
+.cabecera-fila {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rotulo);
+}
+.cabecera-fila a { color: var(--firma); text-decoration: none; }
+.folio-exp { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--tinta); }
+
+/* ---------- Portada ---------- */
+.intro { padding-block: clamp(42px, 7vw, 86px) clamp(30px, 4vw, 48px); }
+.intro h1 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(38px, 6.6vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -0.026em;
+  margin: 0;
+  max-width: 16ch;
+}
+.intro p {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.58;
+  color: var(--gris);
+  max-width: 50ch;
+  margin: 24px 0 0;
+}
+
+/* ============================================================
+   SECCIÓN — cada bloque tiene estructura propia
+   ============================================================ */
+.seccion { border-top: 1px solid var(--tinta); padding-block: clamp(34px, 5vw, 62px); }
+
+.seccion-cabeza {
+  display: grid;
+  gap: 6px 26px;
+  margin-bottom: clamp(24px, 3.4vw, 40px);
+}
+@media (min-width: 820px) {
+  .seccion-cabeza { grid-template-columns: 72px 1fr auto; align-items: baseline; }
+}
+.seccion-folio {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--firma);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.seccion-titulo {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(29px, 4.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.seccion-eje {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rotulo);
+}
+.seccion-nota {
+  grid-column: 1 / -1;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
+  max-width: 62ch;
+  margin: 4px 0 0;
+}
+@media (min-width: 820px) { .seccion-nota { grid-column: 2 / 3; } }
+
+/* ---------- Filas de hallazgo ---------- */
+.hallazgos { border-top: 1px solid var(--linea); }
+
+.hallazgo {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  gap: 14px;
+  align-items: start;
+  width: 100%;
+  padding-block: 15px;
+  border-bottom: 1px solid var(--linea-fina);
+  transition: background-color 220ms var(--ease), padding-left 260ms var(--ease);
+}
+@media (min-width: 820px) {
+  .hallazgo { grid-template-columns: 54px 1fr 150px auto; gap: 20px; padding-block: 17px; }
+}
+@media (hover: hover) {
+  .hallazgo:hover { background: var(--linea-fina); }
+}
+.hallazgo[aria-pressed="true"] { background: var(--marcada); }
+
+/* La casilla: cuadro de 1px, nunca checkbox nativo */
+.casilla {
+  width: 19px; height: 19px;
+  border: 1px solid var(--gris);
+  margin-top: 3px;
+  display: grid;
+  place-items: center;
+  transition: border-color 200ms var(--ease), background-color 200ms var(--ease);
+}
+.hallazgo[aria-pressed="true"] .casilla {
+  border-color: var(--accion);
+  background: var(--accion);
+}
+.casilla svg { opacity: 0; transition: opacity 180ms var(--ease); }
+.hallazgo[aria-pressed="true"] .casilla svg { opacity: 1; }
+
+.hallazgo-texto {
+  font-family: var(--display);
+  font-size: clamp(19px, 2.3vw, 25px);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+.hallazgo-detalle {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--gris);
+  margin-top: 4px;
+  max-width: 54ch;
+}
+.hallazgo-meta {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rotulo);
+  padding-top: 5px;
+}
+.hallazgo-meta--alarma { color: var(--alarma); }
+.hallazgo-folio {
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--rotulo);
+  font-variant-numeric: tabular-nums;
+  padding-top: 6px;
+  display: none;
+}
+@media (min-width: 820px) { .hallazgo-folio { display: block; } }
+
+/* ---------- El vínculo entre ejes ---------- */
+/* Aparece cuando hay marcas; describe un patrón, nunca una causa. */
+.vinculo {
+  margin-top: 22px;
+  padding: 16px 18px 16px 17px;
+  border-left: 3px solid var(--firma);
+  background: var(--linea-fina);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tinta);
+  max-width: 64ch;
+}
+.vinculo-rotulo {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--firma);
+  margin-bottom: 5px;
+}
+.vinculo button {
+  color: var(--accion);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 400;
+}
+
+/* ---------- Pie de muestra ---------- */
+.muestra {
+  border-top: 1px solid var(--tinta);
+  padding-block: clamp(34px, 5vw, 60px);
+}
+.muestra h2 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+.muestra > .marco > p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* El recado: papel dentro del papel, con hairline */
+.recado {
+  margin-top: 26px;
+  border: 1px solid var(--tinta);
+  max-width: 620px;
+}
+.recado-cabeza {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rotulo);
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--linea);
+}
+.recado-cuerpo {
+  padding: 18px;
+  font-size: 15px;
+  line-height: 1.68;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.recado-vacio { color: var(--gris); font-style: italic; }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 13px; align-items: center; margin-top: 24px; }
+.enviar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 30px;
+  background: var(--accion);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 220ms var(--ease), transform 170ms var(--ease);
+}
+.enviar:active { transform: scale(.985); }
+@media (hover: hover) { .enviar:hover { background: var(--accion-fondo); } }
+.enviar[aria-disabled="true"] {
+  background: var(--linea);
+  color: var(--gris);
+  pointer-events: none;
+}
+.limpiar {
+  font-size: 15px;
+  color: var(--gris);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--linea);
+  padding: 8px 4px;
+}
+@media (hover: hover) { .limpiar:hover { color: var(--tinta); } }
+
+.pendiente-clinico {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--linea);
+  font-size: 13px;
+  line-height: 1.62;
+  color: var(--gris);
+  max-width: 64ch;
+}
+.pendiente-clinico strong { color: var(--alarma); font-weight: 500; }
+
+.pie {
+  border-top: 1px solid var(--linea);
+  padding-block: 22px 34px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--rotulo);
+}
+.pie a { color: var(--firma); }
+
+.banda {
+  background: var(--tinta);
+  color: #fff;
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding-block: 10px;
+}
+.banda strong { font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="banda"><div class="marco">
+  <strong>Muestra.</strong> Solo está construida la sección I de cuatro. El mensaje llega a un número de prueba.
+</div></div>
+
+<div class="marco">
+  <header class="cabecera">
+    <div class="cabecera-fila">
+      <a href="index.html">Dra. Daphne Amaral Alemán</a>
+      <span>Ortodoncia · Medicina dental del sueño</span>
+      <span class="folio-exp" id="folio">DA-0000</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <h1>Marca lo que reconozcas.</h1>
+    <p>No hace falta que sepas el nombre de lo que tienes. Marca lo que te suene
+      y al final se arma una ficha que la doctora puede leer en segundos.</p>
+  </section>
+</div>
+
+<main id="app"></main>
+
+<div class="marco">
+  <footer class="pie">
+    <p>Esto no sustituye una valoración y aquí no damos diagnósticos.
+      <a href="index.html">Ir al sitio</a></p>
+  </footer>
+</div>
+
+<script>
+// ---------------------------------------------------------------
+// Dos ejes clínicos. Respiro+Duermo = vía aérea.
+// Muerdo+Se ven = función y oclusión.
+// En esta muestra solo va la sección I completa.
+// ---------------------------------------------------------------
+var SECCIONES = [
+  {
+    id: 'respiro',
+    folio: 'I',
+    titulo: 'Cómo respiro',
+    eje: 'Vía aérea',
+    nota: 'La boca abierta al dormir reseca las encías, cambia dónde descansa la lengua e influye en cómo crecen los maxilares. Conviene revisarlo antes de mover un solo diente.',
+    hallazgos: [
+      { id: 'boca-seca', texto: 'Duermo con la boca abierta',
+        detalle: 'Amaneces con la boca seca o los labios partidos.' },
+      { id: 'encias', texto: 'Mis encías se inflaman o sangran',
+        detalle: 'Sobre todo por la mañana, sin que haya cambiado tu cepillado.' },
+      { id: 'nariz-tapada', texto: 'Casi nunca respiro bien por la nariz',
+        detalle: 'Congestión que no se va, o que solo cede de un lado.' },
+      { id: 'nariz-acostado', texto: 'Se me tapa la nariz al acostarme',
+        detalle: 'Durante el día respiras bien; al acostarte, no.' },
+      { id: 'hijo-boca', texto: 'A mi hijo le pasa',
+        detalle: 'Duerme con la boca abierta o respira por la boca al jugar.',
+        meta: 'Infantil' }
+    ],
+    // El vínculo: patrón observado, nunca mecanismo causal.
+    vinculo: {
+      cuando: ['boca-seca', 'nariz-tapada', 'nariz-acostado'],
+      texto: 'Quienes marcan algo de esta sección suelen marcar también ronquidos o despertar cansado. Son el mismo eje: cómo entra el aire mientras duermes.',
+      lleva: 'duermo',
+      llevaTexto: 'Ver la sección de sueño'
+    }
+  },
+  {
+    id: 'duermo',
+    folio: 'II',
+    titulo: 'Cómo duermo',
+    eje: 'Vía aérea',
+    nota: 'Dormir las horas y amanecer sin energía suele significar que el descanso se interrumpe sin que te enteres. Parte de eso se alcanza a ver desde la boca.',
+    hallazgos: [
+      { id: 'ronco', texto: 'Ronco',
+        detalle: 'Te lo han dicho, aunque tú no lo oigas.' },
+      { id: 'pausas', texto: 'Me dicen que dejo de respirar por momentos',
+        detalle: 'Alguien que duerme cerca lo ha notado.',
+        meta: 'Atención pronta', alarma: true },
+      { id: 'mandibula', texto: 'Despierto con la mandíbula tensa',
+        detalle: 'Como si hubieras apretado los dientes toda la noche.' },
+      { id: 'cansado', texto: 'Duermo completo y despierto cansado',
+        detalle: 'Las horas están; el descanso no.' },
+      { id: 'hijo-ronca', texto: 'Mi hijo ronca',
+        detalle: 'Se oye desde otro cuarto o duerme inquieto.',
+        meta: 'Infantil' }
+    ]
+  }
+];
+
+// Secciones III y IV: pendientes de construir en la muestra.
+var PENDIENTES = [
+  { folio: 'III', titulo: 'Cómo muerdo', eje: 'Función y oclusión' },
+  { folio: 'IV', titulo: 'Cómo se ven mis dientes', eje: 'Función y oclusión' }
+];
+
+var ANTECEDENTES = [
+  { id: 'ninguno', texto: 'Nunca he usado ortodoncia' },
+  { id: 'brackets', texto: 'Usé brackets' },
+  { id: 'alineadores', texto: 'Usé alineadores' },
+  { id: 'en-curso', texto: 'Estoy en tratamiento ahora' },
+  { id: 'recaida', texto: 'Usé ortodoncia y los dientes se volvieron a mover' }
+];
+
+var WHATSAPP = '526221424577';     // demo
+var APPS_SCRIPT_URL = '';          // vacío = solo WhatsApp (patrón de iNode)
+var TOPE = 5;                      // marcar más de 5 deja de ser una ficha
+
+var marcados = [];   // ids de hallazgo, en orden de marcado
+var prioridad = '';  // id del hallazgo elegido como "empezar por"
+var antecedente = '';
+var folio = 'DA-' + Math.random().toString(16).slice(2, 6).toUpperCase();
+
+function todos() {
+  return SECCIONES.reduce(function (a, s) { return a.concat(s.hallazgos); }, []);
+}
+function buscar(id) {
+  return todos().filter(function (h) { return h.id === id; })[0];
+}
+function seccionDe(id) {
+  return SECCIONES.filter(function (s) {
+    return s.hallazgos.some(function (h) { return h.id === id; });
+  })[0];
+}
+function hayAlarma() {
+  return marcados.some(function (id) { return (buscar(id) || {}).alarma; });
+}
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
+
+// ---------------------------------------------------------------
+// El recado: cuatro líneas que la doctora lee en segundos.
+// ---------------------------------------------------------------
+function recado() {
+  if (!marcados.length) return '';
+  var pri = prioridad && buscar(prioridad);
+  var resto = marcados.filter(function (id) { return id !== prioridad; });
+
+  var l = ['Ficha ' + folio, ''];
+  if (pri) {
+    l.push('EMPEZAR POR: ' + pri.texto.toLowerCase());
+    if (resto.length) {
+      l.push('DESPUÉS: ' + resto.map(function (id) {
+        return buscar(id).texto.toLowerCase();
+      }).join('; '));
+    }
+  } else {
+    l.push('ME INTERESA: ' + marcados.map(function (id) {
+      return buscar(id).texto.toLowerCase();
+    }).join('; '));
+  }
+
+  if (antecedente) {
+    l.push('ANTECEDENTE: ' + ANTECEDENTES.filter(function (a) {
+      return a.id === antecedente;
+    })[0].texto.toLowerCase());
+  }
+
+  // Los ejes que tocó: le dicen a la doctora de qué tipo es el caso.
+  var ejes = [];
+  marcados.forEach(function (id) {
+    var s = seccionDe(id);
+    if (s && ejes.indexOf(s.eje) === -1) ejes.push(s.eje);
+  });
+  if (ejes.length) l.push('EJE: ' + ejes.join(' + '));
+
+  if (hayAlarma()) l.push('', 'MARCA DE ATENCIÓN: sí. Entiendo que conviene verlo pronto.');
+
+  l.push('', 'Me gustaría agendar una valoración.');
+  return l.join('\n');
+}
+
+// ---------------------------------------------------------------
+// Vistas
+// ---------------------------------------------------------------
+var PALOMA = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">' +
+  '<path d="M2 6.2 4.6 8.8 10 3.2" stroke="#fff" stroke-width="1.6" ' +
+  'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function filaHallazgo(h) {
+  var on = marcados.indexOf(h.id) !== -1;
+  var lleno = marcados.length >= TOPE && !on;
+  return '<button type="button" class="hallazgo" aria-pressed="' + on + '"' +
+    (lleno ? ' disabled' : '') +
+    ' data-accion="marcar" data-valor="' + h.id + '">' +
+    '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>' +
+    '<span>' +
+      '<span class="hallazgo-texto">' + esc(h.texto) + '</span>' +
+      '<span class="hallazgo-detalle">' + esc(h.detalle) + '</span>' +
+    '</span>' +
+    '<span class="hallazgo-meta' + (h.alarma ? ' hallazgo-meta--alarma' : '') + '">' +
+      (h.meta ? esc(h.meta) : '') + '</span>' +
+    '<span class="hallazgo-folio">' + esc(h.folio || '') + '</span>' +
+    '</button>';
+}
+
+function seccion(s) {
+  var html = '<section class="seccion" id="sec-' + s.id + '"><div class="marco">' +
+    '<div class="seccion-cabeza">' +
+    '<span class="seccion-folio">' + esc(s.folio) + '</span>' +
+    '<h2 class="seccion-titulo">' + esc(s.titulo) + '</h2>' +
+    '<span class="seccion-eje">' + esc(s.eje) + '</span>' +
+    '<p class="seccion-nota">' + esc(s.nota) + '</p>' +
+    '</div>' +
+    '<div class="hallazgos">' +
+    s.hallazgos.map(function (h, i) {
+      h.folio = s.folio + '.' + (i + 1);
+      return filaHallazgo(h);
+    }).join('') +
+    '</div>';
+
+  // El vínculo solo aparece si marcó algo que lo dispara.
+  if (s.vinculo && s.vinculo.cuando.some(function (id) { return marcados.indexOf(id) !== -1; })) {
+    html += '<p class="vinculo">' +
+      '<span class="vinculo-rotulo">Suele venir acompañado</span>' +
+      esc(s.vinculo.texto) + ' ' +
+      '<button type="button" data-accion="ir" data-valor="' + s.vinculo.lleva + '">' +
+      esc(s.vinculo.llevaTexto) + '</button>' +
+      '</p>';
+  }
+  return html + '</div></section>';
+}
+
+function seccionPendiente(p) {
+  return '<section class="seccion"><div class="marco">' +
+    '<div class="seccion-cabeza" style="opacity:.5">' +
+    '<span class="seccion-folio">' + esc(p.folio) + '</span>' +
+    '<h2 class="seccion-titulo">' + esc(p.titulo) + '</h2>' +
+    '<span class="seccion-eje">' + esc(p.eje) + '</span>' +
+    '<p class="seccion-nota">Pendiente de construir en esta muestra.</p>' +
+    '</div></div></section>';
+}
+
+function bloquePrioridad() {
+  if (marcados.length < 2) return '';
+  return '<div style="margin-top:26px">' +
+    '<p class="seccion-eje" style="margin:0 0 10px">¿Por cuál empezamos?</p>' +
+    '<div class="hallazgos" style="border-top:1px solid var(--linea)">' +
+    marcados.map(function (id) {
+      var h = buscar(id), on = prioridad === id;
+      return '<button type="button" class="hallazgo" aria-pressed="' + on + '" ' +
+        'data-accion="prioridad" data-valor="' + id + '">' +
+        '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>' +
+        '<span><span class="hallazgo-texto">' + esc(h.texto) + '</span></span>' +
+        '<span class="hallazgo-meta"></span><span class="hallazgo-folio"></span>' +
+        '</button>';
+    }).join('') +
+    '</div></div>';
+}
+
+function bloqueAntecedente() {
+  if (!marcados.length) return '';
+  return '<div style="margin-top:26px">' +
+    '<p class="seccion-eje" style="margin:0 0 10px">¿Ya te habían tratado antes?</p>' +
+    '<div class="hallazgos" style="border-top:1px solid var(--linea)">' +
+    ANTECEDENTES.map(function (a) {
+      var on = antecedente === a.id;
+      return '<button type="button" class="hallazgo" aria-pressed="' + on + '" ' +
+        'data-accion="antecedente" data-valor="' + a.id + '">' +
+        '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>' +
+        '<span><span class="hallazgo-texto">' + esc(a.texto) + '</span></span>' +
+        '<span class="hallazgo-meta"></span><span class="hallazgo-folio"></span>' +
+        '</button>';
+    }).join('') +
+    '</div></div>';
+}
+
+function render() {
+  var out = SECCIONES.map(seccion).join('') + PENDIENTES.map(seccionPendiente).join('');
+  var txt = recado();
+
+  out += '<section class="muestra"><div class="marco">' +
+    '<h2>Tu ficha</h2>' +
+    '<p>Esto es lo que recibe la doctora. Con esto decide cuánto tiempo apartar, ' +
+    'qué estudio pedirte y qué tan pronto verte.</p>' +
+    bloquePrioridad() +
+    bloqueAntecedente() +
+    '<div class="recado">' +
+    '<p class="recado-cabeza">Lo que se envía</p>' +
+    '<p class="recado-cuerpo' + (txt ? '' : ' recado-vacio') + '">' +
+    (txt ? esc(txt) : 'Marca al menos un hallazgo y aquí aparece tu ficha.') +
+    '</p></div>' +
+    '<div class="acciones">' +
+    (txt
+      ? '<a class="enviar" href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt) + '" ' +
+        'target="_blank" rel="noopener noreferrer">' +
+        '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+        '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
+        'Mandar mi ficha</a>'
+      : '<span class="enviar" aria-disabled="true">Mandar mi ficha</span>') +
+    (marcados.length ? '<button type="button" class="limpiar" data-accion="limpiar">empezar de nuevo</button>' : '') +
+    '</div>' +
+    (marcados.length >= TOPE
+      ? '<p class="pendiente-clinico">Llegaste al máximo de ' + TOPE + ' hallazgos. ' +
+        'Es a propósito: una ficha con todo marcado deja de ayudar a priorizar.</p>'
+      : '') +
+    '<p class="pendiente-clinico"><strong>Pendiente clínico.</strong> ' +
+    'Qué hallazgos llevan marca de atención pronta, y cómo se redactan los vínculos ' +
+    'entre secciones, lo define la Dra. Lo de aquí es una hipótesis de trabajo.</p>' +
+    '</div></section>';
+
+  document.getElementById('app').innerHTML = out;
+  document.getElementById('folio').textContent = folio;
+}
+
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('[data-accion]');
+  if (!b) return;
+  var a = b.dataset.accion, v = b.dataset.valor;
+
+  if (a === 'marcar') {
+    var i = marcados.indexOf(v);
+    if (i !== -1) {
+      marcados.splice(i, 1);
+      if (prioridad === v) prioridad = '';
+    } else if (marcados.length < TOPE) {
+      marcados.push(v);
+    }
+  } else if (a === 'prioridad') {
+    prioridad = prioridad === v ? '' : v;
+  } else if (a === 'antecedente') {
+    antecedente = antecedente === v ? '' : v;
+  } else if (a === 'limpiar') {
+    marcados = []; prioridad = ''; antecedente = '';
+  } else if (a === 'ir') {
+    var el = document.getElementById('sec-' + v);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  } else return;
+
+  // Conserva la posición: marcar no debe mover la página.
+  var y = window.scrollY;
+  render();
+  window.scrollTo({ top: y, behavior: 'instant' });
+});
+
+render();
+</script>
+
+</body>
+</html>
