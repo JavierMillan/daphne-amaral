@@ -4,369 +4,445 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Con·sulta — Dra. Daphne Amaral Alemán</title>
-<meta name="description" content="Empieza por lo que notas y llega a lo que lo explica. Ortodoncia y medicina dental del sueño en Guadalajara.">
+<meta name="description" content="Baja de lo que notas a lo que lo explica. Ortodoncia y medicina dental del sueño en Guadalajara.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="assets/marca.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
 
 <style>
 /* ============================================================
-   Con·sulta — revista editorial
-   Dirección B: 50% editorial de revista / 35% minimalismo premium
-                / 15% déco
-   Estructura: retícula de celdas desiguales con costuras de 1px.
-   Sin radios, sin sombras, sin tarjetas. La tipografía es el evento.
+   Con·sulta — descenso editorial
+   La idea: la página BAJA. Cada elección te deja un piso más
+   abajo; lo que ya elegiste queda arriba, encogido, legible.
+   El blanco es el material; el color aparece una sola vez, al
+   fondo, donde está la decisión.
    ============================================================ */
+:root {
+  /* Base: blanco clínico cálido. Lo clínico es el blanco, no el gris. */
+  --papel: #ffffff;
+  --papel-hueso: #fcfbf9;      /* solo para el piso activo */
+  --tinta: #1c1a18;            /* 16.4:1 sobre blanco */
+  --gris: #5e5852;             /* 6.6:1 — secundario */
+  --gris-claro: #767068;       /* 4.9:1 — rótulos chicos en versalitas */
+  --linea: #e8e4de;
+  --linea-fuerte: #1c1a18;
 
-body { overflow-x: hidden; }
+  /* Firma: el marrón del monograma. Identifica, no acciona. */
+  --firma: #6e5546;            /* 6.9:1 sobre blanco */
 
-/* ---------- Cabecera de publicación ---------- */
-.masthead {
-  border-bottom: 1px solid var(--tinta);
-  padding-block: var(--space-4);
+  /* Acción: verde quirófano. 7.55:1 sobre blanco = AAA.
+     Aparece UNA vez por pantalla, siempre al final del descenso. */
+  --accion: #1f5e52;
+  --accion-hover: #17483f;
+  --accion-tenue: #eef4f2;
+
+  --alarma: #9a3324;           /* 7.4:1 sobre blanco */
+  --alarma-tenue: #fbf0ee;
+
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
 }
-.masthead-inner {
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+:focus-visible { outline: 2px solid var(--accion); outline-offset: 3px; }
+
+.marco {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(22px, env(safe-area-inset-left, 0px));
+  padding-right: max(22px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Cabecera ---------- */
+.cabecera {
   display: flex;
   align-items: baseline;
-  gap: var(--space-4);
+  gap: 14px;
+  padding-block: 20px;
   flex-wrap: wrap;
 }
-.cabecera-marca {
-  font-family: var(--font-display);
-  font-size: 23px;
+.titulo-pub {
+  font-family: var(--display);
+  font-size: 21px;
   font-weight: 400;
-  color: var(--marron);
+  color: var(--firma);
   text-decoration: none;
   line-height: 1;
+  letter-spacing: 0.01em;
 }
-.folio {
+.sello {
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--gris-claro);
   margin-left: auto;
-  font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Portada ---------- */
-.portada { padding-block: var(--space-12) var(--space-8); }
-.portada h1 {
-  font-size: clamp(42px, 9vw, 86px);
-  line-height: .94;
-  letter-spacing: -0.02em;
-  max-width: 13ch;
+/* ============================================================
+   EL DESCENSO
+   Cada piso es una banda horizontal. El piso resuelto se
+   comprime a una línea; el activo ocupa el alto que necesita.
+   ============================================================ */
+.piso {
+  border-top: 1px solid var(--linea);
+  transition: background-color 420ms var(--ease);
 }
-.portada h1 em {
-  font-style: italic;
-  font-weight: 300;
-  color: var(--marron);
-}
-.portada .bajada {
-  font-size: clamp(17px, 2.4vw, 20px);
-  font-weight: 300;
-  line-height: 1.5;
-  color: var(--muted);
-  max-width: 44ch;
-  margin-top: var(--space-6);
-}
-.sumario {
+.piso:first-of-type { border-top: 1px solid var(--linea-fuerte); }
+
+/* --- Piso resuelto: una sola línea, releíble, reversible --- */
+.resuelto {
   display: flex;
-  gap: var(--space-4);
   align-items: baseline;
-  margin-top: var(--space-8);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--line);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ---------- La retícula ---------- */
-/* Costuras: un fondo de línea que los hijos tapan. Así la celda
-   se ve separada sin que nadie lleve borde propio. */
-.reticula {
-  display: grid;
-  gap: 1px;
-  background: var(--line);
-  border-block: 1px solid var(--line);
-  grid-template-columns: 1fr;
-}
-@media (min-width: 680px) { .reticula { grid-template-columns: repeat(6, 1fr); } }
-
-.celda {
-  background: var(--lino);
+  gap: 16px;
+  padding-block: 15px;
+  cursor: pointer;
+  background: none;
   border: 0;
+  width: 100%;
   text-align: left;
   font-family: inherit;
   color: inherit;
-  padding: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  cursor: pointer;
-  position: relative;
-  transition: background-color 260ms var(--ease);
-  min-height: 150px;
+  transition: opacity 300ms var(--ease);
 }
-@media (min-width: 680px) {
-  .celda { padding: var(--space-8); min-height: 210px; }
-  /* Tamaños desiguales: portada de revista, no tabla. */
-  .celda--grande { grid-column: span 4; }
-  .celda--media  { grid-column: span 2; }
-  .celda--ancha  { grid-column: span 3; }
-  .celda--angosta{ grid-column: span 2; }
-}
-@media (hover: hover) {
-  .celda:hover { background: var(--lino-alt); }
-}
-.celda:focus-visible { outline: 2px solid var(--foco); outline-offset: -4px; }
-
-.celda-folio {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--marron);
+.resuelto:hover { opacity: .62; }
+.resuelto-folio {
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--firma);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  flex: none;
+  min-width: 34px;
 }
-.celda-titulo {
-  font-family: var(--font-display);
-  font-weight: 300;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  font-size: clamp(27px, 4.4vw, 40px);
-  margin-top: auto;
-}
-.celda--media .celda-titulo,
-.celda--angosta .celda-titulo { font-size: clamp(24px, 3.4vw, 31px); }
-.celda-pie { font-size: 14px; color: var(--muted); line-height: 1.5; }
-
-/* Flecha déco: aparece al pasar o enfocar. */
-.celda-flecha {
-  position: absolute;
-  top: var(--space-6);
-  right: var(--space-6);
-  color: var(--marron);
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 240ms var(--ease), transform 240ms var(--ease);
-}
-@media (min-width: 680px) { .celda-flecha { top: var(--space-8); right: var(--space-8); } }
-.celda:hover .celda-flecha,
-.celda:focus-visible .celda-flecha { opacity: 1; transform: none; }
-
-/* ---------- Encabezado de capítulo ---------- */
-.capitulo { padding-block: var(--space-12) var(--space-8); }
-.capitulo .kicker {
-  font-size: 11px;
-  font-weight: 500;
+.resuelto-que {
+  font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--gris-claro);
+  flex: none;
+  display: none;
 }
-.capitulo h2 {
-  font-size: clamp(33px, 5.6vw, 54px);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  max-width: 16ch;
-  margin-top: var(--space-3);
-}
-.capitulo .entradilla {
-  font-size: 17px;
+@media (min-width: 720px) { .resuelto-que { display: block; min-width: 118px; } }
+.resuelto-valor {
+  font-family: var(--display);
+  font-size: clamp(19px, 2.4vw, 25px);
   font-weight: 300;
-  line-height: 1.6;
-  color: var(--muted);
-  max-width: 52ch;
-  margin-top: var(--space-4);
+  line-height: 1.2;
+  color: var(--tinta);
+}
+.resuelto-cambiar {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--gris-claro);
+  letter-spacing: 0.04em;
+  flex: none;
+  align-self: center;
 }
 
-/* Rastro de migas, como pie de página de revista. */
-.rastro {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--line);
-  font-size: 13px;
-  color: var(--muted);
+/* --- Piso activo --- */
+.activo { background: var(--papel-hueso); }
+.activo-cuerpo { padding-block: clamp(34px, 6vw, 68px); }
+
+.pregunta-folio {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--firma);
 }
-.rastro button {
-  font-family: inherit;
-  font-size: 13px;
-  color: var(--marron);
+.pregunta {
+  font-family: var(--display);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  font-size: clamp(36px, 7.4vw, 74px);
+  margin: 14px 0 0;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+.pregunta em { font-style: italic; color: var(--firma); }
+.contexto {
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.62;
+  color: var(--gris);
+  max-width: 54ch;
+  margin: 22px 0 0;
+}
+
+/* --- Opciones: filas tipográficas, no tarjetas --- */
+/* Rompen el borde izquierdo al pasar: la marca sale del margen. */
+.opciones { margin-top: clamp(28px, 4vw, 46px); }
+.opcion {
+  display: block;
+  width: 100%;
+  text-align: left;
   background: none;
   border: 0;
-  padding: 0;
+  border-top: 1px solid var(--linea);
+  padding: 20px 56px 20px 0;
+  font-family: inherit;
+  color: inherit;
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  position: relative;
+  transition: padding-left 380ms var(--ease), border-color 380ms var(--ease);
 }
-.rastro .sep { color: var(--line); }
-.rastro .actual { color: var(--tinta); }
-
-/* ---------- Cierre: el contacto ---------- */
-.desenlace { padding-block: var(--space-12) var(--space-16); }
-.desenlace-cita {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 5vw, 46px);
+.opcion:last-child { border-bottom: 1px solid var(--linea); }
+.opcion-texto {
+  font-family: var(--display);
+  font-size: clamp(23px, 3.4vw, 34px);
   font-weight: 300;
-  font-style: italic;
-  line-height: 1.16;
-  letter-spacing: -0.015em;
-  max-width: 17ch;
+  line-height: 1.14;
+  letter-spacing: -0.012em;
+  display: block;
 }
-.desenlace-cuerpo {
-  font-size: 17px;
-  font-weight: 300;
-  line-height: 1.65;
-  color: var(--muted);
-  max-width: 50ch;
-  margin-top: var(--space-6);
+.opcion-nota {
+  font-size: 14px;
+  color: var(--gris);
+  line-height: 1.5;
+  margin-top: 5px;
+  display: block;
+  max-width: 48ch;
 }
+/* La barra de firma que empuja el texto hacia adentro. */
+.opcion::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 0;
+  background: var(--firma);
+  transition: width 380ms var(--ease);
+}
+.opcion-signo {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gris-claro);
+  transition: color 300ms var(--ease), transform 380ms var(--ease);
+}
+@media (hover: hover) {
+  .opcion:hover { padding-left: 26px; border-color: var(--firma); }
+  .opcion:hover::before { width: 4px; }
+  .opcion:hover .opcion-signo { color: var(--firma); transform: translateY(-50%) translateX(5px); }
+}
+.opcion:focus-visible { padding-left: 26px; }
+.opcion:focus-visible::before { width: 4px; }
 
-/* Lo que se va a enviar, a la vista antes de enviarlo. */
-.recado {
-  margin-top: var(--space-8);
-  border: 1px solid var(--line);
-  background: var(--lino-alt);
-}
-.recado-cabeza {
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--line);
-}
-.recado-cuerpo {
-  padding: var(--space-4);
-  font-size: 15px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: var(--font-sans);
-}
-.desenlace-acciones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-6);
-}
-.wa {
+/* Marca de urgencia: palabra, no color solo. */
+.urgente {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  min-height: 50px;
-  padding: 0 26px;
-  background: var(--agua);
-  color: var(--sobre-agua);
+  gap: 5px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--alarma);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   EL FONDO — donde aparece el color
+   ============================================================ */
+.fondo { background: var(--accion); color: #fff; }
+.fondo-cuerpo { padding-block: clamp(44px, 7vw, 86px); }
+.fondo .dicho {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(29px, 5.6vw, 54px);
+  line-height: 1.14;
+  letter-spacing: -0.018em;
+  max-width: 19ch;
+  margin: 0;
+}
+.fondo .explica {
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.62;
+  margin: 26px 0 0;
+  max-width: 50ch;
+  color: rgba(255,255,255,.88);
+}
+
+/* El recado: papel blanco sobre el verde. Se ve que es un papel. */
+.recado {
+  background: var(--papel);
+  color: var(--tinta);
+  margin-top: 34px;
+  max-width: 580px;
+}
+.recado-rotulo {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gris-claro);
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--linea);
+}
+.recado-texto {
+  padding: 20px;
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+.acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.enviar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 30px;
+  background: var(--papel);
+  color: var(--accion);
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid transparent;
-  transition: transform 160ms var(--ease);
+  border: 0;
+  transition: transform 180ms var(--ease);
 }
-.wa:active { transform: scale(.98); }
-.volver {
+.enviar:active { transform: scale(.98); }
+.reiniciar {
   font-family: inherit;
   font-size: 15px;
-  color: var(--muted);
+  color: rgba(255,255,255,.9);
   background: none;
-  border: 1px solid var(--line);
-  min-height: 50px;
-  padding: 0 20px;
+  border: 1px solid rgba(255,255,255,.4);
+  min-height: 54px;
+  padding: 0 22px;
   cursor: pointer;
+  transition: border-color 240ms var(--ease);
 }
-@media (hover: hover) { .volver:hover { color: var(--tinta); border-color: var(--marron); } }
-.nota-demo { font-size: 13px; color: var(--muted); margin-top: var(--space-4); }
+@media (hover: hover) { .reiniciar:hover { border-color: #fff; } }
+.nota-prueba { font-size: 13px; color: rgba(255,255,255,.72); margin: 18px 0 0; }
+
+/* Variante de urgencia al fondo */
+.fondo--urgente { background: var(--alarma); }
+.fondo--urgente .enviar { color: var(--alarma); }
+
+/* ---------- Portada ---------- */
+.portada { padding-block: clamp(40px, 8vw, 92px) clamp(30px, 4vw, 44px); }
+.portada h1 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(44px, 10.5vw, 112px);
+  line-height: .92;
+  letter-spacing: -0.03em;
+  margin: 0;
+  max-width: 11ch;
+}
+.portada h1 em { font-style: italic; color: var(--firma); }
+.portada .entrada {
+  font-size: clamp(17px, 2.1vw, 20px);
+  line-height: 1.52;
+  color: var(--gris);
+  max-width: 46ch;
+  margin: 26px 0 0;
+}
+.indice {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-top: 30px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris-claro);
+}
+.indice .pt { color: var(--linea); }
 
 /* ---------- Pie ---------- */
 .colofon {
-  border-top: 1px solid var(--tinta);
-  padding-block: var(--space-8);
+  border-top: 1px solid var(--linea-fuerte);
+  padding-block: 30px 44px;
   font-size: 13px;
-  color: var(--muted);
+  line-height: 1.6;
+  color: var(--gris);
   display: grid;
-  gap: var(--space-2);
+  gap: 7px;
 }
-.colofon a { color: var(--marron); }
+.colofon a { color: var(--firma); }
 
-/* ---------- Transición entre vistas ---------- */
-.vista { animation: pasar 320ms var(--ease) both; }
-@keyframes pasar {
-  from { opacity: 0; transform: translateY(12px); }
+/* ---------- Entradas ---------- */
+.entra { animation: aparece 440ms var(--ease) both; }
+@keyframes aparece {
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vista { animation-duration: .01ms; }
+  .entra { animation-duration: .01ms; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
 
-.aviso-demo {
-  background: var(--marron-soft);
-  font-size: 13px;
-  line-height: 1.6;
-  padding-block: var(--space-3);
+.banda-prueba {
+  background: var(--tinta);
+  color: #fff;
+  font-size: 12.5px;
+  line-height: 1.55;
+  padding-block: 11px;
 }
-.aviso-demo strong { font-weight: 500; }
+.banda-prueba strong { font-weight: 500; }
 </style>
 </head>
 <body>
 
-<div class="aviso-demo">
-  <div class="contenedor">
-    <strong>Demostración.</strong> El mensaje de WhatsApp se envía a un número
-    de prueba, no al consultorio.
+<div class="banda-prueba">
+  <div class="marco">
+    <strong>Demostración.</strong> El mensaje llega a un número de prueba, no al consultorio.
   </div>
 </div>
 
-<header class="masthead">
-  <div class="contenedor masthead-inner">
-    <a class="cabecera-marca" href="index.html">Con·sulta</a>
-    <span class="folio" id="folio">Dra. Daphne Amaral · Guadalajara</span>
-  </div>
-</header>
+<div class="marco">
+  <header class="cabecera">
+    <a class="titulo-pub" href="index.html">Con·sulta</a>
+    <span class="sello" id="sello">Dra. Daphne Amaral · Guadalajara</span>
+  </header>
+</div>
 
 <main id="app"></main>
 
-<footer class="colofon">
-  <div class="contenedor">
-    <p>Con·sulta es una publicación del consultorio de la Dra. Daphne Amaral Alemán.
-      Ortodoncia, Invisalign y medicina dental del sueño. Colonia Monraz, Guadalajara.</p>
-    <p>Lo que leas aquí no sustituye una valoración. No damos diagnósticos en línea.
+<div class="marco">
+  <footer class="colofon">
+    <p>Con·sulta es del consultorio de la Dra. Daphne Amaral Alemán. Ortodoncia,
+      Invisalign y medicina dental del sueño. Colonia Monraz, Guadalajara.</p>
+    <p>Lo que leas aquí no sustituye una valoración, y aquí no damos diagnósticos.
       <a href="index.html">Ir al sitio</a></p>
-  </div>
-</footer>
+  </footer>
+</div>
 
 <script>
 // ---------------------------------------------------------------
-// El contenido. Cada rama termina en una frase en primera persona:
+// Contenido. Cada hoja termina en una frase en primera persona:
 // esa frase es la que viaja a WhatsApp.
 // ---------------------------------------------------------------
 var TEMAS = [
   {
-    id: 'respiras',
-    folio: 'I',
-    titulo: 'Cómo respiras',
-    pie: 'Por la boca, por la nariz, y lo que eso cambia mientras duermes.',
-    tam: 'grande',
-    h2: 'Respiras por la boca…',
-    entradilla: 'La boca abierta al dormir reseca las encías, cambia dónde descansa la lengua e influye en cómo crecen los maxilares. Conviene saber por qué pasa antes de corregir nada.',
+    id: 'respiras', folio: 'I', titulo: 'Cómo respiras',
+    nota: 'Por la boca, por la nariz, y lo que cambia mientras duermes.',
+    pregunta: 'Respiras por la <em>boca</em>…',
+    contexto: 'La boca abierta al dormir reseca las encías, cambia dónde descansa la lengua e influye en cómo crecen los maxilares. Conviene saber por qué pasa antes de corregir nada.',
     ramas: [
       {
-        id: 'boca-abierta',
-        folio: 'I.1',
-        titulo: 'Duermo con la boca abierta',
-        pie: 'Amaneces con la boca seca o los labios partidos.',
-        tam: 'ancha',
-        h2: 'Amanecer con la boca seca',
-        entradilla: 'Pasa cuando el aire entra por donde no debería durante horas. A veces el origen es nasal, a veces es la postura de la lengua, a veces las dos.',
+        id: 'boca-abierta', folio: 'I.1', titulo: 'Duermo con la boca abierta',
+        nota: 'Amaneces con la boca seca o los labios partidos.',
+        pregunta: 'Amanecer con la boca <em>seca</em>',
+        contexto: 'Pasa cuando el aire entra por donde no debería durante horas. A veces el origen es nasal, a veces la postura de la lengua, a veces las dos.',
         hojas: [
           { id: 'seca', titulo: 'Despierto con la boca seca', frase: 'Duermo con la boca abierta y despierto con la boca muy seca.' },
           { id: 'encias', titulo: 'Me sangran las encías', frase: 'Duermo con la boca abierta y mis encías están inflamadas o me sangran.' },
@@ -374,13 +450,10 @@ var TEMAS = [
         ]
       },
       {
-        id: 'nariz',
-        folio: 'I.2',
-        titulo: 'No me entra aire por la nariz',
-        pie: 'Congestión que no se va, o que solo se va de un lado.',
-        tam: 'angosta',
-        h2: 'Cuando la nariz no alcanza',
-        entradilla: 'Si respirar por la nariz cuesta, el cuerpo compensa con la boca. Eso tiene consecuencias dentales, y también puede necesitar a otro especialista.',
+        id: 'nariz', folio: 'I.2', titulo: 'No me entra aire por la nariz',
+        nota: 'Congestión que no se va, o que solo se va de un lado.',
+        pregunta: 'Cuando la nariz <em>no alcanza</em>',
+        contexto: 'Si respirar por la nariz cuesta, el cuerpo compensa con la boca. Eso tiene consecuencias dentales, y a veces necesita a otro especialista.',
         hojas: [
           { id: 'siempre', titulo: 'Siempre está tapada', frase: 'Casi nunca puedo respirar bien por la nariz y acabo respirando por la boca.' },
           { id: 'dormir', titulo: 'Solo al acostarme', frase: 'Se me tapa la nariz cuando me acuesto y termino respirando por la boca.' },
@@ -390,36 +463,27 @@ var TEMAS = [
     ]
   },
   {
-    id: 'duermes',
-    folio: 'II',
-    titulo: 'Cómo duermes',
-    pie: 'Ronquidos, cansancio al despertar y lo que la boca tiene que ver.',
-    tam: 'media',
-    h2: 'Dormir ocho horas y despertar cansado',
-    entradilla: 'Dormir mucho y amanecer sin energía suele significar que el descanso se interrumpe sin que te enteres. Parte de eso se puede ver desde la boca.',
+    id: 'duermes', folio: 'II', titulo: 'Cómo duermes',
+    nota: 'Ronquidos, cansancio al despertar, y qué tiene que ver la boca.',
+    pregunta: 'Dormir ocho horas y despertar <em>cansado</em>',
+    contexto: 'Dormir mucho y amanecer sin energía suele significar que el descanso se interrumpe sin que te enteres. Parte de eso se alcanza a ver desde la boca.',
     ramas: [
       {
-        id: 'ronco',
-        folio: 'II.1',
-        titulo: 'Ronco',
-        pie: 'Tú no lo oyes. Quien duerme a tu lado, sí.',
-        tam: 'ancha',
-        h2: 'El ronquido como señal',
-        entradilla: 'Roncar es aire pasando apretado. Vale la pena distinguir el ronquido simple del que viene con pausas, porque no se atienden igual.',
+        id: 'ronco', folio: 'II.1', titulo: 'Ronco',
+        nota: 'Tú no lo oyes. Quien duerme a tu lado, sí.',
+        pregunta: 'El ronquido como <em>señal</em>',
+        contexto: 'Roncar es aire pasando apretado. Vale la pena distinguir el ronquido simple del que viene con pausas, porque no se atienden igual.',
         hojas: [
           { id: 'fuerte', titulo: 'Ronco fuerte', frase: 'Ronco fuerte y me dicen que se oye desde otro cuarto.' },
-          { id: 'pausas', titulo: 'Me dicen que dejo de respirar', frase: 'Me dicen que mientras duermo dejo de respirar por momentos. Quiero que me valoren.', prioritario: true },
+          { id: 'pausas', titulo: 'Me dicen que dejo de respirar', frase: 'Me dicen que mientras duermo dejo de respirar por momentos. Quiero que me valoren.', urgente: true },
           { id: 'nino', titulo: 'Mi hijo ronca', frase: 'Mi hijo ronca por las noches y quiero saber si es normal a su edad.' }
         ]
       },
       {
-        id: 'cansado',
-        folio: 'II.2',
-        titulo: 'Despierto cansado',
-        pie: 'Duermes las horas, pero no descansas.',
-        tam: 'angosta',
-        h2: 'Horas de sueño que no rinden',
-        entradilla: 'Si duermes completo y amaneces como si no, algo está cortando el sueño. Apretar los dientes y las pausas al respirar son dos causas que se revisan aquí.',
+        id: 'cansado', folio: 'II.2', titulo: 'Despierto cansado',
+        nota: 'Duermes las horas, pero no descansas.',
+        pregunta: 'Horas de sueño que <em>no rinden</em>',
+        contexto: 'Si duermes completo y amaneces como si no, algo corta el sueño. Apretar los dientes y las pausas al respirar son dos causas que se revisan aquí.',
         hojas: [
           { id: 'mandibula', titulo: 'Amanezco con la mandíbula tensa', frase: 'Despierto cansado y con la mandíbula tensa, como si hubiera apretado toda la noche.' },
           { id: 'cabeza', titulo: 'Amanezco con dolor de cabeza', frase: 'Despierto con dolor de cabeza varios días a la semana.' },
@@ -429,60 +493,45 @@ var TEMAS = [
     ]
   },
   {
-    id: 'muerdes',
-    folio: 'III',
-    titulo: 'Cómo muerdes',
-    pie: 'La mandíbula que truena, que duele o que no abre.',
-    tam: 'ancha',
-    h2: 'La mandíbula avisa antes de doler',
-    entradilla: 'Chasquidos, tensión al masticar o apertura limitada son formas en que la articulación pide revisión. Entre más pronto se vea, menos tratamiento necesita.',
+    id: 'muerdes', folio: 'III', titulo: 'Cómo muerdes',
+    nota: 'La mandíbula que truena, que duele o que no abre.',
+    pregunta: 'La mandíbula <em>avisa</em> antes de doler',
+    contexto: 'Chasquidos, tensión al masticar o apertura limitada son formas en que la articulación pide revisión. Entre más pronto se vea, menos tratamiento necesita.',
     ramas: [
       {
-        id: 'truena',
-        folio: 'III.1',
-        titulo: 'Me truena',
-        pie: 'Un chasquido al abrir o al masticar.',
-        tam: 'media',
-        h2: 'El chasquido al abrir',
-        entradilla: 'Un tronido aislado y sin dolor casi nunca es urgente. Si viene con dolor o con bloqueos, cambia la conversación.',
+        id: 'truena', folio: 'III.1', titulo: 'Me truena',
+        nota: 'Un chasquido al abrir o al masticar.',
+        pregunta: 'El chasquido al <em>abrir</em>',
+        contexto: 'Un tronido aislado y sin dolor casi nunca es urgente. Si viene con dolor o con bloqueos, cambia la conversación.',
         hojas: [
           { id: 'sin-dolor', titulo: 'Truena pero no duele', frase: 'Me truena la mandíbula al abrir la boca, aunque no me duele.' },
           { id: 'con-dolor', titulo: 'Truena y duele', frase: 'Me truena la mandíbula y además me duele al abrir o masticar.' }
         ]
       },
       {
-        id: 'duele',
-        folio: 'III.2',
-        titulo: 'Me duele o no abro bien',
-        pie: 'Dolor al masticar, o la boca que no termina de abrir.',
-        tam: 'angosta',
-        h2: 'Cuando abrir la boca cuesta',
-        entradilla: 'La limitación de apertura y el bloqueo se atienden pronto. Si es tu caso, mejor llamar que esperar una cita de rutina.',
+        id: 'duele', folio: 'III.2', titulo: 'Me duele o no abro bien',
+        nota: 'Dolor al masticar, o la boca que no termina de abrir.',
+        pregunta: 'Cuando abrir la boca <em>cuesta</em>',
+        contexto: 'La limitación de apertura y el bloqueo se atienden pronto. Si es tu caso, mejor llamar que esperar una cita de rutina.',
         hojas: [
           { id: 'masticar', titulo: 'Me duele al masticar', frase: 'Me duele la mandíbula cuando mastico.' },
-          { id: 'no-abre', titulo: 'No abro completo', frase: 'No puedo abrir la boca completamente y quiero que me revisen pronto.', prioritario: true },
-          { id: 'traba', titulo: 'Se me traba', frase: 'Se me traba la mandíbula y a veces no puedo cerrarla o abrirla bien.', prioritario: true }
+          { id: 'no-abre', titulo: 'No abro completo', frase: 'No puedo abrir la boca completamente y quiero que me revisen pronto.', urgente: true },
+          { id: 'traba', titulo: 'Se me traba', frase: 'Se me traba la mandíbula y a veces no puedo cerrarla o abrirla bien.', urgente: true }
         ]
       }
     ]
   },
   {
-    id: 'ves',
-    folio: 'IV',
-    titulo: 'Cómo se ve',
-    pie: 'Dientes chuecos, espacios, color. Por donde entra la mayoría.',
-    tam: 'media',
-    h2: 'Empezar por la estética está bien',
-    entradilla: 'Casi todo el mundo llega por cómo se ven sus dientes. En la valoración revisamos también cómo funcionan, porque de ahí depende que el resultado dure.',
+    id: 'ves', folio: 'IV', titulo: 'Cómo se ve',
+    nota: 'Dientes chuecos, espacios, color. Por donde entra la mayoría.',
+    pregunta: 'Empezar por lo <em>estético</em> está bien',
+    contexto: 'Casi todo el mundo llega por cómo se ven sus dientes. En la valoración revisamos también cómo funcionan, porque de ahí depende que el resultado dure.',
     ramas: [
       {
-        id: 'chuecos',
-        folio: 'IV.1',
-        titulo: 'Están chuecos o encimados',
-        pie: 'Alineación, mordida y espacios.',
-        tam: 'ancha',
-        h2: 'Alinear, y revisar por qué se desalinearon',
-        entradilla: 'Los dientes se encabalgan por falta de espacio, y la falta de espacio tiene causas. Revisarlas es lo que evita que vuelvan a moverse después.',
+        id: 'chuecos', folio: 'IV.1', titulo: 'Están chuecos o encimados',
+        nota: 'Alineación, mordida y espacios.',
+        pregunta: 'Alinear, y revisar <em>por qué</em> se movieron',
+        contexto: 'Los dientes se encabalgan por falta de espacio, y la falta de espacio tiene causas. Revisarlas es lo que evita que vuelvan a moverse después.',
         hojas: [
           { id: 'invisalign', titulo: 'Los quiero alinear sin brackets', frase: 'Quiero alinear mis dientes con Invisalign y saber si soy candidato.' },
           { id: 'brackets', titulo: 'Estoy abierto a brackets', frase: 'Quiero alinear mis dientes y me gustaría saber qué opción me conviene.' },
@@ -490,13 +539,10 @@ var TEMAS = [
         ]
       },
       {
-        id: 'color',
-        folio: 'IV.2',
-        titulo: 'El color o la forma',
-        pie: 'Manchas, desgaste, resinas viejas.',
-        tam: 'angosta',
-        h2: 'Color, desgaste y resinas de antes',
-        entradilla: 'El desgaste y las manchas a veces cuentan algo más: cómo muerdes, si aprietas de noche, qué tan ácida es tu dieta.',
+        id: 'color', folio: 'IV.2', titulo: 'El color o la forma',
+        nota: 'Manchas, desgaste, resinas viejas.',
+        pregunta: 'Color, desgaste y resinas <em>de antes</em>',
+        contexto: 'El desgaste y las manchas a veces cuentan algo más: cómo muerdes, si aprietas de noche, qué tan ácida es tu dieta.',
         hojas: [
           { id: 'blanquear', titulo: 'Los quiero más blancos', frase: 'Me gustaría blanquear mis dientes y saber qué opciones hay.' },
           { id: 'manchas', titulo: 'Tengo manchas', frase: 'Tengo manchas en los dientes que no se quitan al cepillarme.' },
@@ -509,169 +555,141 @@ var TEMAS = [
 
 var WHATSAPP = '526221424577'; // demo. El del consultorio va aquí.
 
-// ---------------------------------------------------------------
-// Estado: solo la ruta.
-// ---------------------------------------------------------------
-var ruta = []; // [temaId, ramaId, hojaId]
+var ruta = [];
 
-function temaActual() { return TEMAS.filter(function (t) { return t.id === ruta[0]; })[0]; }
-function ramaActual() {
-  var t = temaActual();
-  return t && t.ramas.filter(function (r) { return r.id === ruta[1]; })[0];
-}
-function hojaActual() {
-  var r = ramaActual();
-  return r && r.hojas.filter(function (h) { return h.id === ruta[2]; })[0];
-}
+function tema() { return TEMAS.filter(function (t) { return t.id === ruta[0]; })[0]; }
+function rama() { var t = tema(); return t && t.ramas.filter(function (r) { return r.id === ruta[1]; })[0]; }
+function hoja() { var r = rama(); return r && r.hojas.filter(function (h) { return h.id === ruta[2]; })[0]; }
 function esc(s) {
   return String(s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
   });
 }
 
-// El mensaje: la frase de la persona, más el camino que la trajo.
-function armarRecado() {
-  var t = temaActual(), r = ramaActual(), h = hojaActual();
+function recado() {
+  var t = tema(), r = rama(), h = hoja();
   if (!h) return '';
-  var lineas = [
+  var l = [
     'Hola, doctora. Entré a Con·sulta y llegué aquí:',
     '',
     '“' + h.frase + '”',
     '',
-    'Tema: ' + t.titulo + ' › ' + r.titulo
+    'Camino: ' + t.titulo + ' › ' + r.titulo
   ];
-  if (h.prioritario) {
-    lineas.push('', 'Entiendo que esto conviene revisarlo pronto.');
-  }
-  lineas.push('', 'Me gustaría agendar una valoración.');
-  return lineas.join('\n');
+  if (h.urgente) l.push('', 'Entiendo que esto conviene revisarlo pronto.');
+  l.push('', 'Me gustaría agendar una valoración.');
+  return l.join('\n');
 }
 
-// ---------------------------------------------------------------
-// Vistas
-// ---------------------------------------------------------------
-function celda(datos, accion, valor) {
-  return '<button type="button" class="celda celda--' + (datos.tam || 'media') +
-    '" data-accion="' + accion + '" data-valor="' + valor + '">' +
-    '<span class="celda-folio">' + esc(datos.folio) + '</span>' +
-    '<svg class="celda-flecha" width="19" height="19" viewBox="0 0 20 20" fill="none" aria-hidden="true">' +
-    '<path d="M4 16 16 4M16 4H7M16 4v9" stroke="currentColor" stroke-width="1.3" ' +
-    'stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-    '<span class="celda-titulo">' + esc(datos.titulo) + '</span>' +
-    '<span class="celda-pie">' + esc(datos.pie) + '</span>' +
-    '</button>';
+var FLECHA = '<svg class="opcion-signo" width="21" height="21" viewBox="0 0 22 22" fill="none" aria-hidden="true">' +
+  '<path d="M4 11h14M12 5l6 6-6 6" stroke="currentColor" stroke-width="1.3" ' +
+  'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function pisoResuelto(que, folio, valor, accion, valorDato) {
+  return '<div class="piso"><div class="marco">' +
+    '<button type="button" class="resuelto" data-accion="' + accion + '"' +
+    (valorDato ? ' data-valor="' + valorDato + '"' : '') + '>' +
+    '<span class="resuelto-folio">' + esc(folio) + '</span>' +
+    '<span class="resuelto-que">' + esc(que) + '</span>' +
+    '<span class="resuelto-valor">' + esc(valor) + '</span>' +
+    '<span class="resuelto-cambiar">cambiar</span>' +
+    '</button></div></div>';
 }
 
-function rastro() {
-  var t = temaActual(), r = ramaActual();
-  var p = '<div class="contenedor"><nav class="rastro" aria-label="Dónde estás">' +
-    '<button type="button" data-accion="inicio">Portada</button>';
-  if (t) {
-    p += '<span class="sep" aria-hidden="true">›</span>';
-    p += ruta.length > 1
-      ? '<button type="button" data-accion="tema" data-valor="' + t.id + '">' + esc(t.titulo) + '</button>'
-      : '<span class="actual">' + esc(t.titulo) + '</span>';
-  }
-  if (r) {
-    p += '<span class="sep" aria-hidden="true">›</span>';
-    p += ruta.length > 2
-      ? '<button type="button" data-accion="rama" data-valor="' + r.id + '">' + esc(r.titulo) + '</button>'
-      : '<span class="actual">' + esc(r.titulo) + '</span>';
-  }
-  return p + '</nav></div>';
+function pisoActivo(folio, pregunta, contexto, opciones, accion) {
+  return '<div class="piso activo entra"><div class="marco activo-cuerpo">' +
+    '<p class="pregunta-folio">' + esc(folio) + '</p>' +
+    '<h2 class="pregunta">' + pregunta + '</h2>' +
+    '<p class="contexto">' + esc(contexto) + '</p>' +
+    '<div class="opciones">' +
+    opciones.map(function (o) {
+      return '<button type="button" class="opcion" data-accion="' + accion +
+        '" data-valor="' + o.id + '">' +
+        '<span class="opcion-texto">' + esc(o.titulo) + '</span>' +
+        (o.nota ? '<span class="opcion-nota">' + esc(o.nota) + '</span>' : '') +
+        (o.urgente
+          ? '<span class="urgente">' +
+            '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+            '<path d="M8 2 1.6 13.4h12.8L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
+            '<path d="M8 6.6v2.8M8 11.4v.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+            '</svg>Conviene verlo pronto</span>'
+          : '') +
+        FLECHA + '</button>';
+    }).join('') +
+    '</div></div></div>';
 }
 
-function vista() {
-  // Portada
-  if (ruta.length === 0) {
-    return '<div class="vista">' +
-      '<div class="contenedor portada">' +
-      '<h1>Empieza por lo que <em>notas</em>.</h1>' +
-      '<p class="bajada">Cuatro caminos. Elige el que se parezca a lo tuyo y ve bajando ' +
-      'hasta la frase exacta. Al final la mandas por WhatsApp sin volver a escribirla.</p>' +
-      '<div class="sumario"><span>Cuatro temas</span><span class="sep">·</span>' +
-      '<span>Tres niveles</span><span class="sep">·</span><span>Dos minutos</span></div>' +
-      '</div>' +
-      '<div class="reticula">' +
-      TEMAS.map(function (t) { return celda(t, 'tema', t.id); }).join('') +
-      '</div></div>';
-  }
-
-  // Tema → sus ramas
-  if (ruta.length === 1) {
-    var t = temaActual();
-    return '<div class="vista">' + rastro() +
-      '<div class="contenedor capitulo">' +
-      '<p class="kicker">Capítulo ' + esc(t.folio) + '</p>' +
-      '<h2>' + esc(t.h2) + '</h2>' +
-      '<p class="entradilla">' + esc(t.entradilla) + '</p>' +
-      '</div>' +
-      '<div class="reticula">' +
-      t.ramas.map(function (r) { return celda(r, 'rama', r.id); }).join('') +
-      '</div></div>';
-  }
-
-  // Rama → sus hojas
-  if (ruta.length === 2) {
-    var r2 = ramaActual();
-    return '<div class="vista">' + rastro() +
-      '<div class="contenedor capitulo">' +
-      '<p class="kicker">' + esc(r2.folio) + '</p>' +
-      '<h2>' + esc(r2.h2) + '</h2>' +
-      '<p class="entradilla">' + esc(r2.entradilla) + '</p>' +
-      '</div>' +
-      '<div class="reticula">' +
-      r2.hojas.map(function (h, i) {
-        return celda({
-          folio: r2.folio + '.' + (i + 1),
-          titulo: h.titulo,
-          pie: h.prioritario ? 'Conviene revisarlo pronto.' : 'Mandar esta frase',
-          tam: i === 0 ? 'ancha' : 'angosta'
-        }, 'hoja', h.id);
-      }).join('') +
-      '</div></div>';
-  }
-
-  // Desenlace
-  var h = hojaActual();
-  var recado = armarRecado();
-  return '<div class="vista">' + rastro() +
-    '<div class="contenedor desenlace">' +
-    '<p class="desenlace-cita">“' + esc(h.frase) + '”</p>' +
-    '<p class="desenlace-cuerpo">' +
-    (h.prioritario
-      ? 'Por lo que describes, conviene que te vean antes que en una cita de rutina. ' +
-        'Manda el mensaje y márcanos al consultorio.'
-      : 'Eso es lo que la doctora necesita saber para preparar tu valoración. ' +
-        'Va listo, no tienes que escribirlo de nuevo.') +
-    '</p>' +
-    '<div class="recado">' +
-    '<p class="recado-cabeza">Lo que se envía</p>' +
-    '<p class="recado-cuerpo">' + esc(recado) + '</p>' +
-    '</div>' +
-    '<div class="desenlace-acciones">' +
-    '<a class="wa" href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(recado) + '" ' +
-    'target="_blank" rel="noopener noreferrer">' +
-    '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
-    '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
-    'Mandar por WhatsApp</a>' +
-    '<button type="button" class="volver" data-accion="inicio">Empezar de nuevo</button>' +
-    '</div>' +
-    '<p class="nota-demo">Demostración: va a un número de prueba. ' +
-    'En el sitio real llega al consultorio.</p>' +
-    '</div></div>';
-}
-
-// ---------------------------------------------------------------
-// Render
-// ---------------------------------------------------------------
 function render(subir) {
-  document.getElementById('app').innerHTML = vista();
-  var t = temaActual();
-  document.getElementById('folio').textContent = t
+  var out = '';
+
+  // Portada: solo cuando no hay nada elegido.
+  if (ruta.length === 0) {
+    out += '<div class="marco portada entra">' +
+      '<h1>Empieza por lo que <em>notas</em>.</h1>' +
+      '<p class="entrada">Baja de lo general a la frase exacta. Al llegar al fondo la mandas ' +
+      'por WhatsApp sin volver a escribirla.</p>' +
+      '<div class="indice"><span>Cuatro caminos</span><span class="pt">—</span>' +
+      '<span>Tres niveles</span><span class="pt">—</span><span>Dos minutos</span></div>' +
+      '</div>';
+  }
+
+  // Pisos resueltos, de arriba hacia abajo.
+  if (ruta.length >= 1) out += pisoResuelto('Qué notas', tema().folio, tema().titulo, 'inicio');
+  if (ruta.length >= 2) out += pisoResuelto('En concreto', rama().folio, rama().titulo, 'tema', tema().id);
+  if (ruta.length >= 3) out += pisoResuelto('Tu caso', rama().folio + '.' + (rama().hojas.indexOf(hoja()) + 1), hoja().titulo, 'rama', rama().id);
+
+  // El piso activo.
+  if (ruta.length === 0) {
+    out += pisoActivo('Elige un camino', 'Cuatro formas de <em>empezar</em>',
+      'No hace falta saber el nombre de lo que tienes. Elige lo que se parezca a lo tuyo.',
+      TEMAS, 'tema');
+  } else if (ruta.length === 1) {
+    out += pisoActivo('Capítulo ' + tema().folio, tema().pregunta, tema().contexto, tema().ramas, 'rama');
+  } else if (ruta.length === 2) {
+    out += pisoActivo(rama().folio, rama().pregunta, rama().contexto, rama().hojas, 'hoja');
+  } else {
+    // El fondo.
+    var h = hoja(), txt = recado();
+    out += '<div class="piso fondo' + (h.urgente ? ' fondo--urgente' : '') + ' entra">' +
+      '<div class="marco fondo-cuerpo">' +
+      '<p class="dicho">“' + esc(h.frase) + '”</p>' +
+      '<p class="explica">' +
+      (h.urgente
+        ? 'Por lo que describes, conviene que te vean antes que en una cita de rutina. Manda el mensaje y márcanos al consultorio.'
+        : 'Eso es lo que la doctora necesita para preparar tu valoración. Va listo, no tienes que escribirlo de nuevo.') +
+      '</p>' +
+      '<div class="recado">' +
+      '<p class="recado-rotulo">Lo que se envía</p>' +
+      '<p class="recado-texto">' + esc(txt) + '</p>' +
+      '</div>' +
+      '<div class="acciones">' +
+      '<a class="enviar" href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt) + '" ' +
+      'target="_blank" rel="noopener noreferrer">' +
+      '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
+      'Mandar por WhatsApp</a>' +
+      '<button type="button" class="reiniciar" data-accion="inicio">Empezar de nuevo</button>' +
+      '</div>' +
+      '<p class="nota-prueba">Demostración: va a un número de prueba.</p>' +
+      '</div></div>';
+  }
+
+  document.getElementById('app').innerHTML = out;
+  var t = tema();
+  document.getElementById('sello').textContent = t
     ? 'Capítulo ' + t.folio + ' · ' + t.titulo
     : 'Dra. Daphne Amaral · Guadalajara';
-  if (subir !== false) window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Al bajar un piso, llevar la vista al piso nuevo, no al tope.
+  if (subir === 'piso') {
+    var act = document.querySelector('.activo, .fondo');
+    if (act) {
+      var y = act.getBoundingClientRect().top + window.scrollY - 8;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  } else if (subir !== false) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 }
 
 document.addEventListener('click', function (e) {
@@ -679,13 +697,16 @@ document.addEventListener('click', function (e) {
   if (!b) return;
   var a = b.dataset.accion, v = b.dataset.valor;
 
-  if (a === 'inicio') ruta = [];
+  // Un piso resuelto siempre devuelve a su nivel; una opción baja uno.
+  // En ambos casos la ruta se reconstruye desde cero, así no quedan
+  // restos de una rama que ya no corresponde.
+  if (a === 'inicio') { ruta = []; render(); return; }
   else if (a === 'tema') ruta = [v];
   else if (a === 'rama') ruta = [ruta[0], v];
   else if (a === 'hoja') ruta = [ruta[0], ruta[1], v];
   else return;
 
-  render();
+  render('piso');
 });
 
 render(false);
