@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Con·sulta — Dra. Daphne Amaral Alemán</title>
-<meta name="description" content="Baja de lo que notas a lo que lo explica. Ortodoncia y medicina dental del sueño en Guadalajara.">
+<title>Una frase — Dra. Daphne Amaral Alemán</title>
+<meta name="description" content="Escribe una frase eligiendo. Al terminar, la mandas. Ortodoncia y medicina dental del sueño en Guadalajara.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,42 +12,28 @@
 
 <style>
 /* ============================================================
-   Con·sulta — descenso editorial
-   La idea: la página BAJA. Cada elección te deja un piso más
-   abajo; lo que ya elegiste queda arriba, encogido, legible.
-   El blanco es el material; el color aparece una sola vez, al
-   fondo, donde está la decisión.
+   Una frase — Dra. Daphne Amaral
+   La idea: no navegas, ESCRIBES. La pantalla es una sola oración
+   gigante con huecos. Cada elección llena un hueco. Cuando la
+   frase está completa, esa frase es el mensaje.
+   Sin tarjetas, sin cuadrícula, sin contenedores. Solo texto.
    ============================================================ */
 :root {
-  /* Base: blanco clínico cálido. Lo clínico es el blanco, no el gris. */
   --papel: #ffffff;
-  --papel-hueso: #fcfbf9;      /* solo para el piso activo */
-  --tinta: #1c1a18;            /* 16.4:1 sobre blanco */
-  --gris: #5e5852;             /* 6.6:1 — secundario */
-  --gris-claro: #767068;       /* 4.9:1 — rótulos chicos en versalitas */
-  --linea: #e8e4de;
-  --linea-fuerte: #1c1a18;
-
-  /* Firma: el marrón del monograma. Identifica, no acciona. */
-  --firma: #6e5546;            /* 6.9:1 sobre blanco */
-
-  /* Acción: verde quirófano. 7.55:1 sobre blanco = AAA.
-     Aparece UNA vez por pantalla, siempre al final del descenso. */
-  --accion: #1f5e52;
-  --accion-hover: #17483f;
-  --accion-tenue: #eef4f2;
-
-  --alarma: #9a3324;           /* 7.4:1 sobre blanco */
-  --alarma-tenue: #fbf0ee;
-
+  --tinta: #141210;            /* 18.9:1 */
+  --gris: #5e5852;             /* 7.0:1 */
+  --rotulo: #767068;           /* 4.9:1 */
+  --linea: #e9e5df;
+  --firma: #6e5546;            /* 6.9:1 — el marrón del monograma */
+  --accion: #1f5e52;           /* 7.6:1 AAA */
+  --alarma: #9a3324;           /* 7.3:1 AAA */
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease: cubic-bezier(.19, 1, .22, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-
-html { -webkit-text-size-adjust: 100%; }
+html, body { height: 100%; }
 body {
   margin: 0;
   background: var(--papel);
@@ -59,494 +45,375 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-:focus-visible { outline: 2px solid var(--accion); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accion); outline-offset: 4px; }
 
-.marco {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding-left: max(22px, env(safe-area-inset-left, 0px));
-  padding-right: max(22px, env(safe-area-inset-right, 0px));
-}
-
-/* ---------- Cabecera ---------- */
-.cabecera {
+.pagina {
+  min-height: 100%;
   display: flex;
-  align-items: baseline;
-  gap: 14px;
-  padding-block: 20px;
-  flex-wrap: wrap;
-}
-.titulo-pub {
-  font-family: var(--display);
-  font-size: 21px;
-  font-weight: 400;
-  color: var(--firma);
-  text-decoration: none;
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
-.sello {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gris-claro);
-  margin-left: auto;
+  flex-direction: column;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
 }
 
-/* ============================================================
-   EL DESCENSO
-   Cada piso es una banda horizontal. El piso resuelto se
-   comprime a una línea; el activo ocupa el alto que necesita.
-   ============================================================ */
-.piso {
-  border-top: 1px solid var(--linea);
-  transition: background-color 420ms var(--ease);
-}
-.piso:first-of-type { border-top: 1px solid var(--linea-fuerte); }
-
-/* --- Piso resuelto: una sola línea, releíble, reversible --- */
-.resuelto {
+/* ---------- Rótulos de esquina: casi invisibles ---------- */
+.esquinas {
   display: flex;
   align-items: baseline;
   gap: 16px;
-  padding-block: 15px;
-  cursor: pointer;
-  background: none;
-  border: 0;
-  width: 100%;
-  text-align: left;
-  font-family: inherit;
-  color: inherit;
-  transition: opacity 300ms var(--ease);
-}
-.resuelto:hover { opacity: .62; }
-.resuelto-folio {
-  font-family: var(--display);
-  font-size: 14px;
-  color: var(--firma);
-  font-variant-numeric: tabular-nums;
-  flex: none;
-  min-width: 34px;
-}
-.resuelto-que {
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  padding-block: 20px;
+  font-size: 11px;
+  letter-spacing: 0.17em;
   text-transform: uppercase;
-  color: var(--gris-claro);
-  flex: none;
-  display: none;
+  color: var(--rotulo);
+  flex-wrap: wrap;
 }
-@media (min-width: 720px) { .resuelto-que { display: block; min-width: 118px; } }
-.resuelto-valor {
+.esquinas a { color: var(--firma); text-decoration: none; }
+.paso-contador { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   LA FRASE — el elemento monumental
+   ============================================================ */
+.lienzo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding-block: clamp(20px, 4vh, 48px);
+}
+
+.frase {
   font-family: var(--display);
-  font-size: clamp(19px, 2.4vw, 25px);
   font-weight: 300;
-  line-height: 1.2;
+  font-size: clamp(34px, 7.2vw, 96px);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  margin: 0;
+  max-width: 17ch;
+}
+
+/* Parte ya escrita */
+.escrito {
   color: var(--tinta);
-}
-.resuelto-cambiar {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--gris-claro);
-  letter-spacing: 0.04em;
-  flex: none;
-  align-self: center;
-}
-
-/* --- Piso activo --- */
-.activo { background: var(--papel-hueso); }
-.activo-cuerpo { padding-block: clamp(34px, 6vw, 68px); }
-
-.pregunta-folio {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--firma);
-}
-.pregunta {
-  font-family: var(--display);
-  font-weight: 300;
-  line-height: 1.02;
-  letter-spacing: -0.022em;
-  font-size: clamp(36px, 7.4vw, 74px);
-  margin: 14px 0 0;
-  max-width: 15ch;
-  text-wrap: balance;
-}
-.pregunta em { font-style: italic; color: var(--firma); }
-.contexto {
-  font-size: clamp(16px, 1.9vw, 18px);
-  line-height: 1.62;
-  color: var(--gris);
-  max-width: 54ch;
-  margin: 22px 0 0;
-}
-
-/* --- Opciones: filas tipográficas, no tarjetas --- */
-/* Rompen el borde izquierdo al pasar: la marca sale del margen. */
-.opciones { margin-top: clamp(28px, 4vw, 46px); }
-.opcion {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: 0;
-  border-top: 1px solid var(--linea);
-  padding: 20px 56px 20px 0;
-  font-family: inherit;
-  color: inherit;
   cursor: pointer;
+  transition: opacity 300ms var(--ease);
   position: relative;
-  transition: padding-left 380ms var(--ease), border-color 380ms var(--ease);
+  white-space: normal;
 }
-.opcion:last-child { border-bottom: 1px solid var(--linea); }
-.opcion-texto {
-  font-family: var(--display);
-  font-size: clamp(23px, 3.4vw, 34px);
-  font-weight: 300;
-  line-height: 1.14;
-  letter-spacing: -0.012em;
-  display: block;
-}
-.opcion-nota {
-  font-size: 14px;
-  color: var(--gris);
-  line-height: 1.5;
-  margin-top: 5px;
-  display: block;
-  max-width: 48ch;
-}
-/* La barra de firma que empuja el texto hacia adentro. */
-.opcion::before {
+.escrito:hover { opacity: .45; }
+.escrito::after {
   content: "";
   position: absolute;
-  left: 0;
-  top: -1px;
-  bottom: -1px;
-  width: 0;
+  left: 0; right: 0; bottom: .07em;
+  height: 1px;
   background: var(--firma);
-  transition: width 380ms var(--ease);
+  opacity: 0;
+  transition: opacity 260ms var(--ease);
 }
-.opcion-signo {
+.escrito:hover::after { opacity: 1; }
+
+/* El hueco que toca llenar: una línea que late */
+.hueco {
+  color: var(--firma);
+  border-bottom: 2px solid var(--firma);
+  padding-bottom: .04em;
+  animation: late 2.4s ease-in-out infinite;
+}
+@keyframes late { 0%, 100% { opacity: 1 } 50% { opacity: .42 } }
+
+/* Lo que todavía no se escribe */
+.pendiente { color: var(--linea); }
+
+/* ---------- Las opciones: texto suelto, sin caja ---------- */
+.opciones {
+  margin-top: clamp(32px, 5vh, 62px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 2.4vw, 34px) clamp(20px, 3.4vw, 48px);
+  align-items: baseline;
+  max-width: 1040px;
+}
+.opcion {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(21px, 2.9vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.014em;
+  color: var(--gris);
+  cursor: pointer;
+  position: relative;
+  transition: color 240ms var(--ease), transform 340ms var(--ease);
+  text-align: left;
+  display: inline-block;
+}
+.opcion::after {
+  content: "";
   position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gris-claro);
-  transition: color 300ms var(--ease), transform 380ms var(--ease);
+  left: 0; bottom: -.1em;
+  width: 0; height: 2px;
+  background: var(--firma);
+  transition: width 340ms var(--ease);
 }
 @media (hover: hover) {
-  .opcion:hover { padding-left: 26px; border-color: var(--firma); }
-  .opcion:hover::before { width: 4px; }
-  .opcion:hover .opcion-signo { color: var(--firma); transform: translateY(-50%) translateX(5px); }
+  .opcion:hover { color: var(--tinta); transform: translateY(-3px); }
+  .opcion:hover::after { width: 100%; }
 }
-.opcion:focus-visible { padding-left: 26px; }
-.opcion:focus-visible::before { width: 4px; }
+.opcion:focus-visible { color: var(--tinta); }
+.opcion:focus-visible::after { width: 100%; }
 
-/* Marca de urgencia: palabra, no color solo. */
-.urgente {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
+/* La marca de urgencia va pegada a la palabra, en superíndice */
+.opcion .alerta {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--alarma);
-  margin-top: 8px;
+  vertical-align: super;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* ---------- Glosa: el porqué, abajo y chiquito ---------- */
+.glosa {
+  margin-top: clamp(28px, 4.5vh, 52px);
+  padding-top: 18px;
+  border-top: 1px solid var(--linea);
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--gris);
+  max-width: 56ch;
 }
 
 /* ============================================================
-   EL FONDO — donde aparece el color
+   EL FINAL — la frase completa, y el envío
    ============================================================ */
-.fondo { background: var(--accion); color: #fff; }
-.fondo-cuerpo { padding-block: clamp(44px, 7vw, 86px); }
-.fondo .dicho {
-  font-family: var(--display);
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(29px, 5.6vw, 54px);
-  line-height: 1.14;
-  letter-spacing: -0.018em;
-  max-width: 19ch;
-  margin: 0;
+.final .frase { color: var(--tinta); }
+.final-acciones {
+  margin-top: clamp(32px, 5vh, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
 }
-.fondo .explica {
-  font-size: clamp(16px, 1.9vw, 18px);
-  line-height: 1.62;
-  margin: 26px 0 0;
-  max-width: 50ch;
-  color: rgba(255,255,255,.88);
-}
-
-/* El recado: papel blanco sobre el verde. Se ve que es un papel. */
-.recado {
-  background: var(--papel);
-  color: var(--tinta);
-  margin-top: 34px;
-  max-width: 580px;
-}
-.recado-rotulo {
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gris-claro);
-  padding: 13px 20px;
-  border-bottom: 1px solid var(--linea);
-}
-.recado-texto {
-  padding: 20px;
-  font-size: 15px;
-  line-height: 1.65;
-  white-space: pre-wrap;
-  word-break: break-word;
-  margin: 0;
-}
-
-.acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .enviar {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 54px;
-  padding: 0 30px;
-  background: var(--papel);
-  color: var(--accion);
+  gap: 11px;
+  min-height: 58px;
+  padding: 0 34px;
+  background: var(--accion);
+  color: #fff;
+  font-family: var(--sans);
   font-size: 16px;
   font-weight: 500;
   text-decoration: none;
   border: 0;
-  transition: transform 180ms var(--ease);
+  transition: transform 180ms var(--ease), background-color 240ms var(--ease);
 }
 .enviar:active { transform: scale(.98); }
+@media (hover: hover) { .enviar:hover { background: #17483f; } }
+.enviar--urgente { background: var(--alarma); }
+@media (hover: hover) { .enviar--urgente:hover { background: #7d2a1e; } }
+
 .reiniciar {
-  font-family: inherit;
+  font-family: var(--sans);
   font-size: 15px;
-  color: rgba(255,255,255,.9);
-  background: none;
-  border: 1px solid rgba(255,255,255,.4);
-  min-height: 54px;
-  padding: 0 22px;
-  cursor: pointer;
-  transition: border-color 240ms var(--ease);
-}
-@media (hover: hover) { .reiniciar:hover { border-color: #fff; } }
-.nota-prueba { font-size: 13px; color: rgba(255,255,255,.72); margin: 18px 0 0; }
-
-/* Variante de urgencia al fondo */
-.fondo--urgente { background: var(--alarma); }
-.fondo--urgente .enviar { color: var(--alarma); }
-
-/* ---------- Portada ---------- */
-.portada { padding-block: clamp(40px, 8vw, 92px) clamp(30px, 4vw, 44px); }
-.portada h1 {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: clamp(44px, 10.5vw, 112px);
-  line-height: .92;
-  letter-spacing: -0.03em;
-  margin: 0;
-  max-width: 11ch;
-}
-.portada h1 em { font-style: italic; color: var(--firma); }
-.portada .entrada {
-  font-size: clamp(17px, 2.1vw, 20px);
-  line-height: 1.52;
   color: var(--gris);
-  max-width: 46ch;
-  margin: 26px 0 0;
+  background: none;
+  border: 0;
+  padding: 0 6px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--linea);
 }
-.indice {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-  margin-top: 30px;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gris-claro);
-}
-.indice .pt { color: var(--linea); }
+@media (hover: hover) { .reiniciar:hover { color: var(--tinta); } }
 
-/* ---------- Pie ---------- */
-.colofon {
-  border-top: 1px solid var(--linea-fuerte);
-  padding-block: 30px 44px;
+/* El aviso de urgencia: una línea roja, sin caja */
+.urgencia {
+  margin-top: 26px;
+  padding-left: 15px;
+  border-left: 3px solid var(--alarma);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tinta);
+  max-width: 52ch;
+}
+.urgencia strong { color: var(--alarma); font-weight: 500; }
+
+.sobre {
+  margin-top: 26px;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--gris);
-  display: grid;
-  gap: 7px;
+  color: var(--rotulo);
+  max-width: 54ch;
 }
-.colofon a { color: var(--firma); }
 
-/* ---------- Entradas ---------- */
-.entra { animation: aparece 440ms var(--ease) both; }
-@keyframes aparece {
-  from { opacity: 0; transform: translateY(16px); }
+/* ---------- Pie ---------- */
+.pie {
+  padding-block: 22px 32px;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--rotulo);
+  border-top: 1px solid var(--linea);
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+}
+.pie a { color: var(--firma); }
+
+/* ---------- Movimiento ---------- */
+.entra { animation: surge 520ms var(--ease) both; }
+@keyframes surge {
+  from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: none; }
 }
+/* Las opciones entran escalonadas: se leen en orden. */
+.opcion { animation: surge 460ms var(--ease) both; }
+.opcion:nth-child(1) { animation-delay: 60ms }
+.opcion:nth-child(2) { animation-delay: 115ms }
+.opcion:nth-child(3) { animation-delay: 170ms }
+.opcion:nth-child(4) { animation-delay: 225ms }
+
 @media (prefers-reduced-motion: reduce) {
-  .entra { animation-duration: .01ms; }
+  .entra, .opcion { animation-duration: .01ms; animation-delay: 0ms; }
+  .hueco { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
 
-.banda-prueba {
+.banda {
   background: var(--tinta);
   color: #fff;
   font-size: 12.5px;
-  line-height: 1.55;
-  padding-block: 11px;
+  line-height: 1.5;
+  padding: 10px max(24px, env(safe-area-inset-left, 0px));
 }
-.banda-prueba strong { font-weight: 500; }
+.banda strong { font-weight: 500; }
 </style>
 </head>
 <body>
 
-<div class="banda-prueba">
-  <div class="marco">
-    <strong>Demostración.</strong> El mensaje llega a un número de prueba, no al consultorio.
+<div class="banda">
+  <strong>Demostración.</strong> El mensaje llega a un número de prueba, no al consultorio.
+</div>
+
+<div class="pagina">
+  <div class="esquinas">
+    <a href="index.html">Dra. Daphne Amaral Alemán</a>
+    <span>Guadalajara</span>
+    <span class="paso-contador" id="contador">01 / 04</span>
   </div>
-</div>
 
-<div class="marco">
-  <header class="cabecera">
-    <a class="titulo-pub" href="index.html">Con·sulta</a>
-    <span class="sello" id="sello">Dra. Daphne Amaral · Guadalajara</span>
-  </header>
-</div>
+  <main class="lienzo" id="app"></main>
 
-<main id="app"></main>
-
-<div class="marco">
-  <footer class="colofon">
-    <p>Con·sulta es del consultorio de la Dra. Daphne Amaral Alemán. Ortodoncia,
-      Invisalign y medicina dental del sueño. Colonia Monraz, Guadalajara.</p>
-    <p>Lo que leas aquí no sustituye una valoración, y aquí no damos diagnósticos.
+  <footer class="pie">
+    <p>Esto no sustituye una valoración y aquí no damos diagnósticos.
       <a href="index.html">Ir al sitio</a></p>
   </footer>
 </div>
 
 <script>
 // ---------------------------------------------------------------
-// Contenido. Cada hoja termina en una frase en primera persona:
-// esa frase es la que viaja a WhatsApp.
+// El contenido está escrito como PARTES DE UNA FRASE.
+// La frase final es literalmente lo que la persona eligió.
 // ---------------------------------------------------------------
 var TEMAS = [
   {
-    id: 'respiras', folio: 'I', titulo: 'Cómo respiras',
-    nota: 'Por la boca, por la nariz, y lo que cambia mientras duermes.',
-    pregunta: 'Respiras por la <em>boca</em>…',
-    contexto: 'La boca abierta al dormir reseca las encías, cambia dónde descansa la lengua e influye en cómo crecen los maxilares. Conviene saber por qué pasa antes de corregir nada.',
+    id: 'respiras', palabra: 'cómo respiro',
+    glosa: 'La boca abierta al dormir reseca las encías, cambia dónde descansa la lengua e influye en cómo crecen los maxilares.',
     ramas: [
       {
-        id: 'boca-abierta', folio: 'I.1', titulo: 'Duermo con la boca abierta',
-        nota: 'Amaneces con la boca seca o los labios partidos.',
-        pregunta: 'Amanecer con la boca <em>seca</em>',
-        contexto: 'Pasa cuando el aire entra por donde no debería durante horas. A veces el origen es nasal, a veces la postura de la lengua, a veces las dos.',
+        id: 'boca', palabra: 'duermo con la boca abierta',
+        glosa: 'El aire entra por donde no debería durante horas. A veces el origen es nasal, a veces la postura de la lengua.',
         hojas: [
-          { id: 'seca', titulo: 'Despierto con la boca seca', frase: 'Duermo con la boca abierta y despierto con la boca muy seca.' },
-          { id: 'encias', titulo: 'Me sangran las encías', frase: 'Duermo con la boca abierta y mis encías están inflamadas o me sangran.' },
-          { id: 'hijo', titulo: 'Le pasa a mi hijo', frase: 'Mi hijo duerme con la boca abierta y quiero saber si hay que revisarlo.' }
+          { id: 'seca', palabra: 'y despierto con la boca muy seca' },
+          { id: 'encias', palabra: 'y mis encías se inflaman' },
+          { id: 'hijo', palabra: 'igual que mi hijo' }
         ]
       },
       {
-        id: 'nariz', folio: 'I.2', titulo: 'No me entra aire por la nariz',
-        nota: 'Congestión que no se va, o que solo se va de un lado.',
-        pregunta: 'Cuando la nariz <em>no alcanza</em>',
-        contexto: 'Si respirar por la nariz cuesta, el cuerpo compensa con la boca. Eso tiene consecuencias dentales, y a veces necesita a otro especialista.',
+        id: 'nariz', palabra: 'no me entra aire por la nariz',
+        glosa: 'Si respirar por la nariz cuesta, el cuerpo compensa con la boca. Eso tiene consecuencias dentales.',
         hojas: [
-          { id: 'siempre', titulo: 'Siempre está tapada', frase: 'Casi nunca puedo respirar bien por la nariz y acabo respirando por la boca.' },
-          { id: 'dormir', titulo: 'Solo al acostarme', frase: 'Se me tapa la nariz cuando me acuesto y termino respirando por la boca.' },
-          { id: 'lado', titulo: 'Solo de un lado', frase: 'Respiro bien por una fosa nasal pero por la otra casi nada.' }
+          { id: 'siempre', palabra: 'casi siempre' },
+          { id: 'acostado', palabra: 'solo cuando me acuesto' },
+          { id: 'lado', palabra: 'solo de un lado' }
         ]
       }
     ]
   },
   {
-    id: 'duermes', folio: 'II', titulo: 'Cómo duermes',
-    nota: 'Ronquidos, cansancio al despertar, y qué tiene que ver la boca.',
-    pregunta: 'Dormir ocho horas y despertar <em>cansado</em>',
-    contexto: 'Dormir mucho y amanecer sin energía suele significar que el descanso se interrumpe sin que te enteres. Parte de eso se alcanza a ver desde la boca.',
+    id: 'duermo', palabra: 'cómo duermo',
+    glosa: 'Dormir las horas y amanecer sin energía suele significar que el descanso se interrumpe sin que te enteres.',
     ramas: [
       {
-        id: 'ronco', folio: 'II.1', titulo: 'Ronco',
-        nota: 'Tú no lo oyes. Quien duerme a tu lado, sí.',
-        pregunta: 'El ronquido como <em>señal</em>',
-        contexto: 'Roncar es aire pasando apretado. Vale la pena distinguir el ronquido simple del que viene con pausas, porque no se atienden igual.',
+        id: 'ronco', palabra: 'ronco',
+        glosa: 'Roncar es aire pasando apretado. Conviene distinguir el ronquido simple del que viene con pausas.',
         hojas: [
-          { id: 'fuerte', titulo: 'Ronco fuerte', frase: 'Ronco fuerte y me dicen que se oye desde otro cuarto.' },
-          { id: 'pausas', titulo: 'Me dicen que dejo de respirar', frase: 'Me dicen que mientras duermo dejo de respirar por momentos. Quiero que me valoren.', urgente: true },
-          { id: 'nino', titulo: 'Mi hijo ronca', frase: 'Mi hijo ronca por las noches y quiero saber si es normal a su edad.' }
+          { id: 'fuerte', palabra: 'y se oye desde otro cuarto' },
+          { id: 'pausas', palabra: 'y me dicen que dejo de respirar', urgente: true },
+          { id: 'nino', palabra: 'igual que mi hijo' }
         ]
       },
       {
-        id: 'cansado', folio: 'II.2', titulo: 'Despierto cansado',
-        nota: 'Duermes las horas, pero no descansas.',
-        pregunta: 'Horas de sueño que <em>no rinden</em>',
-        contexto: 'Si duermes completo y amaneces como si no, algo corta el sueño. Apretar los dientes y las pausas al respirar son dos causas que se revisan aquí.',
+        id: 'cansado', palabra: 'despierto cansado',
+        glosa: 'Si duermes completo y amaneces como si no, algo corta el sueño. Apretar los dientes es una de las causas.',
         hojas: [
-          { id: 'mandibula', titulo: 'Amanezco con la mandíbula tensa', frase: 'Despierto cansado y con la mandíbula tensa, como si hubiera apretado toda la noche.' },
-          { id: 'cabeza', titulo: 'Amanezco con dolor de cabeza', frase: 'Despierto con dolor de cabeza varios días a la semana.' },
-          { id: 'desvelo', titulo: 'Me despierto a media noche', frase: 'Me despierto varias veces en la noche sin saber por qué.' }
+          { id: 'mandibula', palabra: 'con la mandíbula tensa' },
+          { id: 'cabeza', palabra: 'con dolor de cabeza' },
+          { id: 'noche', palabra: 'porque me desvelo sin saber por qué' }
         ]
       }
     ]
   },
   {
-    id: 'muerdes', folio: 'III', titulo: 'Cómo muerdes',
-    nota: 'La mandíbula que truena, que duele o que no abre.',
-    pregunta: 'La mandíbula <em>avisa</em> antes de doler',
-    contexto: 'Chasquidos, tensión al masticar o apertura limitada son formas en que la articulación pide revisión. Entre más pronto se vea, menos tratamiento necesita.',
+    id: 'muerdo', palabra: 'cómo muerdo',
+    glosa: 'Chasquidos, tensión al masticar o apertura limitada son formas en que la articulación pide revisión.',
     ramas: [
       {
-        id: 'truena', folio: 'III.1', titulo: 'Me truena',
-        nota: 'Un chasquido al abrir o al masticar.',
-        pregunta: 'El chasquido al <em>abrir</em>',
-        contexto: 'Un tronido aislado y sin dolor casi nunca es urgente. Si viene con dolor o con bloqueos, cambia la conversación.',
+        id: 'truena', palabra: 'me truena la mandíbula',
+        glosa: 'Un tronido aislado y sin dolor casi nunca es urgente. Con dolor o con bloqueos, cambia la conversación.',
         hojas: [
-          { id: 'sin-dolor', titulo: 'Truena pero no duele', frase: 'Me truena la mandíbula al abrir la boca, aunque no me duele.' },
-          { id: 'con-dolor', titulo: 'Truena y duele', frase: 'Me truena la mandíbula y además me duele al abrir o masticar.' }
+          { id: 'sin-dolor', palabra: 'aunque no me duele' },
+          { id: 'con-dolor', palabra: 'y además me duele' }
         ]
       },
       {
-        id: 'duele', folio: 'III.2', titulo: 'Me duele o no abro bien',
-        nota: 'Dolor al masticar, o la boca que no termina de abrir.',
-        pregunta: 'Cuando abrir la boca <em>cuesta</em>',
-        contexto: 'La limitación de apertura y el bloqueo se atienden pronto. Si es tu caso, mejor llamar que esperar una cita de rutina.',
+        id: 'abro', palabra: 'no abro bien la boca',
+        glosa: 'La limitación de apertura y el bloqueo se atienden pronto, mejor que esperar una cita de rutina.',
         hojas: [
-          { id: 'masticar', titulo: 'Me duele al masticar', frase: 'Me duele la mandíbula cuando mastico.' },
-          { id: 'no-abre', titulo: 'No abro completo', frase: 'No puedo abrir la boca completamente y quiero que me revisen pronto.', urgente: true },
-          { id: 'traba', titulo: 'Se me traba', frase: 'Se me traba la mandíbula y a veces no puedo cerrarla o abrirla bien.', urgente: true }
+          { id: 'masticar', palabra: 'y me duele al masticar' },
+          { id: 'completo', palabra: 'desde hace varios días', urgente: true },
+          { id: 'traba', palabra: 'porque se me traba', urgente: true }
         ]
       }
     ]
   },
   {
-    id: 'ves', folio: 'IV', titulo: 'Cómo se ve',
-    nota: 'Dientes chuecos, espacios, color. Por donde entra la mayoría.',
-    pregunta: 'Empezar por lo <em>estético</em> está bien',
-    contexto: 'Casi todo el mundo llega por cómo se ven sus dientes. En la valoración revisamos también cómo funcionan, porque de ahí depende que el resultado dure.',
+    id: 'veo', palabra: 'cómo se ven mis dientes',
+    glosa: 'Casi todo el mundo llega por aquí. En la valoración revisamos también cómo funcionan, porque de eso depende que el resultado dure.',
     ramas: [
       {
-        id: 'chuecos', folio: 'IV.1', titulo: 'Están chuecos o encimados',
-        nota: 'Alineación, mordida y espacios.',
-        pregunta: 'Alinear, y revisar <em>por qué</em> se movieron',
-        contexto: 'Los dientes se encabalgan por falta de espacio, y la falta de espacio tiene causas. Revisarlas es lo que evita que vuelvan a moverse después.',
+        id: 'chuecos', palabra: 'están chuecos',
+        glosa: 'Los dientes se encabalgan por falta de espacio, y la falta de espacio tiene causas.',
         hojas: [
-          { id: 'invisalign', titulo: 'Los quiero alinear sin brackets', frase: 'Quiero alinear mis dientes con Invisalign y saber si soy candidato.' },
-          { id: 'brackets', titulo: 'Estoy abierto a brackets', frase: 'Quiero alinear mis dientes y me gustaría saber qué opción me conviene.' },
-          { id: 'recaida', titulo: 'Ya usé ortodoncia y se movieron', frase: 'Ya usé ortodoncia antes y mis dientes se volvieron a mover.' }
+          { id: 'invisalign', palabra: 'y los quiero alinear sin brackets' },
+          { id: 'brackets', palabra: 'y quiero saber qué opción me conviene' },
+          { id: 'recaida', palabra: 'otra vez, después de usar ortodoncia' }
         ]
       },
       {
-        id: 'color', folio: 'IV.2', titulo: 'El color o la forma',
-        nota: 'Manchas, desgaste, resinas viejas.',
-        pregunta: 'Color, desgaste y resinas <em>de antes</em>',
-        contexto: 'El desgaste y las manchas a veces cuentan algo más: cómo muerdes, si aprietas de noche, qué tan ácida es tu dieta.',
+        id: 'color', palabra: 'no me gusta su color',
+        glosa: 'El desgaste y las manchas a veces cuentan algo más: cómo muerdes, si aprietas de noche, qué tan ácida es tu dieta.',
         hojas: [
-          { id: 'blanquear', titulo: 'Los quiero más blancos', frase: 'Me gustaría blanquear mis dientes y saber qué opciones hay.' },
-          { id: 'manchas', titulo: 'Tengo manchas', frase: 'Tengo manchas en los dientes que no se quitan al cepillarme.' },
-          { id: 'gastados', titulo: 'Se ven gastados', frase: 'Siento que mis dientes se ven más cortos o gastados que antes.' }
+          { id: 'blanquear', palabra: 'y los quiero más blancos' },
+          { id: 'manchas', palabra: 'por unas manchas que no se quitan' },
+          { id: 'gastados', palabra: 'y se ven más cortos que antes' }
         ]
       }
     ]
@@ -554,7 +421,6 @@ var TEMAS = [
 ];
 
 var WHATSAPP = '526221424577'; // demo. El del consultorio va aquí.
-
 var ruta = [];
 
 function tema() { return TEMAS.filter(function (t) { return t.id === ruta[0]; })[0]; }
@@ -566,130 +432,110 @@ function esc(s) {
   });
 }
 
-function recado() {
+// La frase que se manda: exactamente lo que la persona compuso.
+function frasePlana() {
   var t = tema(), r = rama(), h = hoja();
+  if (!t) return '';
+  var s = 'Quiero que revisen ' + t.palabra;
+  if (r) s += ': ' + r.palabra;
+  if (h) s += ' ' + h.palabra;
+  return s + '.';
+}
+
+function recado() {
+  var h = hoja();
   if (!h) return '';
-  var l = [
-    'Hola, doctora. Entré a Con·sulta y llegué aquí:',
-    '',
-    '“' + h.frase + '”',
-    '',
-    'Camino: ' + t.titulo + ' › ' + r.titulo
-  ];
+  var l = ['Hola, doctora.', '', frasePlana()];
   if (h.urgente) l.push('', 'Entiendo que esto conviene revisarlo pronto.');
   l.push('', 'Me gustaría agendar una valoración.');
   return l.join('\n');
 }
 
-var FLECHA = '<svg class="opcion-signo" width="21" height="21" viewBox="0 0 22 22" fill="none" aria-hidden="true">' +
-  '<path d="M4 11h14M12 5l6 6-6 6" stroke="currentColor" stroke-width="1.3" ' +
-  'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// ---------------------------------------------------------------
+// La frase en pantalla, por tramos. Cada tramo escrito es un
+// botón: tocarlo borra desde ahí para adelante.
+// ---------------------------------------------------------------
+function frasePintada() {
+  var t = tema(), r = rama(), h = hoja();
+  var p = '<h1 class="frase">Quiero que revisen ';
 
-function pisoResuelto(que, folio, valor, accion, valorDato) {
-  return '<div class="piso"><div class="marco">' +
-    '<button type="button" class="resuelto" data-accion="' + accion + '"' +
-    (valorDato ? ' data-valor="' + valorDato + '"' : '') + '>' +
-    '<span class="resuelto-folio">' + esc(folio) + '</span>' +
-    '<span class="resuelto-que">' + esc(que) + '</span>' +
-    '<span class="resuelto-valor">' + esc(valor) + '</span>' +
-    '<span class="resuelto-cambiar">cambiar</span>' +
-    '</button></div></div>';
-}
+  p += t
+    ? '<button type="button" class="escrito" data-accion="volver" data-nivel="0">' + esc(t.palabra) + '</button>'
+    : '<span class="hueco">qué</span>';
 
-function pisoActivo(folio, pregunta, contexto, opciones, accion) {
-  return '<div class="piso activo entra"><div class="marco activo-cuerpo">' +
-    '<p class="pregunta-folio">' + esc(folio) + '</p>' +
-    '<h2 class="pregunta">' + pregunta + '</h2>' +
-    '<p class="contexto">' + esc(contexto) + '</p>' +
-    '<div class="opciones">' +
-    opciones.map(function (o) {
-      return '<button type="button" class="opcion" data-accion="' + accion +
-        '" data-valor="' + o.id + '">' +
-        '<span class="opcion-texto">' + esc(o.titulo) + '</span>' +
-        (o.nota ? '<span class="opcion-nota">' + esc(o.nota) + '</span>' : '') +
-        (o.urgente
-          ? '<span class="urgente">' +
-            '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
-            '<path d="M8 2 1.6 13.4h12.8L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
-            '<path d="M8 6.6v2.8M8 11.4v.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
-            '</svg>Conviene verlo pronto</span>'
-          : '') +
-        FLECHA + '</button>';
-    }).join('') +
-    '</div></div></div>';
-}
-
-function render(subir) {
-  var out = '';
-
-  // Portada: solo cuando no hay nada elegido.
-  if (ruta.length === 0) {
-    out += '<div class="marco portada entra">' +
-      '<h1>Empieza por lo que <em>notas</em>.</h1>' +
-      '<p class="entrada">Baja de lo general a la frase exacta. Al llegar al fondo la mandas ' +
-      'por WhatsApp sin volver a escribirla.</p>' +
-      '<div class="indice"><span>Cuatro caminos</span><span class="pt">—</span>' +
-      '<span>Tres niveles</span><span class="pt">—</span><span>Dos minutos</span></div>' +
-      '</div>';
+  if (t) {
+    p += ': ';
+    p += r
+      ? '<button type="button" class="escrito" data-accion="volver" data-nivel="1">' + esc(r.palabra) + '</button>'
+      : '<span class="hueco">qué noto</span>';
+  } else {
+    p += '<span class="pendiente">: qué noto</span>';
   }
 
-  // Pisos resueltos, de arriba hacia abajo.
-  if (ruta.length >= 1) out += pisoResuelto('Qué notas', tema().folio, tema().titulo, 'inicio');
-  if (ruta.length >= 2) out += pisoResuelto('En concreto', rama().folio, rama().titulo, 'tema', tema().id);
-  if (ruta.length >= 3) out += pisoResuelto('Tu caso', rama().folio + '.' + (rama().hojas.indexOf(hoja()) + 1), hoja().titulo, 'rama', rama().id);
+  if (r) {
+    p += ' ';
+    p += h
+      ? '<button type="button" class="escrito" data-accion="volver" data-nivel="2">' + esc(h.palabra) + '</button>'
+      : '<span class="hueco">en concreto</span>';
+  } else if (t) {
+    p += ' <span class="pendiente">en concreto</span>';
+  }
 
-  // El piso activo.
-  if (ruta.length === 0) {
-    out += pisoActivo('Elige un camino', 'Cuatro formas de <em>empezar</em>',
-      'No hace falta saber el nombre de lo que tienes. Elige lo que se parezca a lo tuyo.',
-      TEMAS, 'tema');
-  } else if (ruta.length === 1) {
-    out += pisoActivo('Capítulo ' + tema().folio, tema().pregunta, tema().contexto, tema().ramas, 'rama');
-  } else if (ruta.length === 2) {
-    out += pisoActivo(rama().folio, rama().pregunta, rama().contexto, rama().hojas, 'hoja');
+  return p + '.</h1>';
+}
+
+function opciones(lista, accion) {
+  return '<div class="opciones">' + lista.map(function (o) {
+    return '<button type="button" class="opcion" data-accion="' + accion + '" data-valor="' + o.id + '">' +
+      esc(o.palabra) +
+      (o.urgente ? '<span class="alerta">verlo pronto</span>' : '') +
+      '</button>';
+  }).join('') + '</div>';
+}
+
+function render() {
+  var out = frasePintada();
+  var t = tema(), r = rama(), h = hoja();
+  var paso = ruta.length + 1;
+
+  if (!t) {
+    out += opciones(TEMAS, 'tema');
+    out += '<p class="glosa">No hace falta que sepas el nombre de lo que tienes. ' +
+      'Elige lo que se parezca a lo tuyo y la frase se arma sola.</p>';
+  } else if (!r) {
+    out += opciones(t.ramas, 'rama');
+    out += '<p class="glosa">' + esc(t.glosa) + '</p>';
+  } else if (!h) {
+    out += opciones(r.hojas, 'hoja');
+    out += '<p class="glosa">' + esc(r.glosa) + '</p>';
   } else {
-    // El fondo.
-    var h = hoja(), txt = recado();
-    out += '<div class="piso fondo' + (h.urgente ? ' fondo--urgente' : '') + ' entra">' +
-      '<div class="marco fondo-cuerpo">' +
-      '<p class="dicho">“' + esc(h.frase) + '”</p>' +
-      '<p class="explica">' +
-      (h.urgente
-        ? 'Por lo que describes, conviene que te vean antes que en una cita de rutina. Manda el mensaje y márcanos al consultorio.'
-        : 'Eso es lo que la doctora necesita para preparar tu valoración. Va listo, no tienes que escribirlo de nuevo.') +
-      '</p>' +
-      '<div class="recado">' +
-      '<p class="recado-rotulo">Lo que se envía</p>' +
-      '<p class="recado-texto">' + esc(txt) + '</p>' +
-      '</div>' +
-      '<div class="acciones">' +
-      '<a class="enviar" href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt) + '" ' +
+    // Final.
+    var txt = recado();
+    out += '<div class="final-acciones">' +
+      '<a class="enviar' + (h.urgente ? ' enviar--urgente' : '') + '" ' +
+      'href="https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(txt) + '" ' +
       'target="_blank" rel="noopener noreferrer">' +
       '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
       '<path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
-      'Mandar por WhatsApp</a>' +
-      '<button type="button" class="reiniciar" data-accion="inicio">Empezar de nuevo</button>' +
-      '</div>' +
-      '<p class="nota-prueba">Demostración: va a un número de prueba.</p>' +
-      '</div></div>';
-  }
+      'Mandar esta frase</a>' +
+      '<button type="button" class="reiniciar" data-accion="inicio">empezar de nuevo</button>' +
+      '</div>';
 
-  document.getElementById('app').innerHTML = out;
-  var t = tema();
-  document.getElementById('sello').textContent = t
-    ? 'Capítulo ' + t.folio + ' · ' + t.titulo
-    : 'Dra. Daphne Amaral · Guadalajara';
-
-  // Al bajar un piso, llevar la vista al piso nuevo, no al tope.
-  if (subir === 'piso') {
-    var act = document.querySelector('.activo, .fondo');
-    if (act) {
-      var y = act.getBoundingClientRect().top + window.scrollY - 8;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    if (h.urgente) {
+      out += '<p class="urgencia"><strong>Conviene verlo pronto.</strong> ' +
+        'Manda la frase y márcanos al consultorio en vez de esperar la confirmación.</p>';
     }
-  } else if (subir !== false) {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    out += '<p class="sobre">Toca cualquier parte de la frase para cambiarla. ' +
+      'Va a un número de prueba.</p>';
   }
+
+  var app = document.getElementById('app');
+  app.innerHTML = out;
+  app.classList.remove('final');
+  if (h) app.classList.add('final');
+
+  document.getElementById('contador').textContent =
+    String(Math.min(paso, 4)).padStart(2, '0') + ' / 04';
 }
 
 document.addEventListener('click', function (e) {
@@ -697,19 +543,18 @@ document.addEventListener('click', function (e) {
   if (!b) return;
   var a = b.dataset.accion, v = b.dataset.valor;
 
-  // Un piso resuelto siempre devuelve a su nivel; una opción baja uno.
-  // En ambos casos la ruta se reconstruye desde cero, así no quedan
-  // restos de una rama que ya no corresponde.
-  if (a === 'inicio') { ruta = []; render(); return; }
+  if (a === 'inicio') ruta = [];
+  // Tocar un tramo escrito borra desde ese nivel en adelante.
+  else if (a === 'volver') ruta = ruta.slice(0, Number(b.dataset.nivel));
   else if (a === 'tema') ruta = [v];
   else if (a === 'rama') ruta = [ruta[0], v];
   else if (a === 'hoja') ruta = [ruta[0], ruta[1], v];
   else return;
 
-  render('piso');
+  render();
 });
 
-render(false);
+render();
 </script>
 
 </body>
