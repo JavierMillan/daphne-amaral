@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antes de la consulta — Dra. Daphne Amaral Alemán</title>
+<meta name="description" content="Las preguntas de la primera cita, contestadas desde tu teléfono. Ortodoncia y medicina dental del sueño en Guadalajara.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+
+<style>
+/* ============================================================
+   Antes de la consulta — una entrevista
+   Formato de revista: pregunta y respuesta (P. / R.).
+   Una pregunta por pantalla. La transcripción se escribe al
+   lado conforme contestas, y esa transcripción es lo que se
+   manda a la doctora.
+   Contrastes verificados sobre blanco: todo AA o AAA.
+   ============================================================ */
+:root {
+  --papel: #ffffff;
+  --tinta: #191714;        /* 17.89:1 */
+  --gris: #55504a;         /*  7.98:1 */
+  --rotulo: #6b655d;       /*  5.76:1 */
+  --firma: #6b5244;        /*  7.20:1 */
+  --accion: #1f5e52;       /*  7.55:1 */
+  --accion-hover: #17483f;
+  --alarma: #962f20;       /*  7.71:1 */
+  --linea: #d8d3cb;        /*  divisor, nunca texto */
+  --linea-fina: #efebe6;
+  --tenue: #f6f4f1;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Todo control sin estilo de navegador. */
+button {
+  font: inherit; color: inherit; background: none; border: 0;
+  margin: 0; padding: 0; text-align: left; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+}
+input { font: inherit; color: inherit; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+:focus-visible { outline: 2px solid var(--accion); outline-offset: 3px; }
+
+.marco {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: max(22px, env(safe-area-inset-left, 0px));
+  padding-right: max(22px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Banda y cabecera ---------- */
+.banda { background: var(--tinta); color: #fff; font-size: 12.5px; line-height: 1.5; padding-block: 10px; }
+.banda strong { font-weight: 500; }
+
+.cabecera {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  padding-block: 18px 14px;
+  border-bottom: 1px solid var(--tinta);
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--rotulo);
+}
+.cabecera a { color: var(--firma); text-decoration: none; }
+.cabecera .folio { margin-left: auto; color: var(--tinta); font-variant-numeric: tabular-nums; }
+
+/* ---------- Escena: pregunta + transcripción ---------- */
+.escena { display: grid; gap: 0; }
+@media (min-width: 960px) {
+  .escena { grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 72px; }
+}
+.escenario {
+  min-height: calc(100vh - 140px);
+  padding-block: clamp(36px, 7vh, 84px) 140px;
+  display: flex; flex-direction: column;
+}
+@media (min-width: 960px) { .escenario { padding-bottom: 80px; } }
+
+.entra { animation: entra 420ms var(--ease) both; }
+@keyframes entra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Rótulo de posición ---------- */
+.posicion {
+  display: block;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rotulo);
+}
+.posicion b { font-weight: 500; color: var(--firma); }
+.puntos { display: flex; gap: 6px; margin-top: 12px; }
+.punto { display: block; width: 22px; height: 2px; background: var(--linea); }
+.punto--hecho { background: var(--firma); }
+.punto--actual { background: var(--tinta); }
+
+/* ---------- La pregunta ---------- */
+.p-marca {
+  display: block;
+  font-family: var(--display); font-style: italic; font-size: 22px;
+  color: var(--firma); margin-top: clamp(26px, 4vh, 44px); line-height: 1;
+}
+.pregunta {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(31px, 5.2vw, 58px);
+  line-height: 1.07; letter-spacing: -.022em;
+  margin: 10px 0 0; max-width: 18ch; text-wrap: balance;
+}
+.indicacion {
+  font-size: clamp(16px, 1.9vw, 18px); line-height: 1.55; color: var(--gris);
+  margin: 16px 0 0; max-width: 46ch;
+}
+
+/* ---------- Prueba guiada (respirar 20 s) ---------- */
+.prueba {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  margin-top: 26px; padding: 16px 0;
+  border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
+  max-width: 560px;
+}
+.prueba-btn {
+  font-size: 15px; font-weight: 500; color: var(--accion);
+  border: 1px solid var(--accion); padding: 11px 18px; min-height: 44px;
+}
+@media (hover: hover) { .prueba-btn:hover { background: var(--accion); color: #fff; } }
+.crono {
+  font-family: var(--display); font-weight: 300; font-size: 46px; line-height: 1;
+  font-variant-numeric: tabular-nums; color: var(--tinta); min-width: 2ch;
+}
+.crono-texto { font-size: 15px; color: var(--gris); }
+
+/* ---------- Respuestas ---------- */
+.respuestas { margin-top: clamp(26px, 4.4vh, 44px); border-top: 1px solid var(--linea); max-width: 640px; }
+.r {
+  display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: baseline;
+  width: 100%; padding: 16px 0;
+  border-bottom: 1px solid var(--linea);
+  transition: padding-left 300ms var(--ease), background-color 200ms var(--ease);
+  position: relative;
+}
+.r::before {
+  content: ""; position: absolute; left: 0; top: -1px; bottom: -1px; width: 0;
+  background: var(--tinta); transition: width 300ms var(--ease);
+}
+.r-tecla {
+  display: block;
+  font-size: 12px; font-weight: 500; color: var(--rotulo);
+  font-variant-numeric: tabular-nums; letter-spacing: .04em;
+}
+.r-texto {
+  display: block;
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(21px, 2.6vw, 28px); line-height: 1.2; letter-spacing: -.012em;
+}
+@media (hover: hover) {
+  .r:hover { padding-left: 18px; }
+  .r:hover::before { width: 3px; }
+}
+.r[aria-pressed="true"] { padding-left: 18px; }
+.r[aria-pressed="true"]::before { width: 3px; background: var(--accion); }
+.r[aria-pressed="true"] .r-tecla { color: var(--accion); }
+
+/* ---------- Por qué se pregunta ---------- */
+.porque {
+  margin-top: 26px; max-width: 52ch;
+  font-size: 14px; line-height: 1.6; color: var(--gris);
+}
+.porque b {
+  display: block; font-weight: 500;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--firma);
+  margin-bottom: 4px;
+}
+.porque--alarma b { color: var(--alarma); }
+
+.atras {
+  margin-top: auto; padding-top: 34px;
+  font-size: 14px; color: var(--gris);
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--linea);
+  align-self: flex-start;
+}
+@media (hover: hover) { .atras:hover { color: var(--tinta); } }
+
+/* ---------- Índice (sumario de revista) ---------- */
+.portada h1 {
+  font-family: var(--display); font-weight: 300;
+  font-size: clamp(40px, 7.4vw, 88px); line-height: .98; letter-spacing: -.03em;
+  margin: 0; max-width: 13ch; text-wrap: balance;
+}
+.portada h1 em { font-style: italic; color: var(--firma); }
+.portada .bajada {
+  font-size: clamp(16px, 2vw, 19px); line-height: 1.58; color: var(--gris);
+  margin: 22px 0 0; max-width: 48ch;
+}
+.sumario { margin-top: clamp(34px, 5vh, 56px); max-width: 680px; }
+.eje-rotulo {
+  display: block;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rotulo);
+  padding-bottom: 10px; border-bottom: 1px solid var(--tinta); margin-top: 28px;
+}
+.eje-rotulo:first-child { margin-top: 0; }
+.cap {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: baseline;
+  width: 100%; padding: 18px 0; border-bottom: 1px solid var(--linea);
+  transition: padding-left 300ms var(--ease);
+}
+@media (hover: hover) { .cap:hover { padding-left: 14px; } }
+.cap-folio { display: block; font-family: var(--display); font-size: 22px; color: var(--firma); font-variant-numeric: tabular-nums; }
+.cap-titulo { display: block; font-family: var(--display); font-weight: 300; font-size: clamp(25px, 3.2vw, 36px); line-height: 1.1; letter-spacing: -.016em; }
+.cap-meta { display: block; font-size: 12px; color: var(--rotulo); white-space: nowrap; }
+.cap--hecho .cap-meta { color: var(--accion); font-weight: 500; }
+
+/* ---------- Fin de capítulo ---------- */
+.par {
+  margin-top: 26px; padding: 18px 20px;
+  background: var(--tenue); border-left: 3px solid var(--firma);
+  max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--tinta);
+}
+
+/* ---------- Nombre ---------- */
+.campo { margin-top: 30px; max-width: 480px; }
+.campo label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.campo input {
+  display: block; width: 100%;
+  font-family: var(--display); font-weight: 300; font-size: 28px;
+  border: 0; border-bottom: 1px solid var(--tinta); padding: 6px 0 10px;
+  background: transparent;
+}
+.campo input::placeholder { color: var(--rotulo); opacity: 1; }
+.campo input:focus { outline: none; border-bottom: 2px solid var(--accion); padding-bottom: 9px; }
+
+.botones { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 30px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 54px; padding: 0 28px;
+  background: var(--accion); color: #fff; font-size: 16px; font-weight: 500;
+  text-decoration: none; transition: background-color 220ms var(--ease), transform 160ms var(--ease);
+}
+.btn:active { transform: scale(.985); }
+@media (hover: hover) { .btn:hover { background: var(--accion-hover); } }
+.btn--alarma { background: var(--alarma); }
+@media (hover: hover) { .btn--alarma:hover { background: #7a2618; } }
+.enlace {
+  font-size: 15px; color: var(--gris);
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--linea);
+  padding: 8px 2px;
+}
+@media (hover: hover) { .enlace:hover { color: var(--tinta); } }
+
+/* ---------- Recado final ---------- */
+.recado { margin-top: 28px; border: 1px solid var(--tinta); max-width: 620px; }
+.recado-cabeza {
+  display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--rotulo); padding: 11px 18px; border-bottom: 1px solid var(--linea);
+}
+.recado-texto { margin: 0; padding: 18px; font-size: 15px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
+.aviso {
+  margin-top: 22px; padding-left: 15px; border-left: 3px solid var(--alarma);
+  font-size: 15px; line-height: 1.6; max-width: 54ch;
+}
+.aviso b { color: var(--alarma); font-weight: 500; }
+
+/* ============================================================
+   TRANSCRIPCIÓN — la entrevista escribiéndose
+   ============================================================ */
+.transcripcion {
+  border-top: 1px solid var(--tinta);
+  padding-block: 18px 30px;
+}
+@media (min-width: 960px) {
+  .transcripcion {
+    position: sticky; top: 0; align-self: start;
+    max-height: 100vh; overflow-y: auto;
+    border-top: 0; border-left: 1px solid var(--linea);
+    padding: clamp(36px, 7vh, 84px) 0 40px 32px;
+  }
+}
+.t-titulo {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rotulo);
+  padding-bottom: 12px; border-bottom: 1px solid var(--linea);
+}
+.t-titulo b { font-weight: 500; color: var(--tinta); }
+.t-vacio { font-size: 14px; line-height: 1.6; color: var(--gris); margin: 16px 0 0; max-width: 34ch; }
+.t-cap {
+  display: block;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--firma);
+  margin-top: 22px;
+}
+.t-par { display: block; padding: 11px 0; border-bottom: 1px solid var(--linea-fina); }
+.t-p { display: block; font-size: 13px; line-height: 1.5; color: var(--gris); }
+.t-p i { font-family: var(--display); font-style: italic; color: var(--firma); font-size: 15px; margin-right: 4px; }
+.t-r { display: block; font-family: var(--display); font-size: 19px; line-height: 1.3; margin-top: 2px; }
+.t-r i { font-style: italic; color: var(--firma); font-size: 15px; margin-right: 4px; }
+.t-r--alarma { color: var(--alarma); }
+.t-par--nuevo { animation: nuevo 900ms var(--ease) both; }
+@keyframes nuevo { from { background: var(--tenue); } to { background: transparent; } }
+
+/* Móvil: la transcripción vive en una hoja que se abre desde abajo. */
+.barra-movil {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: var(--papel); border-top: 1px solid var(--tinta);
+  padding: 12px max(22px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-size: 13px; color: var(--gris);
+}
+.barra-movil b { color: var(--tinta); font-weight: 500; }
+.barra-movil button { font-size: 14px; font-weight: 500; color: var(--accion); min-height: 40px; padding: 0 4px; }
+@media (min-width: 960px) { .barra-movil { display: none; } }
+
+@media (max-width: 959px) {
+  .transcripcion { display: none; }
+  .transcripcion.abierta {
+    display: block; position: fixed; inset: 0; z-index: 30;
+    background: var(--papel); overflow-y: auto; border-top: 0;
+    padding: calc(22px + env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) 40px max(22px, env(safe-area-inset-left, 0px));
+  }
+}
+.cerrar { font-size: 14px; font-weight: 500; color: var(--accion); }
+@media (min-width: 960px) { .cerrar { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .entra, .t-par--nuevo { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="banda"><div class="marco">
+  <strong>Demostración.</strong> Las preguntas son una propuesta que la Dra. ajusta. El mensaje llega a un número de prueba.
+</div></div>
+
+<div class="marco">
+  <header class="cabecera">
+    <a href="index.html">Dra. Daphne Amaral Alemán</a>
+    <span>Antes de la consulta</span>
+    <span class="folio" id="folio">DA-0000</span>
+  </header>
+
+  <div class="escena">
+    <main class="escenario" id="escenario"></main>
+    <aside class="transcripcion" id="transcripcion" aria-label="Tu entrevista"></aside>
+  </div>
+</div>
+
+<div class="barra-movil" id="barra"></div>
+
+<script>
+// ---------------------------------------------------------------
+// LAS PREGUNTAS. Son hipótesis de trabajo: la Dra. las corrige.
+// r = cómo se lee la respuesta en el mensaje (null = no aporta).
+// alarma = conviene verlo pronto.
+// si = la pregunta solo aparece si otra se contestó de cierta forma.
+// ---------------------------------------------------------------
+var CAPS = [
+  {
+    id: 'respiro', folio: 'I', titulo: 'Cómo respiro', eje: 'Vía aérea', par: 'duermo',
+    preguntas: [
+      { id: 'despertar', p: 'Cuando despiertas, ¿qué es lo primero que haces?',
+        porque: 'La boca seca al despertar tiene varios orígenes posibles. En consulta se revisa cuál es el tuyo.',
+        ops: [
+          { t: 'Tomar agua, porque amanezco con la boca seca', r: 'Amanezco con la boca seca' },
+          { t: 'Me cuesta mucho levantarme', r: 'Me cuesta levantarme por las mañanas' },
+          { t: 'Nada en especial', r: null }
+        ] },
+      { id: 'nariz', p: 'Cierra la boca y respira solo por la nariz.', ind: 'Veinte segundos, aquí mismo. Luego dinos cómo te fue.',
+        prueba: 20,
+        porque: 'Es de lo primero que la doctora observa: cómo respiras cuando nadie te lo pide.',
+        ops: [
+          { t: 'Normal, sin esfuerzo', r: null },
+          { t: 'Me faltó un poco el aire', r: 'Respirar solo por la nariz me cuesta un poco' },
+          { t: 'Tuve que abrir la boca', r: 'No aguanto respirar solo por la nariz' }
+        ] },
+      { id: 'labios', p: '¿Se te resecan los labios seguido, aunque tomes agua?',
+        ops: [
+          { t: 'Sí, casi siempre', r: 'Se me resecan los labios aunque tome agua' },
+          { t: 'A veces', r: 'A veces se me resecan los labios' },
+          { t: 'No', r: null }
+        ] },
+      { id: 'testigo', p: '¿Alguien te ha dicho que duermes con la boca abierta?',
+        porque: 'Casi nadie lo sabe de sí mismo. Lo cuenta quien duerme cerca.',
+        ops: [
+          { t: 'Sí', r: 'Me han dicho que duermo con la boca abierta' },
+          { t: 'No', r: null },
+          { t: 'Duermo solo, no sabría', r: null }
+        ] }
+    ]
+  },
+  {
+    id: 'duermo', folio: 'II', titulo: 'Cómo duermo', eje: 'Vía aérea', par: 'respiro',
+    preguntas: [
+      { id: 'horas', p: '¿Duermes siete horas o más y aun así despiertas cansado?',
+        ops: [
+          { t: 'Sí, casi todos los días', r: 'Duermo siete horas o más y despierto cansado' },
+          { t: 'Algunos días', r: 'Algunos días despierto cansado aunque duerma bien' },
+          { t: 'Duermo menos de siete', r: 'Duermo menos de siete horas' },
+          { t: 'No, descanso bien', r: null }
+        ] },
+      { id: 'ronca', p: '¿Te han dicho que roncas?',
+        ops: [
+          { t: 'Sí, fuerte', r: 'Ronco fuerte' },
+          { t: 'Un poco', r: 'Ronco un poco' },
+          { t: 'Nunca', r: null },
+          { t: 'Duermo solo, no sabría', r: null }
+        ] },
+      { id: 'pausas', p: '¿Y que a veces dejas de respirar unos segundos?', si: { id: 'ronca', en: [0, 1] },
+        porque: 'Si te lo han dicho, la doctora prefiere verte pronto. Es la respuesta más importante de esta parte.',
+        porqueAlarma: true,
+        ops: [
+          { t: 'Sí, me lo han dicho', r: 'Me han dicho que dejo de respirar unos segundos al dormir', alarma: true },
+          { t: 'No', r: null },
+          { t: 'No sé', r: null }
+        ] },
+      { id: 'dia', p: '¿Te gana el sueño sin querer durante el día?', ind: 'En una junta, manejando, viendo una película.',
+        ops: [
+          { t: 'Seguido', r: 'Me quedo dormido sin querer durante el día' },
+          { t: 'A veces', r: 'A veces me gana el sueño durante el día' },
+          { t: 'Casi nunca', r: null }
+        ] }
+    ]
+  },
+  {
+    id: 'muerdo', folio: 'III', titulo: 'Cómo muerdo', eje: 'Función y estética', par: 'veo',
+    preguntas: [
+      { id: 'bostezo', p: 'Abre la boca despacio, como para bostezar.', ind: 'Hazlo ahora. ¿Escuchas o sientes algo?',
+        porque: 'Los ruidos de la articulación casi nunca duelen al principio. Por eso conviene notarlos.',
+        ops: [
+          { t: 'Un chasquido', r: 'Me truena la mandíbula al abrir' },
+          { t: 'Como si hubiera arenilla', r: 'Siento como arenilla al abrir la boca' },
+          { t: 'Nada', r: null }
+        ] },
+      { id: 'dedos', p: 'Pon tres dedos juntos, en vertical, entre tus dientes.', ind: 'Índice, medio y anular, uno encima del otro. ¿Caben?',
+        porque: 'Es una forma rápida de ver cuánto abres. En consulta se mide con precisión.',
+        ops: [
+          { t: 'Caben sin problema', r: null },
+          { t: 'Solo caben dos', r: 'Solo me caben dos dedos al abrir la boca' },
+          { t: 'Menos de dos', r: 'Me caben menos de dos dedos al abrir la boca', alarma: true }
+        ] },
+      { id: 'traba', p: '¿Se te ha trabado la mandíbula alguna vez?',
+        ops: [
+          { t: 'Seguido, últimamente', r: 'Se me traba la mandíbula seguido', alarma: true },
+          { t: 'Alguna vez', r: 'Alguna vez se me ha trabado la mandíbula' },
+          { t: 'Nunca', r: null }
+        ] },
+      { id: 'aprieta', p: 'Ahora mismo, ¿tus dientes están juntos o separados?', ind: 'No los muevas. Solo fíjate.',
+        porque: 'En reposo, los dientes no se tocan. Mucha gente descubre con esta pregunta que los aprieta todo el día.',
+        ops: [
+          { t: 'Juntos, apretados', r: 'Aprieto los dientes sin darme cuenta' },
+          { t: 'Juntos, pero sin apretar', r: 'Mantengo los dientes juntos en reposo' },
+          { t: 'Separados', r: null }
+        ] }
+    ]
+  },
+  {
+    id: 'veo', folio: 'IV', titulo: 'Cómo se ven mis dientes', eje: 'Función y estética', par: 'muerdo',
+    preguntas: [
+      { id: 'foto', p: 'Cuando te ves sonriendo en una foto, ¿en qué te fijas primero?',
+        ops: [
+          { t: 'Que están chuecos o encimados', r: 'Me molesta que estén chuecos o encimados' },
+          { t: 'El color', r: 'Me molesta el color de mis dientes' },
+          { t: 'Que se ven cortos o gastados', r: 'Siento mis dientes cortos o gastados' },
+          { t: 'Las encías', r: 'Me molesta cómo se ven mis encías al sonreír' }
+        ] },
+      { id: 'tiempo', p: '¿Hace cuánto lo estás pensando?',
+        ops: [
+          { t: 'Años', r: 'Llevo años pensando en arreglarlo' },
+          { t: 'Unos meses', r: 'Llevo unos meses pensándolo' },
+          { t: 'Lo estoy decidiendo ahora', r: 'Lo estoy decidiendo ahora' }
+        ] },
+      { id: 'como', p: 'Si lo arreglas, ¿cómo te gustaría hacerlo?',
+        ops: [
+          { t: 'Que no se note', r: 'Prefiero algo que no se note, como alineadores' },
+          { t: 'Lo que dé mejor resultado', r: 'Quiero la opción con mejor resultado' },
+          { t: 'Todavía no sé', r: 'Necesito orientación sobre las opciones' }
+        ] }
+    ]
+  }
+];
+
+var ANTECEDENTE = {
+  id: 'antecedente', p: '¿Ya te habían tratado algo de esto antes?',
+  porque: 'Si ya pasaste por un tratamiento, la doctora quiere saberlo desde antes para no repetir lo que ya hiciste.',
+  ops: [
+    { t: 'Sí, y no quedé conforme', r: 'Ya me trataron y no quedé conforme' },
+    { t: 'Sí, y quiero continuar', r: 'Ya llevé un tratamiento y quiero continuar' },
+    { t: 'Estoy en tratamiento ahora', r: 'Estoy en tratamiento actualmente' },
+    { t: 'Nunca', r: 'Es la primera vez que me trato' }
+  ]
+};
+
+var WHATSAPP = '526221424577';  // demo
+var APPS_SCRIPT_URL = '';       // vacío = solo WhatsApp (mismo patrón que iNode)
+
+// ---------------------------------------------------------------
+// Estado
+// ---------------------------------------------------------------
+var est = {
+  fase: 'indice',      // indice · pregunta · fincap · antecedente · prioridad · nombre · final
+  cap: null, qi: 0,
+  resp: {},            // id de pregunta → índice de opción
+  visitados: [],       // capítulos en el orden en que se abrieron
+  hechos: [],          // capítulos terminados
+  prio: null, nombre: ''
+};
+var hist = [];
+var ultimoId = null;   // para resaltar la última línea de la transcripción
+var folio = 'DA-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+var reloj = null;
+
+function cap(id) { return CAPS.filter(function (c) { return c.id === id; })[0]; }
+function visibles(c) {
+  return c.preguntas.filter(function (q) {
+    return !q.si || q.si.en.indexOf(est.resp[q.si.id]) !== -1;
+  });
+}
+function opElegida(q) { return est.resp[q.id] === undefined ? null : q.ops[est.resp[q.id]]; }
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+  });
+}
+function alarmas() {
+  var a = [];
+  est.visitados.forEach(function (id) {
+    visibles(cap(id)).forEach(function (q) {
+      var o = opElegida(q);
+      if (o && o.alarma) a.push(o.r);
+    });
+  });
+  return a;
+}
+function guardar() { hist.push(JSON.stringify(est)); }
+
+// ---------------------------------------------------------------
+// El mensaje para la doctora
+// ---------------------------------------------------------------
+function lineasDe(c) {
+  return visibles(c).map(opElegida).filter(function (o) { return o && o.r; })
+    .map(function (o) { return '· ' + o.r; });
+}
+function recado() {
+  var orden = est.hechos.slice();
+  if (est.prio) orden = [est.prio].concat(orden.filter(function (id) { return id !== est.prio; }));
+
+  var l = ['Hola, doctora.' + (est.nombre ? ' Soy ' + est.nombre + '.' : '') +
+           ' Te mando mi conversación previa.', 'Ficha ' + folio];
+
+  orden.forEach(function (id, i) {
+    var c = cap(id), ls = lineasDe(c);
+    var rotulo = orden.length === 1 ? 'TEMA' : (i === 0 ? 'EMPEZAR POR' : 'DESPUÉS');
+    l.push('', rotulo + ': ' + c.titulo);
+    l = l.concat(ls.length ? ls : ['· Nada en particular que mencionar']);
+  });
+
+  var a = opElegida(ANTECEDENTE);
+  if (a) l.push('', 'ANTECEDENTE: ' + a.r);
+
+  var al = alarmas();
+  if (al.length) l.push('', 'ATENCIÓN PRONTA: ' + al.join('; '));
+
+  l.push('', 'Me gustaría agendar una valoración.');
+  return l.join('\n');
+}
+
+// ---------------------------------------------------------------
+// Piezas de interfaz
+// ---------------------------------------------------------------
+function respuestas(ops, sel, accion) {
+  return '<div class="respuestas">' + ops.map(function (o, i) {
+    return '<button type="button" class="r" aria-pressed="' + (sel === i) + '" ' +
+      'data-accion="' + accion + '" data-valor="' + i + '">' +
+      '<span class="r-tecla">' + (i + 1) + '</span>' +
+      '<span class="r-texto">' + esc(o.t) + '</span></button>';
+  }).join('') + '</div>';
+}
+function porque(q) {
+  if (!q.porque) return '';
+  return '<p class="porque' + (q.porqueAlarma ? ' porque--alarma' : '') + '">' +
+    '<b>Por qué se pregunta</b>' + esc(q.porque) + '</p>';
+}
+function atras() {
+  return hist.length ? '<button type="button" class="atras" data-accion="atras">Volver a la anterior</button>' : '';
+}
+
+function vistaIndice() {
+  var grupos = [['Vía aérea', ['respiro', 'duermo']], ['Función y estética', ['muerdo', 'veo']]];
+  var hay = est.hechos.length > 0;
+  return '<div class="portada entra">' +
+    (hay
+      ? '<h1>¿Seguimos con <em>otra</em>?</h1>' +
+        '<p class="bajada">Lo que ya contestaste se queda. Elige otra parte, o arma tu ficha con lo que llevas.</p>'
+      : '<h1>Antes de la consulta, <em>una conversación</em>.</h1>' +
+        '<p class="bajada">Son preguntas de la primera cita. Contestarlas aquí te ahorra repetir tu historia: ' +
+        'llegas con tu caso ya contado. Elige por dónde empezar; puedes hacer una parte o las cuatro.</p>') +
+    '<div class="sumario">' +
+    grupos.map(function (g) {
+      return '<span class="eje-rotulo">' + esc(g[0]) + '</span>' +
+        g[1].map(function (id) {
+          var c = cap(id), hecho = est.hechos.indexOf(id) !== -1;
+          return '<button type="button" class="cap' + (hecho ? ' cap--hecho' : '') + '" data-accion="abrir" data-valor="' + id + '">' +
+            '<span class="cap-folio">' + c.folio + '</span>' +
+            '<span class="cap-titulo">' + esc(c.titulo) + '</span>' +
+            '<span class="cap-meta">' + (hecho ? 'Contestado' : 'Un minuto') + '</span>' +
+            '</button>';
+        }).join('');
+    }).join('') +
+    '</div>' +
+    (hay ? '<div class="botones"><button type="button" class="btn" data-accion="cerrar-entrevista">Armar mi ficha</button></div>' : '') +
+    '</div>';
+}
+
+function vistaPregunta() {
+  var c = cap(est.cap), qs = visibles(c), q = qs[est.qi];
+  var puntos = qs.map(function (_, i) {
+    return '<span class="punto' + (i < est.qi ? ' punto--hecho' : i === est.qi ? ' punto--actual' : '') + '"></span>';
+  }).join('');
+  var prueba = q.prueba
+    ? '<div class="prueba"><button type="button" class="prueba-btn" data-accion="cronometro" id="prueba-btn">' +
+      'Empezar los ' + q.prueba + ' segundos</button>' +
+      '<span class="crono" id="crono" aria-live="polite"></span>' +
+      '<span class="crono-texto" id="crono-texto">Respira tranquilo, con la boca cerrada.</span></div>'
+    : '';
+  return '<div class="entra">' +
+    '<span class="posicion"><b>' + c.folio + '</b> · ' + esc(c.titulo) + ' · ' + (est.qi + 1) + ' de ' + qs.length + '</span>' +
+    '<div class="puntos" aria-hidden="true">' + puntos + '</div>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
+    (q.ind ? '<p class="indicacion">' + esc(q.ind) + '</p>' : '') +
+    prueba +
+    respuestas(q.ops, est.resp[q.id], 'responder') +
+    porque(q) +
+    '</div>' + atras();
+}
+
+function vistaFinCap() {
+  var c = cap(est.cap), p = cap(c.par);
+  var parPendiente = est.hechos.indexOf(p.id) === -1;
+  var otras = CAPS.filter(function (x) { return est.hechos.indexOf(x.id) === -1 && x.id !== p.id; });
+  return '<div class="entra">' +
+    '<span class="posicion"><b>' + c.folio + '</b> · ' + esc(c.titulo) + ' · terminado</span>' +
+    '<h2 class="pregunta" style="margin-top:28px">Listo con ' + esc(c.titulo.toLowerCase()) + '.</h2>' +
+    (parPendiente
+      ? '<p class="par">La doctora suele revisar <b>' + esc(c.titulo.toLowerCase()) + '</b> y <b>' +
+        esc(p.titulo.toLowerCase()) + '</b> en la misma consulta. Si quieres, sigue con esa.</p>'
+      : '') +
+    '<div class="respuestas">' +
+    (parPendiente
+      ? '<button type="button" class="r" data-accion="abrir" data-valor="' + p.id + '">' +
+        '<span class="r-tecla">1</span><span class="r-texto">Seguir con ' + esc(p.titulo.toLowerCase()) + '</span></button>'
+      : '') +
+    otras.map(function (x, i) {
+      return '<button type="button" class="r" data-accion="abrir" data-valor="' + x.id + '">' +
+        '<span class="r-tecla">' + (i + (parPendiente ? 2 : 1)) + '</span>' +
+        '<span class="r-texto">Ir a ' + esc(x.titulo.toLowerCase()) + '</span></button>';
+    }).join('') +
+    '<button type="button" class="r" data-accion="cerrar-entrevista">' +
+    '<span class="r-tecla">' + ((parPendiente ? 1 : 0) + otras.length + 1) + '</span>' +
+    '<span class="r-texto">Con esto es suficiente</span></button>' +
+    '</div></div>';
+}
+
+function vistaAntecedente() {
+  var q = ANTECEDENTE;
+  return '<div class="entra">' +
+    '<span class="posicion">Para cerrar</span>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
+    respuestas(q.ops, est.resp[q.id], 'antecedente') +
+    porque(q) + '</div>' + atras();
+}
+
+function vistaPrioridad() {
+  return '<div class="entra">' +
+    '<span class="posicion">Para cerrar</span>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h2 class="pregunta">Si tuvieras que empezar por una, ¿cuál sería?</h2>' +
+    respuestas(est.hechos.map(function (id) { return { t: cap(id).titulo }; }),
+      est.prio ? est.hechos.indexOf(est.prio) : undefined, 'prioridad') +
+    '<p class="porque"><b>Por qué se pregunta</b>Las demás no se pierden. Se atienden después o a la par, ' +
+    'según lo que la doctora vea en la valoración.</p>' +
+    '</div>' + atras();
+}
+
+function vistaNombre() {
+  return '<div class="entra">' +
+    '<span class="posicion">Último paso</span>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h2 class="pregunta">¿Cómo te llamas?</h2>' +
+    '<p class="indicacion">Para que la doctora sepa a quién le contesta. Si prefieres, déjalo en blanco.</p>' +
+    '<div class="campo"><label for="nombre">Tu nombre</label>' +
+    '<input id="nombre" type="text" autocomplete="name" placeholder="Nombre y apellido" value="' + esc(est.nombre) + '"></div>' +
+    '<div class="botones"><button type="button" class="btn" data-accion="nombre">Ver mi ficha</button></div>' +
+    '</div>' + atras();
+}
+
+function vistaFinal() {
+  var txt = recado(), al = alarmas();
+  return '<div class="entra">' +
+    '<span class="posicion">Ficha ' + folio + '</span>' +
+    '<h2 class="pregunta" style="margin-top:22px">Tu conversación está lista.</h2>' +
+    '<p class="indicacion">Es lo que lee la doctora antes de contestarte. Con esto sabe cuánto tiempo apartar ' +
+    'y qué pedirte para la primera cita.</p>' +
+    (al.length
+      ? '<p class="aviso"><b>Conviene verte pronto.</b> Manda tu ficha y llama al consultorio en vez de esperar la respuesta.</p>'
+      : '') +
+    // El botón va antes del mensaje: en el teléfono no hay que bajar a buscarlo.
+    '<div class="botones">' +
+    '<a class="btn' + (al.length ? ' btn--alarma' : '') + '" href="https://wa.me/' + WHATSAPP + '?text=' +
+    encodeURIComponent(txt) + '" target="_blank" rel="noopener noreferrer" data-accion="enviar">' +
+    '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
+    'Mandar a la doctora</a>' +
+    '<button type="button" class="enlace" data-accion="indice">Contestar otra parte</button>' +
+    '<button type="button" class="enlace" data-accion="reiniciar">Empezar de nuevo</button>' +
+    '</div>' +
+    '<div class="recado"><span class="recado-cabeza">Lo que se envía por WhatsApp</span>' +
+    '<p class="recado-texto">' + esc(txt) + '</p></div>' +
+    '<p class="porque" style="margin-top:30px">Demostración: el mensaje va a un número de prueba.</p>' +
+    '</div>';
+}
+
+// ---------------------------------------------------------------
+// Transcripción
+// ---------------------------------------------------------------
+function totalRespuestas() {
+  var n = 0;
+  est.visitados.forEach(function (id) {
+    visibles(cap(id)).forEach(function (q) { if (opElegida(q)) n++; });
+  });
+  if (opElegida(ANTECEDENTE)) n++;
+  return n;
+}
+function vistaTranscripcion() {
+  var n = totalRespuestas();
+  var out = '<div class="t-titulo"><span>La entrevista · <b>' + folio + '</b></span>' +
+    '<button type="button" class="cerrar" data-accion="cerrar-panel">Cerrar</button></div>';
+  if (!n) {
+    return out + '<p class="t-vacio">Aquí se va escribiendo tu conversación, pregunta por pregunta. ' +
+      'Es lo mismo que va a leer la doctora.</p>';
+  }
+  est.visitados.forEach(function (id) {
+    var c = cap(id), qs = visibles(c).filter(opElegida);
+    if (!qs.length) return;
+    out += '<span class="t-cap">' + c.folio + ' · ' + esc(c.titulo) + '</span>';
+    qs.forEach(function (q) {
+      var o = opElegida(q);
+      out += '<span class="t-par' + (q.id === ultimoId ? ' t-par--nuevo' : '') + '">' +
+        '<span class="t-p"><i>P.</i>' + esc(q.p) + '</span>' +
+        '<span class="t-r' + (o.alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' + esc(o.t) + '</span></span>';
+    });
+  });
+  var a = opElegida(ANTECEDENTE);
+  if (a) {
+    out += '<span class="t-cap">Antecedente</span><span class="t-par' + (ultimoId === 'antecedente' ? ' t-par--nuevo' : '') + '">' +
+      '<span class="t-p"><i>P.</i>' + esc(ANTECEDENTE.p) + '</span>' +
+      '<span class="t-r"><i>R.</i>' + esc(a.t) + '</span></span>';
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------
+function render() {
+  if (reloj) { clearInterval(reloj); reloj = null; }
+  var v = {
+    indice: vistaIndice, pregunta: vistaPregunta, fincap: vistaFinCap,
+    antecedente: vistaAntecedente, prioridad: vistaPrioridad, nombre: vistaNombre, final: vistaFinal
+  }[est.fase];
+  document.getElementById('escenario').innerHTML = v();
+  var t = document.getElementById('transcripcion');
+  t.innerHTML = vistaTranscripcion();
+  var n = totalRespuestas();
+  document.getElementById('barra').innerHTML =
+    '<span>Tu entrevista · <b>' + n + ' respuesta' + (n === 1 ? '' : 's') + '</b></span>' +
+    '<button type="button" data-accion="abrir-panel">Ver</button>';
+  document.getElementById('folio').textContent = folio;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  ultimoId = null;
+}
+
+function siguientePregunta() {
+  var qs = visibles(cap(est.cap));
+  if (est.qi + 1 < qs.length) { est.qi++; return; }
+  if (est.hechos.indexOf(est.cap) === -1) est.hechos.push(est.cap);
+  est.fase = 'fincap';
+}
+function cerrarEntrevista() {
+  est.fase = 'antecedente';
+}
+
+function accion(a, v) {
+  if (a === 'abrir') {
+    guardar();
+    est.cap = v; est.qi = 0; est.fase = 'pregunta';
+    if (est.visitados.indexOf(v) === -1) est.visitados.push(v);
+  } else if (a === 'responder') {
+    guardar();
+    var q = visibles(cap(est.cap))[est.qi];
+    est.resp[q.id] = Number(v);
+    ultimoId = q.id;
+    siguientePregunta();
+  } else if (a === 'cerrar-entrevista') {
+    guardar(); cerrarEntrevista();
+  } else if (a === 'antecedente') {
+    guardar();
+    est.resp.antecedente = Number(v); ultimoId = 'antecedente';
+    est.fase = est.hechos.length > 1 ? 'prioridad' : 'nombre';
+  } else if (a === 'prioridad') {
+    guardar();
+    est.prio = est.hechos[Number(v)]; est.fase = 'nombre';
+  } else if (a === 'nombre') {
+    guardar();
+    var inp = document.getElementById('nombre');
+    est.nombre = inp ? inp.value.trim().slice(0, 60) : '';
+    est.fase = 'final';
+  } else if (a === 'atras') {
+    if (!hist.length) return;
+    est = JSON.parse(hist.pop());
+  } else if (a === 'indice') {
+    guardar(); est.fase = 'indice';
+  } else if (a === 'reiniciar') {
+    hist = [];
+    est = { fase: 'indice', cap: null, qi: 0, resp: {}, visitados: [], hechos: [], prio: null, nombre: '' };
+  } else if (a === 'abrir-panel') {
+    document.getElementById('transcripcion').classList.add('abierta'); return;
+  } else if (a === 'cerrar-panel') {
+    document.getElementById('transcripcion').classList.remove('abierta'); return;
+  } else if (a === 'cronometro') {
+    iniciarCrono(); return;
+  } else if (a === 'enviar') {
+    if (APPS_SCRIPT_URL) {
+      fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ folio: folio, nombre: est.nombre, resp: est.resp, prio: est.prio, mensaje: recado() })
+      }).catch(function () {});
+    }
+    return; // el enlace abre WhatsApp por sí solo
+  } else return;
+  render();
+}
+
+function iniciarCrono() {
+  var q = visibles(cap(est.cap))[est.qi], s = q.prueba;
+  var num = document.getElementById('crono'), txt = document.getElementById('crono-texto');
+  var btn = document.getElementById('prueba-btn');
+  if (!num) return;
+  btn.hidden = true;
+  num.textContent = s;
+  reloj = setInterval(function () {
+    s--;
+    num.textContent = s > 0 ? s : '';
+    if (s <= 0) {
+      clearInterval(reloj); reloj = null;
+      txt.textContent = 'Listo. ¿Cómo te fue?';
+    }
+  }, 1000);
+}
+
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('[data-accion]');
+  if (!b) return;
+  accion(b.dataset.accion, b.dataset.valor);
+});
+
+// Teclas 1-9 contestan, como en una entrevista rápida.
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'INPUT') {
+    if (e.key === 'Enter') accion('nombre');
+    return;
+  }
+  var n = parseInt(e.key, 10);
+  if (!n) return;
+  var ops = document.querySelectorAll('#escenario .r');
+  if (ops[n - 1]) ops[n - 1].click();
+});
+
+render();
+</script>
+
+</body>
+</html>
