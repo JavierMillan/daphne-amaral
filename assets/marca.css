@@ -1,29 +1,30 @@
 /* ============================================================
    Dra. Daphne Amaral Alemán — hoja de marca
-   Fuente: design system TSPU2e5nJp3SzqjQ4A5G47
-   Todo color y medida sale de aquí. Nada de hex suelto en la página.
+   Mismos valores que la entrevista (entrevista.html), que es la
+   referencia del sitio. Si cambia uno, cambia el otro.
+   Contrastes verificados sobre blanco: todo AA o AAA.
    ============================================================ */
 
 :root {
-  /* Color — 60% lino, 30% tinta, 10% acentos */
-  --lino: #f7f4ef;
-  --lino-alt: #efeae2;
-  --tinta: #2a2622;
-  --muted: #6b6560;
-  --line: #e4ded4;
+  /* Base blanca: en salud el blanco es el material. */
+  --lino: #ffffff;
+  --lino-alt: #f6f4f1;
+  --tinta: #191714;        /* 17.89:1 */
+  --muted: #55504a;        /*  7.98:1 */
+  --line: #d8d3cb;         /*  divisor, nunca texto */
 
   /* Dos acentos con trabajos distintos:
      marron = firma (identifica) · agua = acción (una por pantalla) */
-  --marron: #73594a;
-  --marron-soft: #d9cabd;
-  --agua: #3a635c;
-  --agua-soft: #dce8e6;
+  --marron: #6b5244;       /*  7.20:1 */
+  --marron-soft: #e9e2da;  /*  decorativo, nunca texto */
+  --agua: #1f5e52;         /*  7.55:1, verde quirófano */
+  --agua-soft: #eef4f2;
   --sobre-agua: #ffffff;
 
   --exito: #3c6649;
-  --error: #a14034;
-  --error-soft: #f4e4e1;
-  --foco: #3a635c;
+  --error: #962f20;        /*  7.71:1 */
+  --error-soft: #fbf0ee;
+  --foco: #1f5e52;
 
   --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --font-sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -32,39 +33,19 @@
   --space-6: 24px;  --space-8: 32px;  --space-12: 48px; --space-16: 64px;
   --space-24: 96px;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-pill: 999px;
+  /* Esquinas rectas en todo el sitio, como la entrevista. */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-pill: 0;
 
-  --ease: cubic-bezier(.4, 0, .2, 1);
+  --ease: cubic-bezier(.22, 1, .36, 1);
   --ancho: 1080px;
   --ancho-texto: 680px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --lino: #1c1a17;       --lino-alt: #262320;
-    --tinta: #f2ede4;      --muted: #a69e94;
-    --line: #3a352f;
-    --marron: #c9a98f;     --marron-soft: #4a3c33;
-    --agua: #7fb5ab;       --agua-soft: #2b3b38;
-    --sobre-agua: #1c1a17;
-    --exito: #7fb58e;      --error: #e08a7c;   --error-soft: #3a2320;
-    --foco: #7fb5ab;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --lino: #1c1a17;       --lino-alt: #262320;
-  --tinta: #f2ede4;      --muted: #a69e94;
-  --line: #3a352f;
-  --marron: #c9a98f;     --marron-soft: #4a3c33;
-  --agua: #7fb5ab;       --agua-soft: #2b3b38;
-  --sobre-agua: #1c1a17;
-  --exito: #7fb58e;      --error: #e08a7c;   --error-soft: #3a2320;
-  --foco: #7fb5ab;
-  color-scheme: dark;
-}
+/* Sin modo oscuro automático: el sitio es blanco siempre.
+   El único momento oscuro es "Cómo duermo" en la entrevista,
+   y funciona justamente porque es el único. */
 
 *, *::before, *::after { box-sizing: border-box; }
 
