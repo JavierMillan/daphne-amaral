@@ -191,7 +191,10 @@ body {
 .casilla svg { opacity: 0; transition: opacity 180ms var(--ease); }
 .hallazgo[aria-pressed="true"] .casilla svg { opacity: 1; }
 
+/* Ambos son <span>: sin display:block fluyen como texto corrido
+   y el detalle se pega al título. */
 .hallazgo-texto {
+  display: block;
   font-family: var(--display);
   font-size: clamp(19px, 2.3vw, 25px);
   font-weight: 300;
@@ -199,6 +202,7 @@ body {
   letter-spacing: -0.012em;
 }
 .hallazgo-detalle {
+  display: block;
   font-family: var(--sans);
   font-size: 14px;
   line-height: 1.5;
@@ -207,6 +211,7 @@ body {
   max-width: 54ch;
 }
 .hallazgo-meta {
+  display: block;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
