@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Antes de la consulta — Dra. Daphne Amaral Alemán</title>
-<meta name="description" content="Las preguntas de la primera cita, contestadas desde tu teléfono. Ortodoncia y medicina dental del sueño en Guadalajara.">
+<title>Tu primera valoración — Dra. Daphne Amaral Alemán</title>
+<meta name="description" content="Elige qué te gustaría revisar y contesta unas preguntas cortas. Odontología integral y ortodoncia en Guadalajara.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,11 +12,12 @@
 
 <style>
 /* ============================================================
-   Antes de la consulta — una entrevista
-   Formato de revista: pregunta y respuesta (P. / R.).
-   Una pregunta por pantalla. La transcripción se escribe al
-   lado conforme contestas, y esa transcripción es lo que se
-   manda a la doctora.
+   Tu primera valoración
+   Flujo que pidió la Dra.: eliges servicios y luego contestas
+   preguntas cortas de cada uno. Una pregunta por pantalla; la
+   entrevista (P. / R.) se escribe al lado y es lo que se envía.
+   Regla de texto: preguntas de una línea, opciones de pocas
+   palabras, sin párrafos de explicación.
    Contrastes verificados sobre blanco: todo AA o AAA.
    ============================================================ */
 :root {
@@ -31,18 +32,16 @@
   --linea: #d8d3cb;        /*  divisor, nunca texto */
   --linea-fina: #efebe6;
   --tenue: #f6f4f1;
+  --marcado: #eef4f2;
   --sobre-accion: #ffffff;
   --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
 
-/* ============================================================
-   CADA CAPÍTULO TIENE SU LUZ
-   Misma tipografía, mismo verde, mismo marrón. Cambia el ambiente.
-   ============================================================ */
-/* II · Cómo duermo: de noche. Contrastes verificados sobre #12161b. */
-:root[data-tema="duermo"] {
+/* ---------- Ambiente por servicio ---------- */
+/* Respiración y sueño: de noche. Verificado sobre #12161b. */
+:root[data-tema="noche"] {
   --papel: #12161b;
   --tinta: #ece8e1;        /* 14.87:1 */
   --gris: #b5afa7;         /*  8.35:1 */
@@ -54,25 +53,23 @@
   --linea: #2f353d;
   --linea-fina: #20252b;
   --tenue: #1b2026;
-  --sobre-accion: #12161b; /*  texto oscuro sobre el botón: 8.59:1 */
+  --marcado: #1d2a2a;
+  --sobre-accion: #12161b;
   color-scheme: dark;
 }
-/* IV · Cómo se ven: el más luminoso. Contrastes verificados sobre #fbf8f3. */
-:root[data-tema="veo"] { --papel: #fbf8f3; --tenue: #f3eee6; --linea-fina: #ece6dd; }
+/* Estética e Invisalign: el más luminoso. Verificado sobre #fbf8f3. */
+:root[data-tema="luz"] { --papel: #fbf8f3; --tenue: #f3eee6; --linea-fina: #ece6dd; }
 
 html { background: var(--papel); transition: background-color 700ms var(--ease); }
-
 *, *::before, *::after { box-sizing: border-box; }
 
-/* Todo control sin estilo de navegador. */
 button {
   font: inherit; color: inherit; background: none; border: 0;
   margin: 0; padding: 0; text-align: left; cursor: pointer;
   -webkit-appearance: none; appearance: none;
 }
-input { font: inherit; color: inherit; }
+input, textarea { font: inherit; color: inherit; }
 
-html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--papel);
@@ -94,7 +91,6 @@ body {
   padding-right: max(22px, env(safe-area-inset-right, 0px));
 }
 
-/* ---------- Banda y cabecera ---------- */
 .banda { background: #191714; color: #fff; font-size: 12.5px; line-height: 1.5; padding-block: 10px; }
 .banda strong { font-weight: 500; }
 
@@ -107,14 +103,14 @@ body {
 .cabecera a { color: var(--firma); text-decoration: none; }
 .cabecera .folio { margin-left: auto; color: var(--tinta); font-variant-numeric: tabular-nums; }
 
-/* ---------- Escena: pregunta + transcripción ---------- */
-.escena { display: grid; gap: 0; }
+/* ---------- Escena ---------- */
+.escena { display: grid; }
 @media (min-width: 960px) {
   .escena { grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 72px; }
 }
 .escenario {
   min-height: calc(100vh - 140px);
-  padding-block: clamp(36px, 7vh, 84px) 140px;
+  padding-block: clamp(32px, 6vh, 72px) 140px;
   display: flex; flex-direction: column;
 }
 @media (min-width: 960px) { .escenario { padding-bottom: 80px; } }
@@ -122,89 +118,37 @@ body {
 .entra { animation: entra 420ms var(--ease) both; }
 @keyframes entra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-/* ---------- Rótulo de posición ---------- */
 .posicion {
   display: block;
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rotulo);
 }
 .posicion b { font-weight: 500; color: var(--firma); }
-.puntos { display: flex; gap: 6px; margin-top: 12px; }
+.puntos { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
 .punto { display: block; width: 22px; height: 2px; background: var(--linea); }
 .punto--hecho { background: var(--firma); }
 .punto--actual { background: var(--tinta); }
 
-/* ---------- La pregunta ---------- */
 .p-marca {
   display: block;
   font-family: var(--display); font-style: italic; font-size: 22px;
-  color: var(--firma); margin-top: clamp(26px, 4vh, 44px); line-height: 1;
+  color: var(--firma); margin-top: clamp(22px, 3.6vh, 40px); line-height: 1;
 }
 .pregunta {
   font-family: var(--display); font-weight: 300;
-  font-size: clamp(31px, 5.2vw, 58px);
+  font-size: clamp(32px, 5.2vw, 58px);
   line-height: 1.07; letter-spacing: -.022em;
   margin: 10px 0 0; max-width: 18ch; text-wrap: balance;
 }
 .indicacion {
-  font-size: clamp(16px, 1.9vw, 18px); line-height: 1.55; color: var(--gris);
-  margin: 16px 0 0; max-width: 46ch;
+  font-size: 16px; line-height: 1.5; color: var(--gris);
+  margin: 12px 0 0; max-width: 44ch;
 }
-
-/* ---------- Prueba guiada (respirar 20 s) ---------- */
-.prueba {
-  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-  margin-top: 26px; padding: 16px 0;
-  border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea);
-  max-width: 560px;
-}
-.prueba-btn {
-  font-size: 15px; font-weight: 500; color: var(--accion);
-  border: 1px solid var(--accion); padding: 11px 18px; min-height: 44px;
-}
-@media (hover: hover) { .prueba-btn:hover { background: var(--accion); color: var(--sobre-accion); } }
-
-/* I · Cómo respiro: una línea que respira. Ocho segundos por ciclo. */
-.aliento { display: block; height: 1px; width: 44px; background: var(--firma); margin-top: 20px; }
-:root[data-tema="respiro"] .aliento { animation: aliento 8s ease-in-out infinite; }
-@keyframes aliento { 0%, 100% { width: 44px; } 50% { width: min(360px, 72%); } }
-.crono-fase { font-family: var(--display); font-style: italic; font-size: 22px; color: var(--firma); }
-
-/* III · Cómo muerdo: una lámina técnica. Retícula y respuestas en recuadro. */
-:root[data-tema="muerdo"] .escenario {
-  background-image:
-    linear-gradient(var(--linea-fina) 1px, transparent 1px),
-    linear-gradient(90deg, var(--linea-fina) 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-position: -1px -1px;
-}
-:root[data-tema="muerdo"] .respuestas { border: 1px solid var(--tinta); background: var(--papel); }
-:root[data-tema="muerdo"] .r { padding: 16px 16px; grid-template-columns: 40px 1fr; }
-:root[data-tema="muerdo"] .r:last-child { border-bottom: 0; }
-:root[data-tema="muerdo"] .r-tecla { border-right: 1px solid var(--linea); align-self: stretch; }
-@media (hover: hover) { :root[data-tema="muerdo"] .r:hover { padding-left: 28px; } }
-:root[data-tema="muerdo"] .r[aria-pressed="true"] { padding-left: 28px; }
-:root[data-tema="muerdo"] .porque { background: var(--papel); padding: 12px 14px; border: 1px solid var(--linea); }
-
-/* IV · Cómo se ven: más grande y con aire. Dos columnas en pantallas anchas. */
-:root[data-tema="veo"] .pregunta { font-size: clamp(34px, 6vw, 68px); max-width: 15ch; }
-@media (min-width: 700px) {
-  :root[data-tema="veo"] .respuestas {
-    display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px;
-    border-top: 0; max-width: 760px;
-  }
-  :root[data-tema="veo"] .r { border-bottom: 0; border-top: 1px solid var(--linea); padding-block: 22px; }
-}
-.crono {
-  font-family: var(--display); font-weight: 300; font-size: 46px; line-height: 1;
-  font-variant-numeric: tabular-nums; color: var(--tinta); min-width: 2ch;
-}
-.crono-texto { font-size: 15px; color: var(--gris); }
 
 /* ---------- Respuestas ---------- */
-.respuestas { margin-top: clamp(26px, 4.4vh, 44px); border-top: 1px solid var(--linea); max-width: 640px; }
+.respuestas { margin-top: clamp(24px, 4vh, 40px); border-top: 1px solid var(--linea); max-width: 640px; }
 .r {
-  display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: baseline;
-  width: 100%; padding: 16px 0;
+  display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center;
+  width: 100%; padding: 15px 0;
   border-bottom: 1px solid var(--linea);
   transition: padding-left 300ms var(--ease), background-color 200ms var(--ease);
   position: relative;
@@ -216,90 +160,80 @@ body {
 .r-tecla {
   display: block;
   font-size: 12px; font-weight: 500; color: var(--rotulo);
-  font-variant-numeric: tabular-nums; letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
 }
 .r-texto {
   display: block;
   font-family: var(--display); font-weight: 300;
-  font-size: clamp(21px, 2.6vw, 28px); line-height: 1.2; letter-spacing: -.012em;
+  font-size: clamp(21px, 2.6vw, 27px); line-height: 1.2; letter-spacing: -.012em;
 }
 @media (hover: hover) {
   .r:hover { padding-left: 18px; }
   .r:hover::before { width: 3px; }
 }
-.r[aria-pressed="true"] { padding-left: 18px; }
+.r[aria-pressed="true"] { padding-left: 18px; background: var(--marcado); }
 .r[aria-pressed="true"]::before { width: 3px; background: var(--accion); }
 .r[aria-pressed="true"] .r-tecla { color: var(--accion); }
 
-/* ---------- Por qué se pregunta ---------- */
-.porque {
-  margin-top: 26px; max-width: 52ch;
-  font-size: 14px; line-height: 1.6; color: var(--gris);
+/* Casilla para preguntas de varias respuestas */
+.casilla {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; border: 1px solid var(--gris);
+  transition: background-color 180ms var(--ease), border-color 180ms var(--ease);
 }
-.porque b {
-  display: block; font-weight: 500;
-  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--firma);
-  margin-bottom: 4px;
-}
-.porque--alarma b { color: var(--alarma); }
+.casilla svg { opacity: 0; }
+.r[aria-pressed="true"] .casilla { background: var(--accion); border-color: var(--accion); }
+.r[aria-pressed="true"] .casilla svg { opacity: 1; }
+.r-alarma { display: block; font-family: var(--sans); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--alarma); margin-top: 3px; }
 
-.atras {
-  margin-top: auto; padding-top: 34px;
-  font-size: 14px; color: var(--gris);
-  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--linea);
-  align-self: flex-start;
+.aviso {
+  margin-top: 22px; padding-left: 15px; border-left: 3px solid var(--alarma);
+  font-size: 15px; line-height: 1.55; max-width: 52ch;
 }
-@media (hover: hover) { .atras:hover { color: var(--tinta); } }
+.aviso b { color: var(--alarma); font-weight: 500; }
 
-/* ---------- Índice (sumario de revista) ---------- */
-.portada h1 {
-  font-family: var(--display); font-weight: 300;
-  font-size: clamp(40px, 7.4vw, 88px); line-height: .98; letter-spacing: -.03em;
-  margin: 0; max-width: 13ch; text-wrap: balance;
-}
-.portada h1 em { font-style: italic; color: var(--firma); }
-.portada .bajada {
-  font-size: clamp(16px, 2vw, 19px); line-height: 1.58; color: var(--gris);
-  margin: 22px 0 0; max-width: 48ch;
-}
-.sumario { margin-top: clamp(34px, 5vh, 56px); max-width: 680px; }
-.eje-rotulo {
+/* ---------- Servicios: el catálogo de la Dra. ---------- */
+.grupos { margin-top: clamp(24px, 4vh, 40px); max-width: 860px; }
+.grupo-rotulo {
   display: block;
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--rotulo);
-  padding-bottom: 10px; border-bottom: 1px solid var(--tinta); margin-top: 28px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--tinta); margin-top: 26px;
 }
-.eje-rotulo:first-child { margin-top: 0; }
-.cap {
-  display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: baseline;
-  width: 100%; padding: 18px 0; border-bottom: 1px solid var(--linea);
-  transition: padding-left 300ms var(--ease);
+.grupo-rotulo:first-child { margin-top: 0; }
+.servicios { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .servicios { grid-template-columns: 1fr 1fr; column-gap: 28px; } }
+.servicio {
+  display: grid; grid-template-columns: 22px 1fr; gap: 14px; align-items: start;
+  width: 100%; padding: 15px 0 15px 0;
+  border-bottom: 1px solid var(--linea);
+  transition: padding-left 260ms var(--ease), background-color 200ms var(--ease);
 }
-@media (hover: hover) { .cap:hover { padding-left: 14px; } }
-.cap-folio { display: block; font-family: var(--display); font-size: 22px; color: var(--firma); font-variant-numeric: tabular-nums; }
-.cap-titulo { display: block; font-family: var(--display); font-weight: 300; font-size: clamp(25px, 3.2vw, 36px); line-height: 1.1; letter-spacing: -.016em; }
-.cap-meta { display: block; font-size: 12px; color: var(--rotulo); white-space: nowrap; }
-.cap--hecho .cap-meta { color: var(--accion); font-weight: 500; }
+.servicio .casilla { margin-top: 4px; }
+.servicio[aria-pressed="true"] { background: var(--marcado); padding-left: 12px; }
+.servicio[aria-pressed="true"] .casilla { background: var(--accion); border-color: var(--accion); }
+.servicio[aria-pressed="true"] .casilla svg { opacity: 1; }
+@media (hover: hover) { .servicio:hover { padding-left: 12px; } }
+.servicio-nombre {
+  display: block;
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(21px, 2.4vw, 25px); line-height: 1.15; letter-spacing: -.01em;
+}
+.servicio-desc { display: block; font-size: 14px; line-height: 1.45; color: var(--gris); margin-top: 3px; }
 
-/* ---------- Fin de capítulo ---------- */
-.par {
-  margin-top: 26px; padding: 18px 20px;
-  background: var(--tenue); border-left: 3px solid var(--firma);
-  max-width: 560px; font-size: 15px; line-height: 1.6; color: var(--tinta);
+/* Botón fijo para continuar cuando se eligen varias cosas */
+.continuar-fila {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 26px;
 }
-
-/* ---------- Nombre ---------- */
-.campo { margin-top: 30px; max-width: 480px; }
-.campo label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
-.campo input {
-  display: block; width: 100%;
-  font-family: var(--display); font-weight: 300; font-size: 28px;
-  border: 0; border-bottom: 1px solid var(--tinta); padding: 6px 0 10px;
-  background: transparent;
+.contador { font-size: 14px; color: var(--gris); }
+/* En la lista de servicios el botón se queda a la vista mientras bajas. */
+.continuar-fila--fija {
+  position: sticky; bottom: calc(64px + env(safe-area-inset-bottom, 0px)); z-index: 5;
+  background: var(--papel); padding-block: 14px; margin-top: 0;
+  border-top: 1px solid var(--linea);
 }
-.campo input::placeholder { color: var(--rotulo); opacity: 1; }
-.campo input:focus { outline: none; border-bottom: 2px solid var(--accion); padding-bottom: 9px; }
+@media (min-width: 960px) { .continuar-fila--fija { bottom: 0; } }
 
-.botones { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 30px; }
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   min-height: 54px; padding: 0 28px;
@@ -308,6 +242,8 @@ body {
 }
 .btn:active { transform: scale(.985); }
 @media (hover: hover) { .btn:hover { background: var(--accion-hover); } }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+.btn[disabled]:active { transform: none; }
 .btn--alarma { background: var(--alarma); }
 @media (hover: hover) { .btn--alarma:hover { background: var(--alarma); opacity: .86; } }
 .enlace {
@@ -316,33 +252,45 @@ body {
   padding: 8px 2px;
 }
 @media (hover: hover) { .enlace:hover { color: var(--tinta); } }
+.atras {
+  margin-top: auto; padding-top: 32px;
+  font-size: 14px; color: var(--gris);
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--linea);
+  align-self: flex-start;
+}
 
-/* ---------- Recado final ---------- */
+/* ---------- Datos ---------- */
+.campos { display: grid; gap: 22px; margin-top: 28px; max-width: 480px; }
+.campo label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.campo input, .campo textarea {
+  display: block; width: 100%;
+  font-family: var(--display); font-weight: 300; font-size: 24px;
+  border: 0; border-bottom: 1px solid var(--tinta); padding: 4px 0 8px;
+  background: transparent; border-radius: 0;
+}
+.campo textarea { font-size: 20px; resize: vertical; min-height: 70px; line-height: 1.4; }
+.campo input::placeholder, .campo textarea::placeholder { color: var(--rotulo); opacity: 1; }
+.campo input:focus, .campo textarea:focus { outline: none; border-bottom: 2px solid var(--accion); padding-bottom: 7px; }
+.campo .nota { display: block; font-size: 13px; color: var(--gris); margin-top: 5px; }
+
+/* ---------- Final ---------- */
 .recado { margin-top: 28px; border: 1px solid var(--tinta); max-width: 620px; }
 .recado-cabeza {
   display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
   color: var(--rotulo); padding: 11px 18px; border-bottom: 1px solid var(--linea);
 }
 .recado-texto { margin: 0; padding: 18px; font-size: 15px; line-height: 1.7; white-space: pre-wrap; word-break: break-word; }
-.aviso {
-  margin-top: 22px; padding-left: 15px; border-left: 3px solid var(--alarma);
-  font-size: 15px; line-height: 1.6; max-width: 54ch;
-}
-.aviso b { color: var(--alarma); font-weight: 500; }
+.botones { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 26px; }
+.legal { font-size: 13px; line-height: 1.55; color: var(--gris); margin-top: 26px; max-width: 58ch; }
 
-/* ============================================================
-   TRANSCRIPCIÓN — la entrevista escribiéndose
-   ============================================================ */
-.transcripcion {
-  border-top: 1px solid var(--tinta);
-  padding-block: 18px 30px;
-}
+/* ---------- Transcripción ---------- */
+.transcripcion { border-top: 1px solid var(--tinta); padding-block: 18px 30px; }
 @media (min-width: 960px) {
   .transcripcion {
     position: sticky; top: 0; align-self: start;
     max-height: 100vh; overflow-y: auto;
     border-top: 0; border-left: 1px solid var(--linea);
-    padding: clamp(36px, 7vh, 84px) 0 40px 32px;
+    padding: clamp(32px, 6vh, 72px) 0 40px 32px;
   }
 }
 .t-titulo {
@@ -352,31 +300,22 @@ body {
 }
 .t-titulo b { font-weight: 500; color: var(--tinta); }
 .t-vacio { font-size: 14px; line-height: 1.6; color: var(--gris); margin: 16px 0 0; max-width: 34ch; }
-.t-cap {
-  display: block;
-  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--firma);
-  margin-top: 22px;
-}
-.t-par { display: block; padding: 11px 0; border-bottom: 1px solid var(--linea-fina); }
+.t-cap { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--firma); margin-top: 22px; }
+.t-par { display: block; padding: 10px 0; border-bottom: 1px solid var(--linea-fina); }
 .t-p { display: block; font-size: 13px; line-height: 1.5; color: var(--gris); }
-.t-p i { font-family: var(--display); font-style: italic; color: var(--firma); font-size: 15px; margin-right: 4px; }
+.t-p i, .t-r i { font-family: var(--display); font-style: italic; color: var(--firma); font-size: 15px; margin-right: 4px; }
 .t-r { display: block; font-family: var(--display); font-size: 19px; line-height: 1.3; margin-top: 2px; }
-.t-r i { font-style: italic; color: var(--firma); font-size: 15px; margin-right: 4px; }
 .t-r--alarma { color: var(--alarma); }
 .t-par--nuevo { animation: nuevo 900ms var(--ease) both; }
 @keyframes nuevo { from { background: var(--tenue); } to { background: transparent; } }
 
-/* Móvil: la transcripción vive en una hoja que se abre desde abajo. */
 .barra-movil {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
   background: var(--papel); border-top: 1px solid var(--tinta);
   padding: 12px max(22px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px));
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  font-size: 13px; color: var(--gris);
 }
-.barra-movil b { color: var(--tinta); font-weight: 500; }
 .barra-movil button { font-size: 14px; font-weight: 500; color: var(--accion); min-height: 40px; padding: 0 4px; white-space: nowrap; flex: none; }
-/* La última respuesta, siempre a la vista: se ve que algo se está armando. */
 .barra-ultima {
   display: block; flex: 1; min-width: 0;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -386,14 +325,6 @@ body {
 .barra-ultima--vacia { font-family: var(--sans); font-size: 13px; color: var(--gris); }
 .barra-movil.llega .barra-ultima { animation: llega 700ms var(--ease) both; }
 @keyframes llega { from { opacity: .2; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-/* La respuesta que viaja hacia la entrevista */
-.vuela {
-  position: fixed; z-index: 40; pointer-events: none;
-  font-family: var(--display); font-weight: 300; line-height: 1.2; color: var(--tinta);
-  transform-origin: left top;
-  transition: transform 440ms var(--ease), opacity 440ms var(--ease);
-}
 @media (min-width: 960px) { .barra-movil { display: none; } }
 
 @media (max-width: 959px) {
@@ -407,8 +338,15 @@ body {
 .cerrar { font-size: 14px; font-weight: 500; color: var(--accion); }
 @media (min-width: 960px) { .cerrar { display: none; } }
 
+.vuela {
+  position: fixed; z-index: 40; pointer-events: none;
+  font-family: var(--display); font-weight: 300; line-height: 1.2; color: var(--tinta);
+  transform-origin: left top;
+  transition: transform 440ms var(--ease), opacity 440ms var(--ease);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .entra, .t-par--nuevo, .aliento, .barra-movil.llega .barra-ultima { animation: none !important; }
+  .entra, .t-par--nuevo, .barra-movil.llega .barra-ultima { animation: none !important; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
 </style>
@@ -416,19 +354,19 @@ body {
 <body>
 
 <div class="banda"><div class="marco">
-  <strong>Demostración.</strong> Las preguntas son una propuesta que la Dra. ajusta. El mensaje llega a un número de prueba.
+  <strong>Demostración.</strong> Las preguntas las ajusta la Dra. El mensaje llega a un número de prueba.
 </div></div>
 
 <div class="marco">
   <header class="cabecera">
     <a href="index.html">Dra. Daphne Amaral Alemán</a>
-    <span>Antes de la consulta</span>
+    <span>Tu primera valoración</span>
     <span class="folio" id="folio">DA-0000</span>
   </header>
 
   <div class="escena">
     <main class="escenario" id="escenario"></main>
-    <aside class="transcripcion" id="transcripcion" aria-label="Tu entrevista"></aside>
+    <aside class="transcripcion" id="transcripcion" aria-label="Tus respuestas"></aside>
   </div>
 </div>
 
@@ -436,145 +374,114 @@ body {
 
 <script>
 // ---------------------------------------------------------------
-// LAS PREGUNTAS. Son hipótesis de trabajo: la Dra. las corrige.
-// r = cómo se lee la respuesta en el mensaje (null = no aporta).
-// alarma = conviene verlo pronto.
-// si = la pregunta solo aparece si otra se contestó de cierta forma.
+// LOS SERVICIOS, tal como los presenta la Dra., agrupados.
+// Cada uno trae una o dos preguntas cortas.
+//   et     = cómo se etiqueta la respuesta en el mensaje
+//   varias = se pueden marcar varias opciones
+//   alarma = conviene verlo pronto
+//   si     = solo aparece si otra respuesta lo pide
+//   id compartido = si dos servicios hacen la misma pregunta, se hace una vez
 // ---------------------------------------------------------------
-var CAPS = [
-  {
-    id: 'respiro', folio: 'I', titulo: 'Cómo respiro', eje: 'Vía aérea', par: 'duermo',
-    preguntas: [
-      { id: 'despertar', p: 'Cuando despiertas, ¿qué es lo primero que haces?',
-        porque: 'La boca seca al despertar tiene varios orígenes posibles. En consulta se revisa cuál es el tuyo.',
-        ops: [
-          { t: 'Tomar agua, porque amanezco con la boca seca', r: 'Amanezco con la boca seca' },
-          { t: 'Me cuesta mucho levantarme', r: 'Me cuesta levantarme por las mañanas' },
-          { t: 'Nada en especial', r: null }
-        ] },
-      { id: 'nariz', p: 'Cierra la boca y respira solo por la nariz.', ind: 'Veinte segundos, aquí mismo. Luego dinos cómo te fue.',
-        prueba: 20,
-        porque: 'Es de lo primero que la doctora observa: cómo respiras cuando nadie te lo pide.',
-        ops: [
-          { t: 'Normal, sin esfuerzo', r: null },
-          { t: 'Me faltó un poco el aire', r: 'Respirar solo por la nariz me cuesta un poco' },
-          { t: 'Tuve que abrir la boca', r: 'No aguanto respirar solo por la nariz' }
-        ] },
-      { id: 'labios', p: '¿Se te resecan los labios seguido, aunque tomes agua?',
-        ops: [
-          { t: 'Sí, casi siempre', r: 'Se me resecan los labios aunque tome agua' },
-          { t: 'A veces', r: 'A veces se me resecan los labios' },
-          { t: 'No', r: null }
-        ] },
-      { id: 'testigo', p: '¿Alguien te ha dicho que duermes con la boca abierta?',
-        porque: 'Casi nadie lo sabe de sí mismo. Lo cuenta quien duerme cerca.',
-        ops: [
-          { t: 'Sí', r: 'Me han dicho que duermo con la boca abierta' },
-          { t: 'No', r: null },
-          { t: 'Duermo solo, no sabría', r: null }
-        ] }
-    ]
-  },
-  {
-    id: 'duermo', folio: 'II', titulo: 'Cómo duermo', eje: 'Vía aérea', par: 'respiro',
-    preguntas: [
-      { id: 'horas', p: '¿Duermes siete horas o más y aun así despiertas cansado?',
-        ops: [
-          { t: 'Sí, casi todos los días', r: 'Duermo siete horas o más y despierto cansado' },
-          { t: 'Algunos días', r: 'Algunos días despierto cansado aunque duerma bien' },
-          { t: 'Duermo menos de siete', r: 'Duermo menos de siete horas' },
-          { t: 'No, descanso bien', r: null }
-        ] },
-      { id: 'ronca', p: '¿Te han dicho que roncas?',
-        ops: [
-          { t: 'Sí, fuerte', r: 'Ronco fuerte' },
-          { t: 'Un poco', r: 'Ronco un poco' },
-          { t: 'Nunca', r: null },
-          { t: 'Duermo solo, no sabría', r: null }
-        ] },
-      { id: 'pausas', p: '¿Y que a veces dejas de respirar unos segundos?', si: { id: 'ronca', en: [0, 1] },
-        porque: 'Si te lo han dicho, la doctora prefiere verte pronto. Es la respuesta más importante de esta parte.',
-        porqueAlarma: true,
-        ops: [
-          { t: 'Sí, me lo han dicho', r: 'Me han dicho que dejo de respirar unos segundos al dormir', alarma: true },
-          { t: 'No', r: null },
-          { t: 'No sé', r: null }
-        ] },
-      { id: 'dia', p: '¿Te gana el sueño sin querer durante el día?', ind: 'En una junta, manejando, viendo una película.',
-        ops: [
-          { t: 'Seguido', r: 'Me quedo dormido sin querer durante el día' },
-          { t: 'A veces', r: 'A veces me gana el sueño durante el día' },
-          { t: 'Casi nunca', r: null }
-        ] }
-    ]
-  },
-  {
-    id: 'muerdo', folio: 'III', titulo: 'Cómo muerdo', eje: 'Función y estética', par: 'veo',
-    preguntas: [
-      { id: 'bostezo', p: 'Abre la boca despacio, como para bostezar.', ind: 'Hazlo ahora. ¿Escuchas o sientes algo?',
-        porque: 'Los ruidos de la articulación casi nunca duelen al principio. Por eso conviene notarlos.',
-        ops: [
-          { t: 'Un chasquido', r: 'Me truena la mandíbula al abrir' },
-          { t: 'Como si hubiera arenilla', r: 'Siento como arenilla al abrir la boca' },
-          { t: 'Nada', r: null }
-        ] },
-      { id: 'dedos', p: 'Pon tres dedos juntos, en vertical, entre tus dientes.', ind: 'Índice, medio y anular, uno encima del otro. ¿Caben?',
-        porque: 'Es una forma rápida de ver cuánto abres. En consulta se mide con precisión.',
-        ops: [
-          { t: 'Caben sin problema', r: null },
-          { t: 'Solo caben dos', r: 'Solo me caben dos dedos al abrir la boca' },
-          { t: 'Menos de dos', r: 'Me caben menos de dos dedos al abrir la boca', alarma: true }
-        ] },
-      { id: 'traba', p: '¿Se te ha trabado la mandíbula alguna vez?',
-        ops: [
-          { t: 'Seguido, últimamente', r: 'Se me traba la mandíbula seguido', alarma: true },
-          { t: 'Alguna vez', r: 'Alguna vez se me ha trabado la mandíbula' },
-          { t: 'Nunca', r: null }
-        ] },
-      { id: 'aprieta', p: 'Ahora mismo, ¿tus dientes están juntos o separados?', ind: 'No los muevas. Solo fíjate.',
-        porque: 'En reposo, los dientes no se tocan. Mucha gente descubre con esta pregunta que los aprieta todo el día.',
-        ops: [
-          { t: 'Juntos, apretados', r: 'Aprieto los dientes sin darme cuenta' },
-          { t: 'Juntos, pero sin apretar', r: 'Mantengo los dientes juntos en reposo' },
-          { t: 'Separados', r: null }
-        ] }
-    ]
-  },
-  {
-    id: 'veo', folio: 'IV', titulo: 'Cómo se ven mis dientes', eje: 'Función y estética', par: 'muerdo',
-    preguntas: [
-      { id: 'foto', p: 'Cuando te ves sonriendo en una foto, ¿en qué te fijas primero?',
-        ops: [
-          { t: 'Que están chuecos o encimados', r: 'Me molesta que estén chuecos o encimados' },
-          { t: 'El color', r: 'Me molesta el color de mis dientes' },
-          { t: 'Que se ven cortos o gastados', r: 'Siento mis dientes cortos o gastados' },
-          { t: 'Las encías', r: 'Me molesta cómo se ven mis encías al sonreír' }
-        ] },
-      { id: 'tiempo', p: '¿Hace cuánto lo estás pensando?',
-        ops: [
-          { t: 'Años', r: 'Llevo años pensando en arreglarlo' },
-          { t: 'Unos meses', r: 'Llevo unos meses pensándolo' },
-          { t: 'Lo estoy decidiendo ahora', r: 'Lo estoy decidiendo ahora' }
-        ] },
-      { id: 'como', p: 'Si lo arreglas, ¿cómo te gustaría hacerlo?',
-        ops: [
-          { t: 'Que no se note', r: 'Prefiero algo que no se note, como alineadores' },
-          { t: 'Lo que dé mejor resultado', r: 'Quiero la opción con mejor resultado' },
-          { t: 'Todavía no sé', r: 'Necesito orientación sobre las opciones' }
-        ] }
-    ]
-  }
+var GRUPOS = [
+  { nombre: 'Ortodoncia', servicios: ['invisalign', 'brackets'] },
+  { nombre: 'Salud funcional', servicios: ['sueno', 'atm'] },
+  { nombre: 'Odontología general', servicios: ['limpieza', 'resinas'] },
+  { nombre: 'Estética', servicios: ['blanqueamiento'] },
+  { nombre: 'Para niños', servicios: ['infantil'] },
+  { nombre: 'Si no sabes por dónde empezar', servicios: ['integral'] }
 ];
 
-var ANTECEDENTE = {
-  id: 'antecedente', p: '¿Ya te habían tratado algo de esto antes?',
-  porque: 'Si ya pasaste por un tratamiento, la doctora quiere saberlo desde antes para no repetir lo que ya hiciste.',
+var PREVIA = {
+  id: 'previa', p: '¿Has usado ortodoncia antes?', et: 'Ortodoncia previa',
   ops: [
-    { t: 'Sí, y no quedé conforme', r: 'Ya me trataron y no quedé conforme' },
-    { t: 'Sí, y quiero continuar', r: 'Ya llevé un tratamiento y quiero continuar' },
-    { t: 'Estoy en tratamiento ahora', r: 'Estoy en tratamiento actualmente' },
-    { t: 'Nunca', r: 'Es la primera vez que me trato' }
+    { t: 'Nunca' },
+    { t: 'Sí, brackets' },
+    { t: 'Sí, alineadores' },
+    { t: 'Estoy en tratamiento' }
   ]
+};
+
+var SERVICIOS = {
+  invisalign: {
+    nombre: 'Invisalign', desc: 'Alineadores transparentes', tema: 'luz',
+    preguntas: [
+      { id: 'corregir', p: '¿Qué te gustaría corregir?', et: 'Quiere corregir', varias: true,
+        ops: [{ t: 'Dientes chuecos' }, { t: 'Espacios entre dientes' }, { t: 'Mi mordida' }, { t: 'No sé, quiero que me revisen' }] },
+      PREVIA
+    ]
+  },
+  brackets: {
+    nombre: 'Brackets', desc: 'Ortodoncia convencional',
+    preguntas: [
+      { id: 'corregir', p: '¿Qué te gustaría corregir?', et: 'Quiere corregir', varias: true,
+        ops: [{ t: 'Dientes chuecos' }, { t: 'Espacios entre dientes' }, { t: 'Mi mordida' }, { t: 'No sé, quiero que me revisen' }] },
+      PREVIA
+    ]
+  },
+  sueno: {
+    nombre: 'Respiración y sueño', desc: 'Ronquidos, boca abierta al dormir', tema: 'noche',
+    preguntas: [
+      { id: 'sueno', p: '¿Qué has notado?', et: 'Ha notado', varias: true,
+        ops: [{ t: 'Respiro por la boca' }, { t: 'Ronco' }, { t: 'Nariz tapada seguido' }, { t: 'Despierto cansado' }] },
+      { id: 'pausas', p: '¿Te han dicho que dejas de respirar al dormir?', et: 'Pausas al dormir',
+        si: { id: 'sueno', incluye: 1 },
+        ops: [{ t: 'Sí', alarma: true }, { t: 'No' }, { t: 'No sé' }] }
+    ]
+  },
+  atm: {
+    nombre: 'Mandíbula (ATM)', desc: 'Dolor, ruidos o bloqueos',
+    preguntas: [
+      { id: 'atm', p: '¿Qué molestia tienes?', et: 'Molestia', varias: true,
+        ops: [{ t: 'Me duele' }, { t: 'Me truena al abrir' }, { t: 'Me cuesta abrir la boca' }, { t: 'Se me traba', alarma: true }] },
+      { id: 'desde', p: '¿Desde cuándo?', et: 'Desde',
+        ops: [{ t: 'Unos días' }, { t: 'Unas semanas' }, { t: 'Meses o más' }] }
+    ]
+  },
+  limpieza: {
+    nombre: 'Limpieza', desc: 'Revisión y prevención',
+    preguntas: [
+      { id: 'ultima', p: '¿Cuándo fue tu última limpieza?', et: 'Última limpieza',
+        ops: [{ t: 'Hace menos de 6 meses' }, { t: 'Hace 6 meses a un año' }, { t: 'Hace más de un año' }, { t: 'No me acuerdo' }] },
+      { id: 'sangrado', p: '¿Te sangran las encías al cepillarte?', et: 'Sangrado de encías',
+        ops: [{ t: 'Sí' }, { t: 'A veces' }, { t: 'No' }] }
+    ]
+  },
+  resinas: {
+    nombre: 'Resinas', desc: 'Caries o dientes rotos',
+    preguntas: [
+      { id: 'resinas', p: '¿Qué te gustaría revisar?', et: 'Revisar', varias: true,
+        ops: [{ t: 'Una posible caries' }, { t: 'Un diente roto' }, { t: 'Una resina vieja' }, { t: 'Sensibilidad' }, { t: 'Dolor fuerte o inflamación', alarma: true }] }
+    ]
+  },
+  blanqueamiento: {
+    nombre: 'Blanqueamiento', desc: 'Dientes más blancos', tema: 'luz',
+    preguntas: [
+      { id: 'blanco', p: '¿Qué te gustaría lograr?', et: 'Busca',
+        ops: [{ t: 'Dientes más blancos' }, { t: 'Quitar manchas' }, { t: 'Verme bien para un evento' }, { t: 'Conocer opciones' }] }
+    ]
+  },
+  infantil: {
+    nombre: 'Odontología infantil', desc: 'Desarrollo y mordida',
+    preguntas: [
+      { id: 'edad', p: '¿Qué edad tiene?', et: 'Edad',
+        ops: [{ t: 'Menos de 6 años' }, { t: '6 a 9 años' }, { t: '10 a 12 años' }, { t: '13 o más' }] },
+      { id: 'nino', p: '¿Qué has notado?', et: 'Ha notado', varias: true,
+        ops: [{ t: 'Dientes encimados' }, { t: 'Muerde chueco' }, { t: 'Respira por la boca' }, { t: 'Se chupa el dedo o usa chupón' }, { t: 'Solo quiero una revisión' }] }
+    ]
+  },
+  integral: {
+    nombre: 'Valoración general', desc: 'Una revisión completa',
+    preguntas: [
+      { id: 'integral', p: '¿Qué buscas?', et: 'Busca',
+        ops: [{ t: 'Una revisión general' }, { t: 'Tengo varias molestias' }, { t: 'Mejorar mi sonrisa' }, { t: 'Un plan completo' }] }
+    ]
+  }
+};
+var ORDEN = ['invisalign', 'brackets', 'sueno', 'atm', 'limpieza', 'resinas', 'blanqueamiento', 'infantil', 'integral'];
+
+var QUIEN = {
+  id: 'quien', p: '¿Para quién es la cita?', et: 'Cita para',
+  ops: [{ t: 'Para mí' }, { t: 'Para mi hijo o hija' }, { t: 'Para otra persona' }]
 };
 
 var WHATSAPP = '526221424577';  // demo
@@ -585,250 +492,200 @@ var APPS_SCRIPT_URL = '';       // vacío = solo WhatsApp (mismo patrón que iNo
 // ---------------------------------------------------------------
 function estadoInicial() {
   return {
-    fase: 'gancho',      // gancho · indice · pregunta · fincap · antecedente · prioridad · nombre · final
-    cap: null, qi: 0,
-    resp: {},            // id de pregunta → índice de opción
-    visitados: [],       // capítulos en el orden en que se abrieron
-    hechos: [],          // capítulos terminados
-    prio: null, nombre: '',
-    gancho: false,       // ya contestó la pregunta de entrada
-    ultima: null         // id de la última pregunta contestada (para la barra móvil)
+    fase: 'quien',     // quien · servicios · pregunta · prioridad · datos · final
+    elegidos: [],      // servicios marcados, en orden del catálogo
+    qi: 0,             // índice dentro de la lista plana de preguntas
+    resp: {},          // id → número (una) o arreglo (varias)
+    prio: null,
+    paciente: '', tutor: '', comentario: '',
+    ultima: null
   };
 }
 var est = estadoInicial();
-var ocupado = false;     // mientras una respuesta va volando, no se aceptan más clics
 var hist = [];
-var ultimoId = null;   // para resaltar la última línea de la transcripción
+var ultimoId = null;
+var ocupado = false;
 var folio = 'DA-' + Math.random().toString(36).slice(2, 6).toUpperCase();
-var reloj = null;
 
-function cap(id) { return CAPS.filter(function (c) { return c.id === id; })[0]; }
-function visibles(c) {
-  return c.preguntas.filter(function (q) {
-    return !q.si || q.si.en.indexOf(est.resp[q.si.id]) !== -1;
-  });
-}
-// Las que se recorren pantalla por pantalla. La de "dientes juntos o
-// separados" abre la página; si ya se contestó ahí, no se repite.
-function navegables(c) {
-  return visibles(c).filter(function (q) { return !(est.gancho && q.id === 'aprieta'); });
-}
-function pregunta(id) {
-  if (id === 'antecedente') return ANTECEDENTE;
-  for (var i = 0; i < CAPS.length; i++) {
-    var q = CAPS[i].preguntas.filter(function (x) { return x.id === id; })[0];
-    if (q) return q;
-  }
-}
-function opElegida(q) { return est.resp[q.id] === undefined ? null : q.ops[est.resp[q.id]]; }
 function esc(s) {
   return String(s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
   });
 }
+function guardar() { hist.push(JSON.stringify(est)); }
+function esNino() { return est.resp.quien === 1; }
+
+// La lista plana de pantallas de preguntas: servicio por servicio,
+// sin repetir preguntas compartidas, respetando las condicionales.
+function recorrido() {
+  var vistos = {}, lista = [];
+  est.elegidos.forEach(function (sid) {
+    SERVICIOS[sid].preguntas.forEach(function (q) {
+      if (vistos[q.id]) return;
+      if (q.si) {
+        var r = est.resp[q.si.id];
+        if (!r || r.indexOf(q.si.incluye) === -1) return;
+      }
+      vistos[q.id] = true;
+      lista.push({ sid: sid, q: q });
+    });
+  });
+  return lista;
+}
+function elegidas(q) {
+  var r = est.resp[q.id];
+  if (r === undefined) return [];
+  return (Array.isArray(r) ? r : [r]).map(function (i) { return q.ops[i]; });
+}
 function alarmas() {
   var a = [];
-  est.visitados.forEach(function (id) {
-    visibles(cap(id)).forEach(function (q) {
-      var o = opElegida(q);
-      if (o && o.alarma) a.push(o.r);
+  recorrido().forEach(function (x) {
+    elegidas(x.q).forEach(function (o) {
+      if (o.alarma) a.push(x.q.et + ': ' + o.t.toLowerCase());
     });
   });
   return a;
 }
-function guardar() { hist.push(JSON.stringify(est)); }
 
 // ---------------------------------------------------------------
-// El mensaje para la doctora
+// El mensaje
 // ---------------------------------------------------------------
-function lineasDe(c) {
-  return visibles(c).map(opElegida).filter(function (o) { return o && o.r; })
-    .map(function (o) { return '· ' + o.r; });
-}
 function recado() {
-  var orden = est.hechos.slice();
-  if (est.prio) orden = [est.prio].concat(orden.filter(function (id) { return id !== est.prio; }));
+  var lista = recorrido();
+  var orden = est.elegidos.slice();
+  if (est.prio) orden = [est.prio].concat(orden.filter(function (s) { return s !== est.prio; }));
 
-  var l = ['Hola, doctora.' + (est.nombre ? ' Soy ' + est.nombre + '.' : '') +
-           ' Te mando mi conversación previa.', 'Ficha ' + folio];
+  var quien = esNino()
+    ? 'Soy ' + (est.tutor || 'madre/padre de familia') + '. La cita es para ' + (est.paciente || 'mi hijo o hija') + '.'
+    : (est.paciente ? 'Soy ' + est.paciente + '.' : '');
+  var l = ['Hola, doctora. ' + quien, 'Ficha ' + folio, '',
+    'SERVICIOS: ' + est.elegidos.map(function (s) { return SERVICIOS[s].nombre; }).join(', ')];
+  if (orden.length > 1 && est.prio) l.push('EMPEZAR POR: ' + SERVICIOS[est.prio].nombre);
 
-  orden.forEach(function (id, i) {
-    var c = cap(id), ls = lineasDe(c);
-    var rotulo = orden.length === 1 ? 'TEMA' : (i === 0 ? 'EMPEZAR POR' : 'DESPUÉS');
-    l.push('', rotulo + ': ' + c.titulo);
-    l = l.concat(ls.length ? ls : ['· Nada en particular que mencionar']);
+  orden.forEach(function (sid) {
+    var mias = lista.filter(function (x) { return x.sid === sid; });
+    if (!mias.length) return;
+    l.push('', SERVICIOS[sid].nombre.toUpperCase());
+    mias.forEach(function (x) {
+      var ops = elegidas(x.q);
+      if (ops.length) l.push('· ' + x.q.et + ': ' + ops.map(function (o) { return o.t.toLowerCase(); }).join(', '));
+    });
   });
-
-  // La pregunta de entrada, si no quedó dentro de "Cómo muerdo".
-  var g = est.gancho && opElegida(pregunta('aprieta'));
-  if (g && g.r && est.hechos.indexOf('muerdo') === -1) l.push('', 'TAMBIÉN: ' + g.r);
-
-  var a = opElegida(ANTECEDENTE);
-  if (a) l.push('', 'ANTECEDENTE: ' + a.r);
 
   var al = alarmas();
   if (al.length) l.push('', 'ATENCIÓN PRONTA: ' + al.join('; '));
-
+  if (est.comentario) l.push('', 'COMENTARIO: ' + est.comentario);
   l.push('', 'Me gustaría agendar una valoración.');
   return l.join('\n');
 }
 
 // ---------------------------------------------------------------
-// Piezas de interfaz
+// Vistas
 // ---------------------------------------------------------------
-function respuestas(ops, sel, accion) {
-  return '<div class="respuestas">' + ops.map(function (o, i) {
-    return '<button type="button" class="r" aria-pressed="' + (sel === i) + '" ' +
-      'data-accion="' + accion + '" data-valor="' + i + '">' +
-      '<span class="r-tecla">' + (i + 1) + '</span>' +
-      '<span class="r-texto">' + esc(o.t) + '</span></button>';
+var PALOMA = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">' +
+  '<path d="M2 6.2 4.6 8.8 10 3.2" style="stroke:var(--sobre-accion)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function opciones(q, accion) {
+  var sel = est.resp[q.id];
+  var marcadas = sel === undefined ? [] : (Array.isArray(sel) ? sel : [sel]);
+  return '<div class="respuestas">' + q.ops.map(function (o, i) {
+    var on = marcadas.indexOf(i) !== -1;
+    return '<button type="button" class="r" aria-pressed="' + on + '" data-accion="' + accion + '" data-valor="' + i + '">' +
+      (q.varias
+        ? '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>'
+        : '<span class="r-tecla">' + (i + 1) + '</span>') +
+      '<span><span class="r-texto">' + esc(o.t) + '</span>' +
+      (o.alarma ? '<span class="r-alarma">Conviene verlo pronto</span>' : '') +
+      '</span></button>';
   }).join('') + '</div>';
 }
-function porque(q) {
-  if (!q.porque) return '';
-  return '<p class="porque' + (q.porqueAlarma ? ' porque--alarma' : '') + '">' +
-    '<b>Por qué se pregunta</b>' + esc(q.porque) + '</p>';
-}
 function atras() {
-  return hist.length ? '<button type="button" class="atras" data-accion="atras">Volver a la anterior</button>' : '';
+  return hist.length ? '<button type="button" class="atras" data-accion="atras">Volver</button>' : '';
 }
 
-function vistaIndice() {
-  var grupos = [['Vía aérea', ['respiro', 'duermo']], ['Función y estética', ['muerdo', 'veo']]];
-  var hay = est.hechos.length > 0;
-  return '<div class="portada entra">' +
-    (hay
-      ? '<h1>¿Seguimos con <em>otra</em>?</h1>' +
-        '<p class="bajada">Lo que ya contestaste se queda. Elige otra parte, o arma tu ficha con lo que llevas.</p>'
-      : '<h1>Antes de la consulta, <em>una conversación</em>.</h1>' +
-        '<p class="bajada">Son preguntas de la primera cita. Contestarlas aquí te ahorra repetir tu historia: ' +
-        'llegas con tu caso ya contado. Elige por dónde empezar; puedes hacer una parte o las cuatro.</p>') +
-    '<div class="sumario">' +
-    grupos.map(function (g) {
-      return '<span class="eje-rotulo">' + esc(g[0]) + '</span>' +
-        g[1].map(function (id) {
-          var c = cap(id), hecho = est.hechos.indexOf(id) !== -1;
-          return '<button type="button" class="cap' + (hecho ? ' cap--hecho' : '') + '" data-accion="abrir" data-valor="' + id + '">' +
-            '<span class="cap-folio">' + c.folio + '</span>' +
-            '<span class="cap-titulo">' + esc(c.titulo) + '</span>' +
-            '<span class="cap-meta">' + (hecho ? 'Contestado' : 'Un minuto') + '</span>' +
-            '</button>';
-        }).join('');
-    }).join('') +
-    '</div>' +
-    (hay ? '<div class="botones"><button type="button" class="btn" data-accion="cerrar-entrevista">Armar mi ficha</button></div>' : '') +
+function vistaQuien() {
+  return '<div class="entra">' +
+    '<span class="posicion">Toma un par de minutos</span>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h1 class="pregunta">' + esc(QUIEN.p) + '</h1>' +
+    '<p class="indicacion">Luego eliges qué te gustaría revisar y contestas unas preguntas cortas.</p>' +
+    opciones(QUIEN, 'quien') +
     '</div>';
 }
 
-function vistaGancho() {
-  var q = pregunta('aprieta'), o = opElegida(q);
-  if (!o) {
-    return '<div class="entra">' +
-      '<span class="posicion">Antes de empezar, una pregunta</span>' +
-      '<span class="p-marca" aria-hidden="true">P.</span>' +
-      '<h2 class="pregunta">Ahora mismo, ¿tus dientes están juntos o separados?</h2>' +
-      '<p class="indicacion">No los muevas. Solo fíjate.</p>' +
-      respuestas(q.ops, undefined, 'gancho') +
-      '</div>' +
-      '<button type="button" class="atras" data-accion="indice">Ir directo a las preguntas</button>';
-  }
-  var lectura = {
-    0: 'Contestaste que juntos y apretados. Mucha gente se entera así de que aprieta todo el día, y es de lo que la doctora revisa.',
-    1: 'Los tienes juntos aunque no aprietes. Es un detalle que la doctora revisa en consulta.',
-    2: 'Así suelen estar. Con preguntas como esta se arma tu conversación.'
-  }[est.resp.aprieta];
+function vistaServicios() {
+  var n = est.elegidos.length;
   return '<div class="entra">' +
-    '<span class="posicion">Antes de empezar</span>' +
-    '<h2 class="pregunta" style="margin-top:28px">En reposo, los dientes no se tocan.</h2>' +
-    '<p class="indicacion">' + esc(lectura) + '</p>' +
-    '<p class="indicacion">Las demás preguntas son así: cosas que se notan en un minuto y que casi nadie se había preguntado.</p>' +
-    '<div class="botones"><button type="button" class="btn" data-accion="indice">Seguir</button></div>' +
-    '</div>' + atras();
+    '<span class="posicion">Paso 1 de 3</span>' +
+    '<span class="p-marca" aria-hidden="true">P.</span>' +
+    '<h2 class="pregunta">¿Qué te gustaría revisar?</h2>' +
+    '<p class="indicacion">Puedes elegir varios.</p>' +
+    '<div class="grupos">' + GRUPOS.map(function (g) {
+      return '<span class="grupo-rotulo">' + esc(g.nombre) + '</span>' +
+        '<div class="servicios">' + g.servicios.map(function (sid) {
+          var s = SERVICIOS[sid], on = est.elegidos.indexOf(sid) !== -1;
+          return '<button type="button" class="servicio" aria-pressed="' + on + '" data-accion="servicio" data-valor="' + sid + '">' +
+            '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>' +
+            '<span><span class="servicio-nombre">' + esc(s.nombre) + '</span>' +
+            '<span class="servicio-desc">' + esc(s.desc) + '</span></span></button>';
+        }).join('') + '</div>';
+    }).join('') + '</div>' +
+    '<div class="continuar-fila continuar-fila--fija">' +
+    '<button type="button" class="btn" data-accion="a-preguntas"' + (n ? '' : ' disabled') + '>Continuar</button>' +
+    '<span class="contador" id="contador">' + (n ? n + (n === 1 ? ' elegido' : ' elegidos') : 'Elige al menos uno') + '</span>' +
+    '</div></div>' + atras();
 }
 
 function vistaPregunta() {
-  var c = cap(est.cap), qs = navegables(c), q = qs[est.qi];
-  var puntos = qs.map(function (_, i) {
+  var lista = recorrido(), x = lista[est.qi], q = x.q, s = SERVICIOS[x.sid];
+  var puntos = lista.map(function (_, i) {
     return '<span class="punto' + (i < est.qi ? ' punto--hecho' : i === est.qi ? ' punto--actual' : '') + '"></span>';
   }).join('');
-  var prueba = q.prueba
-    ? '<div class="prueba"><button type="button" class="prueba-btn" data-accion="cronometro" id="prueba-btn">' +
-      'Empezar los ' + q.prueba + ' segundos</button>' +
-      '<span class="crono" id="crono" aria-live="polite"></span>' +
-      '<span class="crono-fase" id="crono-fase"></span>' +
-      '<span class="crono-texto" id="crono-texto">Respira tranquilo, con la boca cerrada.</span></div>'
-    : '';
+  var hay = elegidas(q).length > 0;
+  var alerta = elegidas(q).some(function (o) { return o.alarma; });
   return '<div class="entra">' +
-    '<span class="posicion"><b>' + c.folio + '</b> · ' + esc(c.titulo) + ' · ' + (est.qi + 1) + ' de ' + qs.length + '</span>' +
+    '<span class="posicion">Paso 2 de 3 · <b>' + esc(s.nombre) + '</b></span>' +
     '<div class="puntos" aria-hidden="true">' + puntos + '</div>' +
     '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
-    (c.id === 'respiro' ? '<span class="aliento" aria-hidden="true"></span>' : '') +
-    (q.ind ? '<p class="indicacion">' + esc(q.ind) + '</p>' : '') +
-    prueba +
-    respuestas(q.ops, est.resp[q.id], 'responder') +
-    porque(q) +
+    (q.varias ? '<p class="indicacion">Puedes elegir varias.</p>' : '') +
+    opciones(q, 'responder') +
+    (alerta ? '<p class="aviso"><b>Conviene verlo pronto.</b> Al terminar, llama al consultorio.</p>' : '') +
+    (q.varias
+      ? '<div class="continuar-fila"><button type="button" class="btn" data-accion="siguiente"' +
+        (hay ? '' : ' disabled') + '>Continuar</button></div>'
+      : '') +
     '</div>' + atras();
-}
-
-function vistaFinCap() {
-  var c = cap(est.cap), p = cap(c.par);
-  var parPendiente = est.hechos.indexOf(p.id) === -1;
-  var otras = CAPS.filter(function (x) { return est.hechos.indexOf(x.id) === -1 && x.id !== p.id; });
-  return '<div class="entra">' +
-    '<span class="posicion"><b>' + c.folio + '</b> · ' + esc(c.titulo) + ' · terminado</span>' +
-    '<h2 class="pregunta" style="margin-top:28px">Listo con ' + esc(c.titulo.toLowerCase()) + '.</h2>' +
-    (parPendiente
-      ? '<p class="par">La doctora suele revisar <b>' + esc(c.titulo.toLowerCase()) + '</b> y <b>' +
-        esc(p.titulo.toLowerCase()) + '</b> en la misma consulta. Si quieres, sigue con esa.</p>'
-      : '') +
-    '<div class="respuestas">' +
-    (parPendiente
-      ? '<button type="button" class="r" data-accion="abrir" data-valor="' + p.id + '">' +
-        '<span class="r-tecla">1</span><span class="r-texto">Seguir con ' + esc(p.titulo.toLowerCase()) + '</span></button>'
-      : '') +
-    otras.map(function (x, i) {
-      return '<button type="button" class="r" data-accion="abrir" data-valor="' + x.id + '">' +
-        '<span class="r-tecla">' + (i + (parPendiente ? 2 : 1)) + '</span>' +
-        '<span class="r-texto">Ir a ' + esc(x.titulo.toLowerCase()) + '</span></button>';
-    }).join('') +
-    '<button type="button" class="r" data-accion="cerrar-entrevista">' +
-    '<span class="r-tecla">' + ((parPendiente ? 1 : 0) + otras.length + 1) + '</span>' +
-    '<span class="r-texto">Con esto es suficiente</span></button>' +
-    '</div></div>';
-}
-
-function vistaAntecedente() {
-  var q = ANTECEDENTE;
-  return '<div class="entra">' +
-    '<span class="posicion">Para cerrar</span>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
-    '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
-    respuestas(q.ops, est.resp[q.id], 'antecedente') +
-    porque(q) + '</div>' + atras();
 }
 
 function vistaPrioridad() {
   return '<div class="entra">' +
-    '<span class="posicion">Para cerrar</span>' +
+    '<span class="posicion">Paso 2 de 3 · para terminar</span>' +
     '<span class="p-marca" aria-hidden="true">P.</span>' +
-    '<h2 class="pregunta">Si tuvieras que empezar por una, ¿cuál sería?</h2>' +
-    respuestas(est.hechos.map(function (id) { return { t: cap(id).titulo }; }),
-      est.prio ? est.hechos.indexOf(est.prio) : undefined, 'prioridad') +
-    '<p class="porque"><b>Por qué se pregunta</b>Las demás no se pierden. Se atienden después o a la par, ' +
-    'según lo que la doctora vea en la valoración.</p>' +
+    '<h2 class="pregunta">¿Por cuál te gustaría empezar?</h2>' +
+    '<p class="indicacion">Lo demás se atiende después o a la par.</p>' +
+    opciones({ id: '_prio', ops: est.elegidos.map(function (s) { return { t: SERVICIOS[s].nombre }; }) }, 'prioridad') +
     '</div>' + atras();
 }
 
-function vistaNombre() {
+function vistaDatos() {
+  var nino = esNino();
   return '<div class="entra">' +
-    '<span class="posicion">Último paso</span>' +
+    '<span class="posicion">Paso 3 de 3</span>' +
     '<span class="p-marca" aria-hidden="true">P.</span>' +
-    '<h2 class="pregunta">¿Cómo te llamas?</h2>' +
-    '<p class="indicacion">Para que la doctora sepa a quién le contesta. Si prefieres, déjalo en blanco.</p>' +
-    '<div class="campo"><label for="nombre">Tu nombre</label>' +
-    '<input id="nombre" type="text" autocomplete="name" placeholder="Nombre y apellido" value="' + esc(est.nombre) + '"></div>' +
-    '<div class="botones"><button type="button" class="btn" data-accion="nombre">Ver mi ficha</button></div>' +
+    '<h2 class="pregunta">' + (nino ? '¿Cómo se llaman?' : '¿Cómo te llamas?') + '</h2>' +
+    '<div class="campos">' +
+    (nino
+      ? '<div class="campo"><label for="tutor">Tu nombre</label>' +
+        '<input id="tutor" type="text" autocomplete="name" placeholder="Madre, padre o tutor" value="' + esc(est.tutor) + '"></div>' +
+        '<div class="campo"><label for="paciente">Nombre del niño o niña</label>' +
+        '<input id="paciente" type="text" placeholder="Nombre" value="' + esc(est.paciente) + '"></div>'
+      : '<div class="campo"><label for="paciente">Tu nombre</label>' +
+        '<input id="paciente" type="text" autocomplete="name" placeholder="Nombre y apellido" value="' + esc(est.paciente) + '"></div>') +
+    '<div class="campo"><label for="comentario">¿Algo más? <span style="font-weight:300;color:var(--gris)">(opcional)</span></label>' +
+    '<textarea id="comentario" rows="2" placeholder="Escríbelo aquí">' + esc(est.comentario) + '</textarea></div>' +
+    '</div>' +
+    '<div class="botones"><button type="button" class="btn" data-accion="datos">Ver mi resumen</button></div>' +
     '</div>' + atras();
 }
 
@@ -836,69 +693,57 @@ function vistaFinal() {
   var txt = recado(), al = alarmas();
   return '<div class="entra">' +
     '<span class="posicion">Ficha ' + folio + '</span>' +
-    '<h2 class="pregunta" style="margin-top:22px">Tu conversación está lista.</h2>' +
-    '<p class="indicacion">Es lo que lee la doctora antes de contestarte. Con esto sabe cuánto tiempo apartar ' +
-    'y qué pedirte para la primera cita.</p>' +
-    (al.length
-      ? '<p class="aviso"><b>Conviene verte pronto.</b> Manda tu ficha y llama al consultorio en vez de esperar la respuesta.</p>'
-      : '') +
-    // El botón va antes del mensaje: en el teléfono no hay que bajar a buscarlo.
+    '<h2 class="pregunta" style="margin-top:20px">Listo. Mándalo a la doctora.</h2>' +
+    '<p class="indicacion">Con esto prepara tu primera valoración.</p>' +
+    (al.length ? '<p class="aviso"><b>Conviene verte pronto.</b> Manda tu ficha y llama al consultorio.</p>' : '') +
     '<div class="botones">' +
     '<a class="btn' + (al.length ? ' btn--alarma' : '') + '" href="https://wa.me/' + WHATSAPP + '?text=' +
     encodeURIComponent(txt) + '" target="_blank" rel="noopener noreferrer" data-accion="enviar">' +
     '<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.17c-.24.68-1.42 1.3-1.96 1.35-.5.05-.95.23-3.2-.67-2.69-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75s.69-1.95.93-2.22c.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.59.45.21.51.73 1.78.79 1.91.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.78.98.87 1.81 1.14 2.07 1.27.26.13.41.11.56-.07.15-.18.64-.75.81-1.01.17-.26.34-.21.58-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.63-.18 1.31z"/></svg>' +
-    'Mandar a la doctora</a>' +
-    '<button type="button" class="enlace" data-accion="indice">Contestar otra parte</button>' +
+    'Mandar por WhatsApp</a>' +
     '<button type="button" class="enlace" data-accion="reiniciar">Empezar de nuevo</button>' +
     '</div>' +
-    '<div class="recado"><span class="recado-cabeza">Lo que se envía por WhatsApp</span>' +
+    '<div class="recado"><span class="recado-cabeza">Lo que se envía</span>' +
     '<p class="recado-texto">' + esc(txt) + '</p></div>' +
-    '<p class="porque" style="margin-top:30px">Demostración: el mensaje va a un número de prueba.</p>' +
+    '<p class="legal">Estas respuestas orientan tu primera consulta. No sustituyen una revisión ni son un diagnóstico.</p>' +
     '</div>';
 }
 
 // ---------------------------------------------------------------
 // Transcripción
 // ---------------------------------------------------------------
+function par(q, rotulo) {
+  var ops = elegidas(q);
+  if (!ops.length) return '';
+  var alarma = ops.some(function (o) { return o.alarma; });
+  return (rotulo ? '<span class="t-cap">' + esc(rotulo) + '</span>' : '') +
+    '<span class="t-par' + (q.id === ultimoId ? ' t-par--nuevo' : '') + '">' +
+    '<span class="t-p"><i>P.</i>' + esc(q.p) + '</span>' +
+    '<span class="t-r' + (alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' +
+    esc(ops.map(function (o) { return o.t; }).join(', ')) + '</span></span>';
+}
 function totalRespuestas() {
-  var n = 0;
-  est.visitados.forEach(function (id) {
-    visibles(cap(id)).forEach(function (q) { if (opElegida(q)) n++; });
-  });
-  if (est.gancho && est.visitados.indexOf('muerdo') === -1) n++;
-  if (opElegida(ANTECEDENTE)) n++;
+  var n = est.resp.quien !== undefined ? 1 : 0;
+  if (est.elegidos.length) n++;
+  recorrido().forEach(function (x) { if (elegidas(x.q).length) n++; });
   return n;
 }
-function bloqueTranscripcion(rotulo, q) {
-  var o = opElegida(q);
-  return '<span class="t-cap">' + esc(rotulo) + '</span>' +
-    '<span class="t-par' + (est.ultima === q.id && ultimoId ? ' t-par--nuevo' : '') + '">' +
-    '<span class="t-p"><i>P.</i>' + esc(q.p) + '</span>' +
-    '<span class="t-r' + (o.alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' + esc(o.t) + '</span></span>';
-}
 function vistaTranscripcion() {
-  var n = totalRespuestas();
-  var out = '<div class="t-titulo"><span>La entrevista · <b>' + folio + '</b></span>' +
+  var out = '<div class="t-titulo"><span>Tus respuestas · <b>' + folio + '</b></span>' +
     '<button type="button" class="cerrar" data-accion="cerrar-panel">Cerrar</button></div>';
-  if (!n) {
-    return out + '<p class="t-vacio">Aquí se va escribiendo tu conversación, pregunta por pregunta. ' +
-      'Es lo mismo que va a leer la doctora.</p>';
+  if (est.resp.quien === undefined) {
+    return out + '<p class="t-vacio">Aquí se van escribiendo tus respuestas. Es lo que lee la doctora.</p>';
   }
-  if (est.gancho && est.visitados.indexOf('muerdo') === -1) {
-    out += bloqueTranscripcion('Para empezar', pregunta('aprieta'));
+  out += par(QUIEN, 'Para empezar');
+  if (est.elegidos.length) {
+    out += '<span class="t-par"><span class="t-p"><i>P.</i>¿Qué te gustaría revisar?</span>' +
+      '<span class="t-r"><i>R.</i>' + esc(est.elegidos.map(function (s) { return SERVICIOS[s].nombre; }).join(', ')) + '</span></span>';
   }
-  est.visitados.forEach(function (id) {
-    var c = cap(id), qs = visibles(c).filter(opElegida);
-    if (!qs.length) return;
-    out += '<span class="t-cap">' + c.folio + ' · ' + esc(c.titulo) + '</span>';
-    qs.forEach(function (q) {
-      var o = opElegida(q);
-      out += '<span class="t-par' + (q.id === ultimoId ? ' t-par--nuevo' : '') + '">' +
-        '<span class="t-p"><i>P.</i>' + esc(q.p) + '</span>' +
-        '<span class="t-r' + (o.alarma ? ' t-r--alarma' : '') + '"><i>R.</i>' + esc(o.t) + '</span></span>';
-    });
+  var ultimoSid = null;
+  recorrido().forEach(function (x) {
+    var h = par(x.q, x.sid !== ultimoSid ? SERVICIOS[x.sid].nombre : '');
+    if (h) { out += h; ultimoSid = x.sid; }
   });
-  if (opElegida(ANTECEDENTE)) out += bloqueTranscripcion('Antecedente', ANTECEDENTE);
   return out;
 }
 
@@ -906,27 +751,26 @@ function vistaTranscripcion() {
 // Render
 // ---------------------------------------------------------------
 function render() {
-  if (reloj) { clearInterval(reloj); reloj = null; }
-  var v = {
-    gancho: vistaGancho, indice: vistaIndice, pregunta: vistaPregunta, fincap: vistaFinCap,
-    antecedente: vistaAntecedente, prioridad: vistaPrioridad, nombre: vistaNombre, final: vistaFinal
-  }[est.fase];
+  var v = { quien: vistaQuien, servicios: vistaServicios, pregunta: vistaPregunta,
+    prioridad: vistaPrioridad, datos: vistaDatos, final: vistaFinal }[est.fase];
 
-  // La luz del capítulo: solo mientras estás dentro de él.
-  var tema = (est.fase === 'pregunta' || est.fase === 'fincap') ? est.cap : '';
+  var tema = '';
+  if (est.fase === 'pregunta') {
+    var x = recorrido()[est.qi];
+    tema = SERVICIOS[x.sid].tema || '';
+  }
   if (tema) document.documentElement.setAttribute('data-tema', tema);
   else document.documentElement.removeAttribute('data-tema');
 
   document.getElementById('escenario').innerHTML = v();
   document.getElementById('transcripcion').innerHTML = vistaTranscripcion();
 
-  // Barra móvil: la última respuesta escrita, no un contador suelto.
   var n = totalRespuestas();
-  var u = est.ultima && pregunta(est.ultima), uo = u && opElegida(u);
+  var u = est.ultima;
   var barra = document.getElementById('barra');
-  barra.innerHTML = (uo
-      ? '<span class="barra-ultima"><i>R.</i>' + esc(uo.t) + '</span>'
-      : '<span class="barra-ultima barra-ultima--vacia">Aquí se va escribiendo tu entrevista</span>') +
+  barra.innerHTML = (u
+      ? '<span class="barra-ultima"><i>R.</i>' + esc(u) + '</span>'
+      : '<span class="barra-ultima barra-ultima--vacia">Aquí se van escribiendo tus respuestas</span>') +
     (n ? '<button type="button" data-accion="abrir-panel">' + (n === 1 ? 'Ver' : 'Ver las ' + n) + '</button>' : '');
   barra.classList.toggle('llega', !!ultimoId);
 
@@ -935,97 +779,99 @@ function render() {
   ultimoId = null;
 }
 
-function siguientePregunta() {
-  var qs = navegables(cap(est.cap));
-  if (est.qi + 1 < qs.length) { est.qi++; return; }
-  if (est.hechos.indexOf(est.cap) === -1) est.hechos.push(est.cap);
-  est.fase = 'fincap';
+// Refresco ligero al marcar casillas: no redibuja la pantalla.
+function refrescarMarcas(selector, marcadas) {
+  document.querySelectorAll(selector).forEach(function (b) {
+    b.setAttribute('aria-pressed', marcadas.indexOf(b.dataset.valor) !== -1);
+  });
 }
-function cerrarEntrevista() {
-  est.fase = 'antecedente';
+
+function avanzar() {
+  var lista = recorrido();
+  if (est.qi + 1 < lista.length) { est.qi++; return; }
+  est.fase = est.elegidos.length > 1 ? 'prioridad' : 'datos';
+}
+
+function leerDatos() {
+  var p = document.getElementById('paciente'), t = document.getElementById('tutor'), c = document.getElementById('comentario');
+  if (p) est.paciente = p.value.trim().slice(0, 60);
+  if (t) est.tutor = t.value.trim().slice(0, 60);
+  if (c) est.comentario = c.value.trim().slice(0, 300);
 }
 
 function accion(a, v) {
-  if (a === 'abrir') {
+  if (a === 'quien') {
     guardar();
-    est.cap = v; est.qi = 0; est.fase = 'pregunta';
-    if (est.visitados.indexOf(v) === -1) est.visitados.push(v);
+    est.resp.quien = Number(v); ultimoId = 'quien'; est.ultima = QUIEN.ops[Number(v)].t;
+    // Si la cita es para un niño, se sugiere el servicio infantil.
+    if (esNino() && est.elegidos.indexOf('infantil') === -1) est.elegidos.push('infantil');
+    est.fase = 'servicios';
+  } else if (a === 'servicio') {
+    var i = est.elegidos.indexOf(v);
+    if (i === -1) est.elegidos.push(v); else est.elegidos.splice(i, 1);
+    est.elegidos.sort(function (x, y) { return ORDEN.indexOf(x) - ORDEN.indexOf(y); });
+    refrescarMarcas('.servicio', est.elegidos);
+    var n = est.elegidos.length, btn = document.querySelector('[data-accion="a-preguntas"]');
+    if (btn) btn.disabled = !n;
+    var c = document.getElementById('contador');
+    if (c) c.textContent = n ? n + (n === 1 ? ' elegido' : ' elegidos') : 'Elige al menos uno';
+    return;
+  } else if (a === 'a-preguntas') {
+    if (!est.elegidos.length) return;
+    guardar();
+    est.ultima = est.elegidos.map(function (s) { return SERVICIOS[s].nombre; }).join(', ');
+    est.qi = 0; est.prio = null; est.fase = 'pregunta';
+    if (!recorrido().length) est.fase = 'datos';
   } else if (a === 'responder') {
+    var q = recorrido()[est.qi].q, k = Number(v);
+    if (q.varias) {
+      var arr = (est.resp[q.id] || []).slice(), j = arr.indexOf(k);
+      if (j === -1) arr.push(k); else arr.splice(j, 1);
+      arr.sort();
+      if (arr.length) est.resp[q.id] = arr; else delete est.resp[q.id];
+      return render();                       // muestra la marca y el aviso, sin avanzar
+    }
     guardar();
-    var q = navegables(cap(est.cap))[est.qi];
-    est.resp[q.id] = Number(v);
-    ultimoId = q.id; est.ultima = q.id;
-    siguientePregunta();
-  } else if (a === 'gancho') {
+    est.resp[q.id] = k; ultimoId = q.id; est.ultima = q.et + ': ' + q.ops[k].t.toLowerCase();
+    avanzar();
+  } else if (a === 'siguiente') {
+    var q2 = recorrido()[est.qi].q;
+    if (!elegidas(q2).length) return;
     guardar();
-    est.resp.aprieta = Number(v); est.gancho = true;
-    ultimoId = 'aprieta'; est.ultima = 'aprieta';
-  } else if (a === 'cerrar-entrevista') {
-    guardar(); cerrarEntrevista();
-  } else if (a === 'antecedente') {
-    guardar();
-    est.resp.antecedente = Number(v); ultimoId = 'antecedente'; est.ultima = 'antecedente';
-    est.fase = est.hechos.length > 1 ? 'prioridad' : 'nombre';
+    ultimoId = q2.id;
+    est.ultima = q2.et + ': ' + elegidas(q2).map(function (o) { return o.t.toLowerCase(); }).join(', ');
+    avanzar();
   } else if (a === 'prioridad') {
     guardar();
-    est.prio = est.hechos[Number(v)]; est.fase = 'nombre';
-  } else if (a === 'nombre') {
-    guardar();
-    var inp = document.getElementById('nombre');
-    est.nombre = inp ? inp.value.trim().slice(0, 60) : '';
-    est.fase = 'final';
+    est.prio = est.elegidos[Number(v)]; est.fase = 'datos';
+  } else if (a === 'datos') {
+    leerDatos(); guardar(); est.fase = 'final';
   } else if (a === 'atras') {
     if (!hist.length) return;
+    if (est.fase === 'datos') leerDatos();
+    var datos = { paciente: est.paciente, tutor: est.tutor, comentario: est.comentario };
     est = JSON.parse(hist.pop());
-  } else if (a === 'indice') {
-    guardar(); est.fase = 'indice';
+    est.paciente = datos.paciente; est.tutor = datos.tutor; est.comentario = datos.comentario;
   } else if (a === 'reiniciar') {
-    hist = [];
-    est = estadoInicial();
+    hist = []; est = estadoInicial();
   } else if (a === 'abrir-panel') {
     document.getElementById('transcripcion').classList.add('abierta'); return;
   } else if (a === 'cerrar-panel') {
     document.getElementById('transcripcion').classList.remove('abierta'); return;
-  } else if (a === 'cronometro') {
-    iniciarCrono(); return;
   } else if (a === 'enviar') {
     if (APPS_SCRIPT_URL) {
       fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ folio: folio, nombre: est.nombre, resp: est.resp, prio: est.prio, mensaje: recado() })
+        body: JSON.stringify({ folio: folio, paciente: est.paciente, tutor: est.tutor,
+          servicios: est.elegidos, resp: est.resp, prio: est.prio, mensaje: recado() })
       }).catch(function () {});
     }
-    return; // el enlace abre WhatsApp por sí solo
+    return;
   } else return;
   render();
 }
 
-// El cronómetro va al ritmo de la línea que respira: 4 s inhalar, 4 s exhalar.
-function iniciarCrono() {
-  var q = navegables(cap(est.cap))[est.qi], total = q.prueba, s = total;
-  var num = document.getElementById('crono'), txt = document.getElementById('crono-texto');
-  var fase = document.getElementById('crono-fase'), btn = document.getElementById('prueba-btn');
-  if (!num) return;
-  btn.hidden = true;
-  txt.textContent = '';
-  var pinta = function () {
-    num.textContent = s > 0 ? s : '';
-    fase.textContent = s > 0 ? (((total - s) % 8) < 4 ? 'inhala…' : 'exhala…') : '';
-  };
-  pinta();
-  reloj = setInterval(function () {
-    s--;
-    pinta();
-    if (s <= 0) {
-      clearInterval(reloj); reloj = null;
-      txt.textContent = 'Listo. ¿Cómo te fue?';
-    }
-  }, 1000);
-}
-
-// Al contestar, la respuesta viaja hacia la entrevista antes de que
-// llegue la siguiente pregunta. En escritorio va a la columna; en el
-// teléfono, a la barra de abajo.
+// La respuesta viaja a la transcripción (escritorio) o a la barra (teléfono).
 function volar(boton, despues) {
   var texto = boton.querySelector('.r-texto');
   var ancho = window.innerWidth >= 960;
@@ -1059,28 +905,23 @@ function volar(boton, despues) {
     copia.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(.66)';
     copia.style.opacity = '0.25';
   });
-  setTimeout(function () {
-    copia.remove();
-    ocupado = false;
-    despues();
-  }, 450);
+  setTimeout(function () { copia.remove(); ocupado = false; despues(); }, 450);
 }
 
-var VUELAN = { responder: 1, gancho: 1, antecedente: 1 };
 document.addEventListener('click', function (e) {
   var b = e.target.closest('[data-accion]');
-  if (!b || ocupado) return;
+  if (!b || ocupado || b.disabled) return;
   var a = b.dataset.accion, v = b.dataset.valor;
-  if (VUELAN[a]) return volar(b, function () { accion(a, v); });
+  // Solo vuelan las respuestas que avanzan de pantalla (una sola opción).
+  var avanzaSola = a === 'quien' || a === 'prioridad' ||
+    (a === 'responder' && est.fase === 'pregunta' && !recorrido()[est.qi].q.varias);
+  if (avanzaSola) return volar(b, function () { accion(a, v); });
   accion(a, v);
 });
 
-// Teclas 1-9 contestan, como en una entrevista rápida.
 document.addEventListener('keydown', function (e) {
-  if (e.target.tagName === 'INPUT') {
-    if (e.key === 'Enter') accion('nombre');
-    return;
-  }
+  var tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
   var n = parseInt(e.key, 10);
   if (!n) return;
   var ops = document.querySelectorAll('#escenario .r');
