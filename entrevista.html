@@ -388,6 +388,7 @@ body {
 
 <div class="barra-movil" id="barra"></div>
 
+<script src="assets/servicios.js"></script>
 <script>
 // ---------------------------------------------------------------
 // LOS SERVICIOS, tal como los presenta la Dra., agrupados.
@@ -398,14 +399,10 @@ body {
 //   si     = solo aparece si otra respuesta lo pide
 //   id compartido = si dos servicios hacen la misma pregunta, se hace una vez
 // ---------------------------------------------------------------
-var GRUPOS = [
-  { nombre: 'Ortodoncia', servicios: ['invisalign', 'brackets'] },
-  { nombre: 'Salud funcional', servicios: ['sueno', 'atm'] },
-  { nombre: 'Odontología general', servicios: ['limpieza', 'resinas'] },
-  { nombre: 'Estética', servicios: ['blanqueamiento'] },
-  { nombre: 'Para niños', servicios: ['infantil'] },
-  { nombre: 'Si no sabes por dónde empezar', servicios: ['integral'] }
-];
+// Grupos, nombres y descripciones vienen de assets/servicios.js,
+// el mismo catálogo que usa la landing. Aquí solo viven las preguntas.
+var CATALOGO = window.CATALOGO_DA;
+var GRUPOS = CATALOGO.grupos;
 
 var PREVIA = {
   id: 'previa', p: '¿Has usado ortodoncia antes?', et: 'Ortodoncia previa',
@@ -419,8 +416,6 @@ var PREVIA = {
 
 var SERVICIOS = {
   invisalign: {
-    nombre: 'Invisalign', desc: 'Alineadores transparentes', tema: 'luz',
-    ayuda: 'Es ortodoncia: mueve los dientes con alineadores transparentes que te quitas para comer.',
     preguntas: [
       { id: 'corregir', p: '¿Qué te gustaría corregir?', et: 'Quiere corregir', varias: true,
         ops: [{ t: 'Dientes chuecos' }, { t: 'Espacios entre dientes' }, { t: 'Mi mordida' }, { t: 'No sé, quiero que me revisen' }] },
@@ -428,7 +423,6 @@ var SERVICIOS = {
     ]
   },
   brackets: {
-    nombre: 'Brackets', desc: 'Ortodoncia convencional',
     preguntas: [
       { id: 'corregir', p: '¿Qué te gustaría corregir?', et: 'Quiere corregir', varias: true,
         ops: [{ t: 'Dientes chuecos' }, { t: 'Espacios entre dientes' }, { t: 'Mi mordida' }, { t: 'No sé, quiero que me revisen' }] },
@@ -436,8 +430,6 @@ var SERVICIOS = {
     ]
   },
   sueno: {
-    nombre: 'Respiración y sueño', desc: 'Ronquidos, boca abierta al dormir', tema: 'noche',
-    ayuda: 'Para quien ronca, respira por la boca o despierta cansado. Se revisa junto con la mordida.',
     preguntas: [
       { id: 'sueno', p: '¿Qué has notado?', et: 'Ha notado', varias: true,
         ops: [{ t: 'Respiro por la boca' }, { t: 'Ronco' }, { t: 'Nariz tapada seguido' }, { t: 'Despierto cansado' }] },
@@ -447,8 +439,6 @@ var SERVICIOS = {
     ]
   },
   atm: {
-    nombre: 'Mandíbula (ATM)', desc: 'Dolor, ruidos o bloqueos',
-    ayuda: 'La ATM es la articulación que abre y cierra la boca, justo frente a la oreja.',
     preguntas: [
       { id: 'atm', p: '¿Qué molestia tienes?', et: 'Molestia', varias: true,
         ops: [{ t: 'Me duele' }, { t: 'Me truena al abrir' }, { t: 'Me cuesta abrir la boca' }, { t: 'Se me traba', alarma: true }] },
@@ -457,7 +447,6 @@ var SERVICIOS = {
     ]
   },
   limpieza: {
-    nombre: 'Limpieza', desc: 'Revisión y prevención',
     preguntas: [
       { id: 'ultima', p: '¿Cuándo fue tu última limpieza?', et: 'Última limpieza',
         ops: [{ t: 'Hace menos de 6 meses' }, { t: 'Hace 6 meses a un año' }, { t: 'Hace más de un año' }, { t: 'No me acuerdo' }] },
@@ -466,22 +455,18 @@ var SERVICIOS = {
     ]
   },
   resinas: {
-    nombre: 'Resinas', desc: 'Caries o dientes rotos',
-    ayuda: 'Rellenos del color del diente para reparar caries o pedazos rotos.',
     preguntas: [
       { id: 'resinas', p: '¿Qué te gustaría revisar?', et: 'Revisar', varias: true,
         ops: [{ t: 'Una posible caries' }, { t: 'Un diente roto' }, { t: 'Una resina vieja' }, { t: 'Sensibilidad' }, { t: 'Dolor fuerte o inflamación', alarma: true }] }
     ]
   },
   blanqueamiento: {
-    nombre: 'Blanqueamiento', desc: 'Dientes más blancos', tema: 'luz',
     preguntas: [
       { id: 'blanco', p: '¿Qué te gustaría lograr?', et: 'Busca',
         ops: [{ t: 'Dientes más blancos' }, { t: 'Quitar manchas' }, { t: 'Verme bien para un evento' }, { t: 'Conocer opciones' }] }
     ]
   },
   infantil: {
-    nombre: 'Odontología infantil', desc: 'Desarrollo y mordida',
     preguntas: [
       { id: 'edad', p: '¿Qué edad tiene?', et: 'Edad',
         ops: [{ t: 'Menos de 6 años' }, { t: '6 a 9 años' }, { t: '10 a 12 años' }, { t: '13 o más' }] },
@@ -490,14 +475,17 @@ var SERVICIOS = {
     ]
   },
   integral: {
-    nombre: 'Valoración general', desc: 'Una revisión completa',
-    ayuda: 'Si tienes varias molestias o no sabes cuál elegir, empieza por aquí.',
     preguntas: [
       { id: 'integral', p: '¿Qué buscas?', et: 'Busca',
         ops: [{ t: 'Una revisión general' }, { t: 'Tengo varias molestias' }, { t: 'Mejorar mi sonrisa' }, { t: 'Un plan completo' }] }
     ]
   }
 };
+// Cada servicio = lo del catálogo + sus preguntas.
+Object.keys(SERVICIOS).forEach(function (id) {
+  var c = CATALOGO.servicios[id] || {};
+  SERVICIOS[id] = Object.assign({}, c, SERVICIOS[id]);
+});
 var ORDEN = ['invisalign', 'brackets', 'sueno', 'atm', 'limpieza', 'resinas', 'blanqueamiento', 'infantil', 'integral'];
 
 var QUIEN = {
@@ -523,6 +511,17 @@ function estadoInicial() {
   };
 }
 var est = estadoInicial();
+
+// Si llegas desde la landing con un servicio (entrevista.html?s=invisalign),
+// ese servicio ya viene marcado cuando llegues a la lista.
+(function () {
+  var s = new URLSearchParams(location.search).get('s');
+  if (!s) return;
+  s.split(',').forEach(function (id) {
+    if (SERVICIOS[id] && est.elegidos.indexOf(id) === -1) est.elegidos.push(id);
+  });
+  est.elegidos.sort(function (x, y) { return ORDEN.indexOf(x) - ORDEN.indexOf(y); });
+})();
 var hist = [];
 var ultimoId = null;
 var ocupado = false;
@@ -628,7 +627,10 @@ function vistaQuien() {
   return '<div class="entra">' +
     '<span class="posicion">Toma un par de minutos</span>' +
     '<h1 class="pregunta">' + esc(QUIEN.p) + '</h1>' +
-    '<p class="indicacion">Luego eliges qué te gustaría revisar y contestas unas preguntas cortas.</p>' +
+    '<p class="indicacion">' + (est.elegidos.length
+      ? 'Ya marcamos ' + est.elegidos.map(function (s) { return SERVICIOS[s].nombre; }).join(', ') +
+        '. Después puedes agregar más.'
+      : 'Luego eliges qué te gustaría revisar y contestas unas preguntas cortas.') + '</p>' +
     opciones(QUIEN, 'quien') +
     '</div>';
 }

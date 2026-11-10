@@ -166,19 +166,38 @@ body::before {
   gap: 0;
   border-top: 1px solid var(--line);
 }
+.servicios-grupo {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--tinta);
+  margin: 0;
+}
+.servicios-grupo:first-child { padding-top: var(--space-4); }
+/* Cada fila es un enlace a la entrevista con el servicio marcado. */
 .servicio {
   display: grid;
   gap: var(--space-2);
   padding-block: var(--space-6);
   border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+  transition: padding-left 300ms var(--ease), background-color 200ms var(--ease);
 }
 @media (min-width: 760px) {
   .servicio {
-    grid-template-columns: 56px 1fr 1.2fr;
+    grid-template-columns: 56px 1fr 1.2fr auto;
     gap: var(--space-6);
     align-items: baseline;
-    padding-block: var(--space-8);
+    padding-block: var(--space-6);
   }
+}
+@media (hover: hover) {
+  .servicio:hover { padding-left: var(--space-3); background: var(--lino-alt); }
 }
 .servicio-num {
   font-family: var(--font-display);
@@ -188,8 +207,18 @@ body::before {
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
-.servicio h3 { font-size: 21px; font-weight: 400; }
+.servicio h3 { font-size: 22px; font-weight: 400; }
 .servicio p { color: var(--muted); font-size: 15px; max-width: 50ch; }
+.servicio-ir {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--agua);
+  white-space: nowrap;
+}
+@media (hover: hover) and (min-width: 760px) {
+  .servicio-ir { opacity: 0; transition: opacity 240ms var(--ease); }
+  .servicio:hover .servicio-ir, .servicio:focus-visible .servicio-ir { opacity: 1; }
+}
 
 /* ---------- Proceso ---------- */
 .pasos { display: grid; gap: var(--space-12); }
@@ -375,38 +404,36 @@ body::before {
         </p>
       </div>
 
-      <div class="servicios-lista">
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">01</span>
-          <h3>Invisalign</h3>
-          <p>Alineadores transparentes. Planificación digital del movimiento, sin brackets.</p>
-        </article>
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">02</span>
-          <h3>Ortodoncia convencional</h3>
-          <p>Brackets para alineación y problemas de mordida, cuando es la mejor opción del caso.</p>
-        </article>
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">03</span>
-          <h3>Respiración y sueño</h3>
-          <p>Respiración oral, ronquidos y sueño inquieto. Valoración y, si hace falta, derivación.</p>
-        </article>
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">04</span>
-          <h3>ATM y dolor mandibular</h3>
-          <p>Dolor, chasquidos, bloqueos o dificultad para abrir la boca.</p>
-        </article>
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">05</span>
-          <h3>Ortodoncia infantil</h3>
-          <p>Crecimiento y desarrollo dental. Hábitos orales y maloclusiones a tiempo.</p>
-        </article>
-        <article class="servicio revela">
-          <span class="servicio-num" aria-hidden="true">06</span>
-          <h3>Diseño de sonrisa</h3>
-          <p>Blanqueamiento, resinas y estética dental sobre una base funcional sana.</p>
-        </article>
+      <!-- Las filas salen de assets/servicios.js, el mismo catálogo de la entrevista. -->
+      <div class="servicios-lista" id="servicios-lista">
+        <noscript><p><a href="entrevista.html">Ver servicios y agendar</a></p></noscript>
       </div>
+      <script src="assets/servicios.js"></script>
+      <script>
+        // Cada fila lleva a la entrevista con ese servicio ya marcado.
+        (function () {
+          var C = window.CATALOGO_DA, n = 0, html = '';
+          var esc = function (t) {
+            return String(t).replace(/[&<>"]/g, function (c) {
+              return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+            });
+          };
+          C.grupos.forEach(function (g) {
+            html += '<p class="servicios-grupo revela">' + esc(g.nombre) + '</p>';
+            g.servicios.forEach(function (id) {
+              var s = C.servicios[id];
+              n++;
+              html += '<a class="servicio revela" href="entrevista.html?s=' + id + '">' +
+                '<span class="servicio-num" aria-hidden="true">' + String(n).padStart(2, '0') + '</span>' +
+                '<h3>' + esc(s.nombre) + '</h3>' +
+                '<p>' + esc(s.detalle) + '</p>' +
+                '<span class="servicio-ir">Empezar por aquí <span aria-hidden="true">→</span></span>' +
+                '</a>';
+            });
+          });
+          document.getElementById('servicios-lista').innerHTML = html;
+        })();
+      </script>
     </div>
   </section>
 
