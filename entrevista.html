@@ -128,16 +128,11 @@ body {
 .punto--hecho { background: var(--firma); }
 .punto--actual { background: var(--tinta); }
 
-.p-marca {
-  display: block;
-  font-family: var(--display); font-style: italic; font-size: 22px;
-  color: var(--firma); margin-top: clamp(22px, 3.6vh, 40px); line-height: 1;
-}
 .pregunta {
   font-family: var(--display); font-weight: 300;
   font-size: clamp(32px, 5.2vw, 58px);
   line-height: 1.07; letter-spacing: -.022em;
-  margin: 10px 0 0; max-width: 18ch; text-wrap: balance;
+  margin: 18px 0 0; max-width: 18ch; text-wrap: balance;
 }
 .indicacion {
   font-size: 16px; line-height: 1.5; color: var(--gris);
@@ -606,7 +601,6 @@ function atras() {
 function vistaQuien() {
   return '<div class="entra">' +
     '<span class="posicion">Toma un par de minutos</span>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h1 class="pregunta">' + esc(QUIEN.p) + '</h1>' +
     '<p class="indicacion">Luego eliges qué te gustaría revisar y contestas unas preguntas cortas.</p>' +
     opciones(QUIEN, 'quien') +
@@ -617,7 +611,6 @@ function vistaServicios() {
   var n = est.elegidos.length;
   return '<div class="entra">' +
     '<span class="posicion">Paso 1 de 3</span>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">¿Qué te gustaría revisar?</h2>' +
     '<p class="indicacion">Puedes elegir varios.</p>' +
     '<div class="grupos">' + GRUPOS.map(function (g) {
@@ -646,7 +639,6 @@ function vistaPregunta() {
   return '<div class="entra">' +
     '<span class="posicion">Paso 2 de 3 · <b>' + esc(s.nombre) + '</b></span>' +
     '<div class="puntos" aria-hidden="true">' + puntos + '</div>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
     (q.varias ? '<p class="indicacion">Puedes elegir varias.</p>' : '') +
     opciones(q, 'responder') +
@@ -661,7 +653,6 @@ function vistaPregunta() {
 function vistaPrioridad() {
   return '<div class="entra">' +
     '<span class="posicion">Paso 2 de 3 · para terminar</span>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">¿Por cuál te gustaría empezar?</h2>' +
     '<p class="indicacion">Lo demás se atiende después o a la par.</p>' +
     opciones({ id: '_prio', ops: est.elegidos.map(function (s) { return { t: SERVICIOS[s].nombre }; }) }, 'prioridad') +
@@ -672,7 +663,6 @@ function vistaDatos() {
   var nino = esNino();
   return '<div class="entra">' +
     '<span class="posicion">Paso 3 de 3</span>' +
-    '<span class="p-marca" aria-hidden="true">P.</span>' +
     '<h2 class="pregunta">' + (nino ? '¿Cómo se llaman?' : '¿Cómo te llamas?') + '</h2>' +
     '<div class="campos">' +
     (nino
