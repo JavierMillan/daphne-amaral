@@ -195,25 +195,46 @@ body {
   padding-bottom: 8px; border-bottom: 1px solid var(--tinta); margin-top: 26px;
 }
 .grupo-rotulo:first-child { margin-top: 0; }
-.servicios { display: grid; grid-template-columns: 1fr; }
-@media (min-width: 640px) { .servicios { grid-template-columns: 1fr 1fr; column-gap: 28px; } }
+/* Dos columnas desde el teléfono: los nueve servicios caben casi
+   en una pantalla. Una sola columna solo en pantallas muy angostas. */
+.servicios { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; }
+@media (max-width: 339px) { .servicios { grid-template-columns: 1fr; } }
+@media (min-width: 640px) { .servicios { column-gap: 28px; } }
+.celda { border-bottom: 1px solid var(--linea); min-width: 0; }
 .servicio {
-  display: grid; grid-template-columns: 22px 1fr; gap: 14px; align-items: start;
-  width: 100%; padding: 15px 0 15px 0;
-  border-bottom: 1px solid var(--linea);
+  display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start;
+  width: 100%; padding: 13px 6px 13px 0;
   transition: padding-left 260ms var(--ease), background-color 200ms var(--ease);
 }
-.servicio .casilla { margin-top: 4px; }
-.servicio[aria-pressed="true"] { background: var(--marcado); padding-left: 12px; }
+@media (min-width: 640px) { .servicio { grid-template-columns: 22px 1fr; gap: 14px; padding: 15px 8px 15px 0; } }
+.servicio .casilla { margin-top: 3px; width: 18px; height: 18px; }
+@media (min-width: 640px) { .servicio .casilla { width: 20px; height: 20px; } }
+.servicio[aria-pressed="true"] { background: var(--marcado); padding-left: 8px; }
 .servicio[aria-pressed="true"] .casilla { background: var(--accion); border-color: var(--accion); }
 .servicio[aria-pressed="true"] .casilla svg { opacity: 1; }
-@media (hover: hover) { .servicio:hover { padding-left: 12px; } }
+@media (hover: hover) { .servicio:hover { padding-left: 8px; } }
 .servicio-nombre {
   display: block;
   font-family: var(--display); font-weight: 400;
-  font-size: clamp(21px, 2.4vw, 25px); line-height: 1.15; letter-spacing: -.01em;
+  font-size: clamp(19px, 2.4vw, 25px); line-height: 1.12; letter-spacing: -.01em;
+  overflow-wrap: anywhere;
 }
-.servicio-desc { display: block; font-size: 14px; line-height: 1.45; color: var(--gris); margin-top: 3px; }
+.servicio-desc { display: block; font-size: 13px; line-height: 1.4; color: var(--gris); margin-top: 3px; }
+@media (min-width: 640px) { .servicio-desc { font-size: 14px; } }
+
+/* "¿Qué es?": la explicación existe, pero solo aparece si la pides. */
+.que-es {
+  display: inline-block;
+  font-size: 13px; color: var(--accion);
+  text-decoration: underline; text-underline-offset: 3px;
+  margin: -6px 0 12px 28px; min-height: 28px; padding: 4px 0;
+}
+@media (min-width: 640px) { .que-es { margin-left: 36px; } }
+.ayuda {
+  font-size: 13.5px; line-height: 1.5; color: var(--tinta);
+  margin: 0 6px 14px 28px;
+}
+@media (min-width: 640px) { .ayuda { margin-left: 36px; } }
 
 /* Botón fijo para continuar cuando se eligen varias cosas */
 .continuar-fila {
@@ -399,6 +420,7 @@ var PREVIA = {
 var SERVICIOS = {
   invisalign: {
     nombre: 'Invisalign', desc: 'Alineadores transparentes', tema: 'luz',
+    ayuda: 'Es ortodoncia: mueve los dientes con alineadores transparentes que te quitas para comer.',
     preguntas: [
       { id: 'corregir', p: '¿Qué te gustaría corregir?', et: 'Quiere corregir', varias: true,
         ops: [{ t: 'Dientes chuecos' }, { t: 'Espacios entre dientes' }, { t: 'Mi mordida' }, { t: 'No sé, quiero que me revisen' }] },
@@ -415,6 +437,7 @@ var SERVICIOS = {
   },
   sueno: {
     nombre: 'Respiración y sueño', desc: 'Ronquidos, boca abierta al dormir', tema: 'noche',
+    ayuda: 'Para quien ronca, respira por la boca o despierta cansado. Se revisa junto con la mordida.',
     preguntas: [
       { id: 'sueno', p: '¿Qué has notado?', et: 'Ha notado', varias: true,
         ops: [{ t: 'Respiro por la boca' }, { t: 'Ronco' }, { t: 'Nariz tapada seguido' }, { t: 'Despierto cansado' }] },
@@ -425,6 +448,7 @@ var SERVICIOS = {
   },
   atm: {
     nombre: 'Mandíbula (ATM)', desc: 'Dolor, ruidos o bloqueos',
+    ayuda: 'La ATM es la articulación que abre y cierra la boca, justo frente a la oreja.',
     preguntas: [
       { id: 'atm', p: '¿Qué molestia tienes?', et: 'Molestia', varias: true,
         ops: [{ t: 'Me duele' }, { t: 'Me truena al abrir' }, { t: 'Me cuesta abrir la boca' }, { t: 'Se me traba', alarma: true }] },
@@ -443,6 +467,7 @@ var SERVICIOS = {
   },
   resinas: {
     nombre: 'Resinas', desc: 'Caries o dientes rotos',
+    ayuda: 'Rellenos del color del diente para reparar caries o pedazos rotos.',
     preguntas: [
       { id: 'resinas', p: '¿Qué te gustaría revisar?', et: 'Revisar', varias: true,
         ops: [{ t: 'Una posible caries' }, { t: 'Un diente roto' }, { t: 'Una resina vieja' }, { t: 'Sensibilidad' }, { t: 'Dolor fuerte o inflamación', alarma: true }] }
@@ -466,6 +491,7 @@ var SERVICIOS = {
   },
   integral: {
     nombre: 'Valoración general', desc: 'Una revisión completa',
+    ayuda: 'Si tienes varias molestias o no sabes cuál elegir, empieza por aquí.',
     preguntas: [
       { id: 'integral', p: '¿Qué buscas?', et: 'Busca',
         ops: [{ t: 'Una revisión general' }, { t: 'Tengo varias molestias' }, { t: 'Mejorar mi sonrisa' }, { t: 'Un plan completo' }] }
@@ -610,17 +636,25 @@ function vistaQuien() {
 function vistaServicios() {
   var n = est.elegidos.length;
   return '<div class="entra">' +
-    '<span class="posicion">Paso 1 de 3</span>' +
+    '<span class="posicion">Servicios</span>' +
     '<h2 class="pregunta">¿Qué te gustaría revisar?</h2>' +
     '<p class="indicacion">Puedes elegir varios.</p>' +
     '<div class="grupos">' + GRUPOS.map(function (g) {
       return '<span class="grupo-rotulo">' + esc(g.nombre) + '</span>' +
         '<div class="servicios">' + g.servicios.map(function (sid) {
           var s = SERVICIOS[sid], on = est.elegidos.indexOf(sid) !== -1;
-          return '<button type="button" class="servicio" aria-pressed="' + on + '" data-accion="servicio" data-valor="' + sid + '">' +
+          // La ayuda va fuera del botón principal: un botón no puede vivir dentro de otro.
+          return '<div class="celda">' +
+            '<button type="button" class="servicio" aria-pressed="' + on + '" data-accion="servicio" data-valor="' + sid + '">' +
             '<span class="casilla" aria-hidden="true">' + PALOMA + '</span>' +
             '<span><span class="servicio-nombre">' + esc(s.nombre) + '</span>' +
-            '<span class="servicio-desc">' + esc(s.desc) + '</span></span></button>';
+            '<span class="servicio-desc">' + esc(s.desc) + '</span></span></button>' +
+            (s.ayuda
+              ? '<button type="button" class="que-es" data-accion="ayuda" data-valor="' + sid + '" ' +
+                'aria-expanded="false" aria-controls="ayuda-' + sid + '">¿Qué es?</button>' +
+                '<p class="ayuda" id="ayuda-' + sid + '" hidden>' + esc(s.ayuda) + '</p>'
+              : '') +
+            '</div>';
         }).join('') + '</div>';
     }).join('') + '</div>' +
     '<div class="continuar-fila continuar-fila--fija">' +
@@ -637,7 +671,7 @@ function vistaPregunta() {
   var hay = elegidas(q).length > 0;
   var alerta = elegidas(q).some(function (o) { return o.alarma; });
   return '<div class="entra">' +
-    '<span class="posicion">Paso 2 de 3 · <b>' + esc(s.nombre) + '</b></span>' +
+    '<span class="posicion">Pregunta ' + (est.qi + 1) + ' de ' + lista.length + ' · <b>' + esc(s.nombre) + '</b></span>' +
     '<div class="puntos" aria-hidden="true">' + puntos + '</div>' +
     '<h2 class="pregunta">' + esc(q.p) + '</h2>' +
     (q.varias ? '<p class="indicacion">Puedes elegir varias.</p>' : '') +
@@ -652,7 +686,7 @@ function vistaPregunta() {
 
 function vistaPrioridad() {
   return '<div class="entra">' +
-    '<span class="posicion">Paso 2 de 3 · para terminar</span>' +
+    '<span class="posicion">Casi listo</span>' +
     '<h2 class="pregunta">¿Por cuál te gustaría empezar?</h2>' +
     '<p class="indicacion">Lo demás se atiende después o a la par.</p>' +
     opciones({ id: '_prio', ops: est.elegidos.map(function (s) { return { t: SERVICIOS[s].nombre }; }) }, 'prioridad') +
@@ -662,7 +696,7 @@ function vistaPrioridad() {
 function vistaDatos() {
   var nino = esNino();
   return '<div class="entra">' +
-    '<span class="posicion">Paso 3 de 3</span>' +
+    '<span class="posicion">Último paso</span>' +
     '<h2 class="pregunta">' + (nino ? '¿Cómo se llaman?' : '¿Cómo te llamas?') + '</h2>' +
     '<div class="campos">' +
     (nino
@@ -805,6 +839,14 @@ function accion(a, v) {
     if (btn) btn.disabled = !n;
     var c = document.getElementById('contador');
     if (c) c.textContent = n ? n + (n === 1 ? ' elegido' : ' elegidos') : 'Elige al menos uno';
+    return;
+  } else if (a === 'ayuda') {
+    // Abre o cierra la explicación sin redibujar: la lista no salta.
+    var caja = document.getElementById('ayuda-' + v), btn2 = document.querySelector('[data-accion="ayuda"][data-valor="' + v + '"]');
+    if (!caja || !btn2) return;
+    caja.hidden = !caja.hidden;
+    btn2.setAttribute('aria-expanded', String(!caja.hidden));
+    btn2.textContent = caja.hidden ? '¿Qué es?' : 'Cerrar';
     return;
   } else if (a === 'a-preguntas') {
     if (!est.elegidos.length) return;
